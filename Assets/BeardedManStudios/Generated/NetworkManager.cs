@@ -1,4 +1,5 @@
 using BeardedManStudios.Forge.Networking.Generated;
+using BeardedManStudios.Forge.Networking.Unity;
 using System;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace BeardedManStudios.Forge.Networking.Unity
 		public event InstantiateEvent objectInitialized;
 		protected BMSByte metadata = new BMSByte();
 
-		public GameObject[] testNetworkObject = null;
+		public GameObject[] testPlayerObject = null;
 
 		protected virtual void SetupObjectCreatedEvent()
 		{
@@ -28,17 +29,17 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			if (obj.CreateCode < 0)
 				return;
 				
-		if (obj is TestNetworkObject)
+		if (obj is TestPlayerNetworkObject)
 			{
 				MainThreadManager.Run(() =>
 				{
 					NetworkBehavior newObj = null;
 					if (!NetworkBehavior.skipAttachIds.TryGetValue(obj.NetworkId, out newObj))
 					{
-						if (testNetworkObject.Length > 0 && testNetworkObject[obj.CreateCode] != null)
+						if (testPlayerObject.Length > 0 && testPlayerObject[obj.CreateCode] != null)
 						{
-							var go = Instantiate(testNetworkObject[obj.CreateCode]);
-							newObj = go.GetComponent<TestBehavior>();
+							var go = Instantiate(testPlayerObject[obj.CreateCode]);
+							newObj = go.GetComponent<TestPlayerBehavior>();
 						}
 					}
 
@@ -69,10 +70,10 @@ namespace BeardedManStudios.Forge.Networking.Unity
 		/// <param name="position">Optional parameter which defines the position of the created GameObject</param>
 		/// <param name="rotation">Optional parameter which defines the rotation of the created GameObject</param>
 		/// <param name="sendTransform">Optional Parameter to send transform data to other connected clients on Instantiation</param>
-		public TestBehavior InstantiateTest(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
+		public TestPlayerBehavior InstantiateTestPlayer(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
 		{
-			var go = Instantiate(testNetworkObject[index]);
-			var netBehavior = go.GetComponent<TestBehavior>();
+			var go = Instantiate(testPlayerObject[index]);
+			var netBehavior = go.GetComponent<TestPlayerBehavior>();
 
 			NetworkObject obj = null;
 			if (!sendTransform && position == null && rotation == null)
@@ -104,7 +105,7 @@ namespace BeardedManStudios.Forge.Networking.Unity
 				obj = netBehavior.CreateNetworkObject(Networker, index, metadata.CompressBytes());
 			}
 
-			go.GetComponent<TestBehavior>().networkObject = (TestNetworkObject)obj;
+			go.GetComponent<TestPlayerBehavior>().networkObject = (TestPlayerNetworkObject)obj;
 
 			FinalizeInitialization(go, netBehavior, obj, position, rotation, sendTransform);
 			
