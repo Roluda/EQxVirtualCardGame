@@ -387,9 +387,10 @@ MonoBehaviour:
   gameId: myGame
   gameType: any
   gameMode: all
-  content: {fileID: 0}
-  serverOption: {fileID: 0}
-  networkManagerPrefab: {fileID: 0}
+  content: {fileID: 1511091329}
+  serverOption: {fileID: 1554347533863162, guid: b928ea62faaa41e43ac9457797db9561,
+    type: 3}
+  networkManagerPrefab: {fileID: 186558, guid: 79adc0da5b6caf74990d862696696ecd, type: 3}
   useMainThreadManagerForRPCs: 1
 --- !u!4 &526392256
 Transform:
@@ -417,7 +418,6 @@ GameObject:
   - component: {fileID: 568611364}
   - component: {fileID: 568611363}
   - component: {fileID: 568611362}
-  - component: {fileID: 568611366}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -507,27 +507,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &568611366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 568611361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a93ace8436dda2f46ba0a3e6bc0a3ed0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterServerHost: 127.0.0.1
-  masterServerPort: 15940
-  gameId: myGame
-  gameType: any
-  gameMode: all
-  content: {fileID: 1511091329}
-  serverOption: {fileID: 1554347533863162, guid: b928ea62faaa41e43ac9457797db9561,
-    type: 3}
-  networkManager: {fileID: 186558, guid: 79adc0da5b6caf74990d862696696ecd, type: 3}
 --- !u!1 &831411883
 GameObject:
   m_ObjectHideFlags: 0
