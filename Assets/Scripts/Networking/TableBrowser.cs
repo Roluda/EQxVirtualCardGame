@@ -164,9 +164,14 @@ namespace EQx.Networking {
 			networkManager.Initialize(networker, masterServerHost, masterServerPort, masterServerData);
 
 			if (networker is IServer) {
+				Debug.Log("Hosting Table");
 				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			} else {
+				Debug.Log("Joinig Table as Client");
 			}
 		}
+
+
 
 		private void OnApplicationQuit() {
 			if (server != null)
