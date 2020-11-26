@@ -5,23 +5,38 @@ using UnityEngine.SceneManagement;
 using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Unity;
 
-namespace EQx.Networking {
+namespace EQx.Menu {
     public class TableBrowser : MonoBehaviour {
-		public string masterServerHost = "127.0.0.1";
-		public ushort masterServerPort = 15940;
+		[SerializeField]
+		string masterServerHost = "127.0.0.1";
+		[SerializeField]
+		ushort masterServerPort = 15940;
 
-		public string gameId = "myGame";
-		public string gameType = "any";
-		public string gameMode = "all";
+		[SerializeField, Range(0, 180)]
+		float refreshInterval = 10;
 
-		public Transform content = null;
-		public GameObject serverOption = null;
-		public GameObject networkManagerPrefab = null;
+		[SerializeField]
+		string gameId = "myGame";
+		[SerializeField]
+		string gameType = "any";
+		[SerializeField]
+		string gameMode = "all";
 
-		public bool useMainThreadManagerForRPCs = true;
+		[SerializeField]
+		Transform content = null;
+		[SerializeField]
+		GameObject serverOption = null;
+		[SerializeField]
+		GameObject networkManagerPrefab = null;
+
+		[SerializeField]
+		bool useMainThreadManagerForRPCs = true;
+
+
 		TCPClient client = null;
 		NetworkManager networkManager = null;
 		NetWorker server = null;
+		float timer = 0;
 
         private void Awake() {
 			MainThreadManager.Create();
@@ -33,7 +48,14 @@ namespace EQx.Networking {
 			Refresh();
 		}
 
-		public void CreateServerOption(string name, UnityEngine.Events.UnityAction callback) {
+        private void Update() {
+			timer += Time.deltaTime;
+			if (timer > refreshInterval) {
+				Refresh();
+            }
+        }
+
+        public void CreateServerOption(string name, UnityEngine.Events.UnityAction callback) {
 			MainThreadManager.Run(() => {
 				var option = Instantiate(serverOption);
 				option.transform.SetParent(content);
