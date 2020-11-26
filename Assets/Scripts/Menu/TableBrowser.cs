@@ -16,11 +16,16 @@ namespace EQx.Menu {
 		float refreshInterval = 10;
 
 		[SerializeField]
-		string gameId = "myGame";
+		string gameName = "EQx CG";
 		[SerializeField]
 		string gameType = "any";
 		[SerializeField]
 		string gameMode = "all";
+
+		[SerializeField]
+		string hostGamePrefix = "Table of ";
+		[SerializeField]
+		string hostDefaultName = "Anonymous";
 
 		[SerializeField]
 		Transform content = null;
@@ -51,6 +56,7 @@ namespace EQx.Menu {
         private void Update() {
 			timer += Time.deltaTime;
 			if (timer > refreshInterval) {
+				timer = 0;
 				Refresh();
             }
         }
@@ -59,7 +65,7 @@ namespace EQx.Menu {
 			MainThreadManager.Run(() => {
 				var option = Instantiate(serverOption);
 				option.transform.SetParent(content);
-				var browserItem = option.GetComponent<ServerBrowserItem>();
+				var browserItem = option.GetComponent<TableOption>();
 				if (browserItem != null)
 					browserItem.SetData(name, callback);
 			});
@@ -79,7 +85,7 @@ namespace EQx.Menu {
 					// Create the get request with the desired filters
 					JSONNode sendData = JSONNode.Parse("{}");
 					JSONClass getData = new JSONClass();
-					getData.Add("id", gameId);
+					getData.Add("id", gameName);
 					getData.Add("type", gameType);
 					getData.Add("mode", gameMode);
 
@@ -119,12 +125,7 @@ namespace EQx.Menu {
 										socket = new TCPClient();
 										((TCPClient)socket).Connect(address, port);
 									}
-#if !UNITY_IOS && !UNITY_ANDROID
-									else if (protocol == "web") {
-										socket = new TCPClientWebsockets();
-										((TCPClientWebsockets)socket).Connect(address, port);
-									}
-#endif
+
 									if (socket == null)
 										throw new Exception("No socket of type " + protocol + " could be established");
 
@@ -175,11 +176,11 @@ namespace EQx.Menu {
 				networkManager = Instantiate(networkManagerPrefab).GetComponent<NetworkManager>();
 
 			// If we are using the master server we need to get the registration data
-			string serverId = "myGame";
-			string serverName = "Forge Game";
-			string type = "Deathmatch";
+			string serverId = gameName;
+			string serverName = hostGamePrefix + PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, hostDefaultName);
+			string type = "Standard";
 			string mode = "Teams";
-			string comment = "Demo comment...";
+			string comment = "Join me";
 
 			JSONNode masterServerData = networkManager.MasterServerRegisterData(networker, serverId, serverName, type, mode, comment);
 
@@ -193,7 +194,9 @@ namespace EQx.Menu {
 			}
 		}
 
-
+		public void SetMasterServerIP(string ip) {
+			masterServerHost = ip;
+        }
 
 		private void OnApplicationQuit() {
 			if (server != null)
