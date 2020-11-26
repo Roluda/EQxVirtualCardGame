@@ -12,7 +12,8 @@ namespace EQx.Game.Table {
         // Start is called before the first frame update
         void Start() {
             Vector2 spawnPoint = Random.insideUnitCircle * spawnRadius;
-            NetworkManager.Instance.InstantiateTestPlayer(); //0, new Vector3(spawnPoint.x, spawnHeight, spawnPoint.y), Quaternion.identity);
+            NetworkManager.Instance.InstantiateTestPlayer(0, new Vector3(spawnPoint.x, spawnHeight, spawnPoint.y), Quaternion.identity);
+            Debug.Log("Seated new player");
         }
 
         // Update is called once per frame

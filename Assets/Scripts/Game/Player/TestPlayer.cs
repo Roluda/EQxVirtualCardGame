@@ -23,15 +23,17 @@ namespace EQx.Game.Player {
             });
         }
 
-        // Start is called before the first frame update
-        void Start() {
-
+        protected override void NetworkStart() {
+            base.NetworkStart();
+            if (networkObject.IsOwner) {
+                Debug.Log("I own this player");
+            } else {
+                Debug.Log("I don't own this player");
+            }
         }
 
         // Update is called once per frame
         void Update() {
-            // Unity's Update() running, before this object is instantiated
-            // on the network is *very* rare, but better be safe 100%
             if (networkObject == null) {
                 return;
             }
