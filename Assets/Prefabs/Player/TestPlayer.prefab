@@ -104,9 +104,9 @@ GameObject:
   - component: {fileID: 1223108490518291089}
   - component: {fileID: 8051091947805268132}
   - component: {fileID: 614227438184548594}
-  - component: {fileID: 9119605054317173495}
   - component: {fileID: 1420192745653128475}
   - component: {fileID: 1257924104029377205}
+  - component: {fileID: 3079896151343156601}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Untagged
@@ -179,19 +179,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &9119605054317173495
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5851508550452581041}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1420192745653128475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attachedRigidbody: {fileID: 1257924104029377205}
-  forwardVelocity: 5
+  forwardVelocity: 500
   jumpForce: 3
   rotationVelocity: 180
 --- !u!54 &1257924104029377205
@@ -222,8 +209,22 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &3079896151343156601
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5851508550452581041}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6985197137557196744
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,6 +38,9 @@ namespace EQx.Game.Player {
             if (networkObject.IsOwner) {
                 networkObject.SendRpc(RPC_ASSIGN_NAME, Receivers.AllBuffered, PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, "Anonymous"));
                 networkObject.SendRpc(RPC_ASSIGN_COLOR, Receivers.AllBuffered, Random.ColorHSV(0,1,.8f,.8f,1,1));
+                Camera.main.transform.position = transform.position + new Vector3(0, 4, 5);
+                Camera.main.transform.parent = transform;
+                Camera.main.transform.LookAt(transform);
             }
         }
 
@@ -54,7 +57,7 @@ namespace EQx.Game.Player {
             }
 
             if (Input.GetMouseButton(0)) {
-                attachedRigidbody.AddForce(-transform.forward * forwardVelocity);
+                attachedRigidbody.AddForce(-transform.forward * forwardVelocity * Time.deltaTime);
             }
 
             if (Input.GetMouseButton(1)) {
