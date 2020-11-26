@@ -8,8 +8,6 @@ namespace EQx.Menu {
     public class NameInput : MonoBehaviour {
         [SerializeField]
         TMP_InputField nameField = default;
-        [SerializeField]
-        string defaultName = default;
 
         public void SetPlayerName(string name) {
             PlayerPrefs.SetString(PlayerPrefKeys.PLAYERNAME, name);
@@ -17,7 +15,10 @@ namespace EQx.Menu {
 
         // Start is called before the first frame update
         void Start() {
-            nameField.text = PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, defaultName);
+            var name = PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME);
+            if (name!=null) {
+                nameField.text = name;
+            }
         }
     }
 }
