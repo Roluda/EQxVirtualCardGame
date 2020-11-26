@@ -27,21 +27,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new ChatManagerNetworkObject(networker, id, frame);
 						break;
-					case CubeForgeGameNetworkObject.IDENTITY:
+					case TestPlayerNetworkObject.IDENTITY:
 						availableCallback = true;
-						obj = new CubeForgeGameNetworkObject(networker, id, frame);
-						break;
-					case ExampleProximityPlayerNetworkObject.IDENTITY:
-						availableCallback = true;
-						obj = new ExampleProximityPlayerNetworkObject(networker, id, frame);
-						break;
-					case NetworkCameraNetworkObject.IDENTITY:
-						availableCallback = true;
-						obj = new NetworkCameraNetworkObject(networker, id, frame);
-						break;
-					case TestNetworkObject.IDENTITY:
-						availableCallback = true;
-						obj = new TestNetworkObject(networker, id, frame);
+						obj = new TestPlayerNetworkObject(networker, id, frame);
 						break;
 				}
 
