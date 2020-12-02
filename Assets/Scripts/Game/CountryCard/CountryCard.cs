@@ -26,6 +26,10 @@ namespace EQx.Game.CountryCards {
             }
         }
 
+        private void Start() {
+            onNewCardData?.Invoke();
+        }
+
         CountryCardData dataCache = new CountryCardData("Country Name", new float[20]);
         public CountryCardData data {
             get {

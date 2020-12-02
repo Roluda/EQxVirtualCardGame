@@ -23,8 +23,8 @@ namespace EQx.Game.CountryCards {
             name = sectorVariable.variableName + "Info";
         }
 
-        void Start() {
-
+        protected override void NewCardDataListener() {
+            value.text = ((int)observedCard.data.GetValue(sectorVariable.variable)).ToString();
         }
     }
 }

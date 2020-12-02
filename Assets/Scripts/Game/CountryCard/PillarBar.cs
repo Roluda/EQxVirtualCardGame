@@ -41,18 +41,6 @@ namespace EQx.Game.CountryCards {
             InitializePillar();
         }
 
-        // Start is called before the first frame update
-        void Start() {
-
-            if (!observedCard) {
-                Debug.Log("NoCard");
-            }
-            if (observedCard.data == null) {
-                Debug.Log("Card has no data");
-            }
-            targetValue = observedCard.data.GetValue(data.variable);
-        }
-
         // Update is called once per frame
         void Update() {
             if (currentValue < targetValue) {
