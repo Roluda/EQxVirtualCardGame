@@ -303,7 +303,7 @@ MonoBehaviour:
   bar: {fileID: 5085854844334791336}
   value: {fileID: 5085854843021791703}
   label: {fileID: 5085854844600151178}
-  gainRate: 40
+  gainRate: 80
   maximumValue: 100
   maximumBarWidth: 280
   valueOffset: 80
