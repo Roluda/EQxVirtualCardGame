@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace EQx.Game {
-    public enum EQxVariable{
+    public enum EQxVariableType{
         ValueCreation = 0,
         ValueExtraction = 1,
         Power = 2,

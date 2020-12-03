@@ -3,9 +3,6 @@
 namespace EQx.Game.CountryCards {
     public class CountryCard : MonoBehaviour {
 
-        [SerializeField]
-        bool randomValue = false;
-
         public delegate void NewCardData();
         public event NewCardData onNewCardData;
         public delegate void CardPlayed();
@@ -15,22 +12,8 @@ namespace EQx.Game.CountryCards {
         public delegate void CardUnselected();
         public event CardUnselected onCardUnselected;
 
-        private void OnValidate() {
-            if (randomValue) {
-                randomValue = false;
-                float[] randomValues = new float[20];
-                for (int i=0; i<randomValues.Length; i++) {
-                    randomValues[i] = Random.value * 100;
-                }
-                data = new CountryCardData("Country Name", randomValues);
-            }
-        }
-
-        private void Start() {
-            onNewCardData?.Invoke();
-        }
-
-        CountryCardData dataCache = new CountryCardData("Country Name", new float[20]);
+        [SerializeField]
+        CountryCardData dataCache = default;
         public CountryCardData data {
             get {
                 return dataCache;
@@ -41,6 +24,10 @@ namespace EQx.Game.CountryCards {
                     onNewCardData?.Invoke();
                 }
             }
+        }
+
+        private void OnValidate() {
+            onNewCardData?.Invoke();
         }
 
         bool selectedCache = false;
@@ -57,6 +44,10 @@ namespace EQx.Game.CountryCards {
                     onCardUnselected?.Invoke();
                 }
             }
+        }
+
+        private void Start() {
+            onNewCardData?.Invoke();
         }
     }
 }

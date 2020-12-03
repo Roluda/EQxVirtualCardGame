@@ -17,8 +17,8 @@ namespace EQx.Game.CountryCards {
             if (dirty) {
                 Debug.Log("Slidign");
                 dirty = false;
-                float creation = observedCard.data.GetValue(EQxVariable.ValueCreation);
-                float extraction = observedCard.data.GetValue(EQxVariable.ValueExtraction);
+                float creation = observedCard.data.GetValue(EQxVariableType.ValueCreation);
+                float extraction = observedCard.data.GetValue(EQxVariableType.ValueExtraction);
                 float value = creation / (creation + extraction);
                 if (float.IsNaN(value)) {
                     return;

@@ -14,6 +14,7 @@ namespace EQx.Game.CountryCards {
 
         protected override void NewCardDataListener() {
             label.text = observedCard.data.country;
+            flagIcon.sprite = observedCard.data.flag;
         }
     }
 }
