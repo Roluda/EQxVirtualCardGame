@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
   m_Name: EQxVar_CreativeDestruction
   m_EditorClassIdentifier: 
-  variable: 13
+  type: 13
   variableName: Creative Destruction
   level: 3
   color: {r: 0.77647066, g: 0.30588236, b: 0.35686275, a: 1}
   iconTransparent: {fileID: 21300000, guid: 126baeef2f4699b40951141d0aaacedb, type: 3}
   iconWhite: {fileID: 21300000, guid: a9c0112afe38d424cae47bb8f72f0c37, type: 3}
   iconBlack: {fileID: 21300000, guid: cd474ac35ce1c214bad4cf350afc2cf4, type: 3}
-  description: 
+  description: Default Description please change this in the future. You look good
+    today.

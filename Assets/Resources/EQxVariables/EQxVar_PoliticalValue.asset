@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
   m_Name: EQxVar_PoliticalValue
   m_EditorClassIdentifier: 
-  variable: 6
+  type: 6
   variableName: Political Value
   level: 2
   color: {r: 0.3529412, g: 0.54509807, b: 0.67058825, a: 1}
   iconTransparent: {fileID: 0}
   iconWhite: {fileID: 0}
   iconBlack: {fileID: 0}
-  description: 
+  description: Default Description please change this in the future. You look good
+    today.

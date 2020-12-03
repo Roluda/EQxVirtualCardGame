@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
   m_Name: EQxVar_Power
   m_EditorClassIdentifier: 
-  variable: 2
+  type: 2
   variableName: Power
   level: 2
   color: {r: 1, g: 1, b: 1, a: 1}
   iconTransparent: {fileID: 21300000, guid: 3dc3d407a0c1ee8439ae8a7b9452297d, type: 3}
   iconWhite: {fileID: 0}
   iconBlack: {fileID: 0}
-  description: 
+  description: Default Description please change this in the future. You look good
+    today.

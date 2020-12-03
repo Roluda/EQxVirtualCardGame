@@ -15,7 +15,6 @@ namespace EQx.Game.CountryCards {
 
         private void Update() {
             if (dirty) {
-                Debug.Log("Slidign");
                 dirty = false;
                 float creation = observedCard.data.GetValue(EQxVariableType.ValueCreation);
                 float extraction = observedCard.data.GetValue(EQxVariableType.ValueExtraction);

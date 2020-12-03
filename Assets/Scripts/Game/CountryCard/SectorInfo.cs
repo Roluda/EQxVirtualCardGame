@@ -24,7 +24,7 @@ namespace EQx.Game.CountryCards {
         }
 
         protected override void NewCardDataListener() {
-            value.text = ((int)observedCard.data.GetValue(sectorVariable.variable)).ToString();
+            value.text = ((int)observedCard.data.GetValue(sectorVariable.type)).ToString();
         }
     }
 }

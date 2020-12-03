@@ -20,7 +20,7 @@ namespace EQx.Game.CountryCards {
         // Start is called before the first frame update
 
         protected override void NewCardDataListener() {
-            value.text = ((int)observedCard.data.GetValue(data.variable)).ToString();
+            value.text = ((int)observedCard.data.GetValue(data.type)).ToString();
         }
     }
 }

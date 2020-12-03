@@ -16,9 +16,11 @@ namespace EQx.Game.Table {
         public static GameTable instance = null;
 
         [SerializeField]
-        public CardDealer dealer;
+        public CardDealer dealer = default;
+        [SerializeField]
+        List<EQxVariableType> possibleDemands = default;
 
-        UnityAction<EQxVariableType> onNewDemand;
+        public UnityAction<EQxVariableType> onNewDemand;
         public UnityAction<CardPlayer> onPlayerSeated;
         public UnityAction<CardPlayer> onPlayerLeftTable;
         public UnityAction onTableUpdated;
@@ -80,7 +82,7 @@ namespace EQx.Game.Table {
             }
             placedCards.Clear();
             if (networkObject.IsOwner) {
-                int newDemand = UnityEngine.Random.Range(0, Enum.GetNames(typeof(EQxVariableType)).Length);
+                int newDemand = (int)possibleDemands[UnityEngine.Random.Range(0, possibleDemands.Count)];
                 networkObject.SendRpc(RPC_SET_DEMAND, Receivers.AllBuffered, newDemand);
             }
             registeredPlayers[0].CallStartTurn();
@@ -99,13 +101,16 @@ namespace EQx.Game.Table {
 
         // Start is called before the first frame update
         void Start() {
+            NetworkManager.Instance.InstantiateCardPlayer();
+        }
+
+        private void Awake() {
             if (instance) {
                 Destroy(gameObject);
                 return;
             } else {
                 instance = this;
             }
-            NetworkManager.Instance.InstantiateCardPlayer();
         }
 
         private void OnDestroy() {

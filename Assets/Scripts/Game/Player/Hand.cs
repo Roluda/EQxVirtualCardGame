@@ -17,6 +17,8 @@ namespace EQx.Game.Player {
         float playOutDistance = 5;
 
         [SerializeField]
+        int sortingOrderStart = 1;
+        [SerializeField]
         Vector3 spaceBetweenCards = default;
         [SerializeField]
         Vector3 fanWeightDirection = default;
@@ -105,6 +107,7 @@ namespace EQx.Game.Player {
                 card.motor.targetPosition = CalculateFanPosition(fan.IndexOf(card));
                 card.motor.targetUpDirection = card.transform.position - fanAnchor.position + fanWeightDirection;
                 card.motor.targetLookDirection = lookAtTransform.position - card.transform.position;
+                card.cardCanvas.sortingOrder = sortingOrderStart + fan.IndexOf(card);
             }
         }
 

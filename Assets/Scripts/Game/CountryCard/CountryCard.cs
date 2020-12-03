@@ -11,6 +11,8 @@ namespace EQx.Game.CountryCards {
 
         [SerializeField]
         public CardMotor motor = default;
+        [SerializeField]
+        public Canvas cardCanvas;
 
         [SerializeField]
         CountryCardData dataCache = default;
@@ -36,7 +38,7 @@ namespace EQx.Game.CountryCards {
 
         bool selectedCache = false;
         public bool selected {
-            get => selected;
+            get => selectedCache;
             set {
                 if(value == selectedCache) {
                     return;
@@ -52,6 +54,14 @@ namespace EQx.Game.CountryCards {
 
         private void Start() {
             onNewCardData?.Invoke();
+        }
+
+        private void OnMouseDown() {
+            selected = true;
+        }
+
+        private void OnMouseUp() {
+            selected = false;
         }
     }
 }

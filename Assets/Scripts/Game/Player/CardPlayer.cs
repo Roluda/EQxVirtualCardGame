@@ -15,6 +15,7 @@ namespace EQx.Game.Player {
 
         public UnityAction<CardPlayer, int> onPlacedCard;
         public UnityAction<CardPlayer, int> onReceivedCard;
+        public UnityAction<CardPlayer, string> onSetName;
         public UnityAction<CardPlayer> onRequestedCard;
         public UnityAction<CardPlayer> onEndedTurn;
         public UnityAction<CardPlayer> onStartedTurn;
@@ -63,6 +64,7 @@ namespace EQx.Game.Player {
             MainThreadManager.Run(() => {
                 Debug.Log(name + "SetNameRPC");
                 playerName = args.GetNext<string>();
+                onSetName?.Invoke(this, playerName);
             });
         }
 
@@ -105,6 +107,7 @@ namespace EQx.Game.Player {
 
 
         protected override void NetworkStart() {
+            base.NetworkStart();
             Debug.Log(name + "NetworkStart");
             GameTable.instance.TakeSeat(this);
             if (networkObject.IsOwner) {
