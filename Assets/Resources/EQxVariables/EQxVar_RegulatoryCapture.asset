@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
+  m_Name: EQxVar_RegulatoryCapture
+  m_EditorClassIdentifier: 
+  variable: 9
+  variableName: Regulatory Capture
+  level: 3
+  color: {r: 0.81568635, g: 0.7294118, b: 0.16862746, a: 1}
+  iconTransparent: {fileID: 21300000, guid: daea4117d3ed48d47bd7ee256d76d72d, type: 3}
+  iconWhite: {fileID: 21300000, guid: ee20b22f70b077f43b0da522836f0b86, type: 3}
+  iconBlack: {fileID: 21300000, guid: 0ed28b0e369b49f46b19254f216b5eba, type: 3}
+  description: 

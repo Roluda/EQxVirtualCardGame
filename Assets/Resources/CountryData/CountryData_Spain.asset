@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f95ab1aff5f8ea4da37f50c2e0a93ef, type: 3}
+  m_Name: CountryData_Spain
+  m_EditorClassIdentifier: 
+  cardID: 1
+  country: Spain
+  flag: {fileID: 21300000, guid: 649adad6cc024b74a8917c6cea117b30, type: 3}
+  variables:
+  - type: 0
+    value: 29.3
+  - type: 1
+    value: 69
+  - type: 2
+    value: 39
+  - type: 3
+    value: 56.3
+  - type: 4
+    value: 42
+  - type: 5
+    value: 36.9
+  - type: 6
+    value: 34.4
+  - type: 7
+    value: 36.9
+  - type: 8
+    value: 78.6
+  - type: 9
+    value: 76.6
+  - type: 10
+    value: 54.2
+  - type: 11
+    value: 30.8
+  - type: 12
+    value: 39
+  - type: 13
+    value: 73.6
+  - type: 14
+    value: 34.4
+  - type: 15
+    value: 78.6
+  - type: 16
+    value: 34.9
+  - type: 17
+    value: 58.3
+  - type: 18
+    value: 46.6
+  - type: 19
+    value: 50.7
