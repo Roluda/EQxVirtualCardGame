@@ -51,7 +51,7 @@ namespace EQx.Game.CountryCards {
             UpdatePillar();
         }
 
-        protected override void CardSelectedListener() {
+        protected override void CardSelectedListener(CountryCard card) {
             currentValue = 0;
         }
 

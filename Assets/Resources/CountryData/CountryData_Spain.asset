@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f95ab1aff5f8ea4da37f50c2e0a93ef, type: 3}
   m_Name: CountryData_Spain
   m_EditorClassIdentifier: 
-  cardID: 1
+  cardID: 7
   country: Spain
   flag: {fileID: 21300000, guid: 649adad6cc024b74a8917c6cea117b30, type: 3}
   variables:
