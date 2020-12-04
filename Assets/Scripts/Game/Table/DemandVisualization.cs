@@ -21,25 +21,14 @@ namespace EQx.Game.Table {
         [SerializeField]
         TMP_Text body = default;
 
-        [SerializeField]
-        bool test = false;
-
-        private void OnValidate() {
-            if (test) {
-                test = false;
-                NewDemandListener(EQxVariableType.FirmDominace);
-            }
-        }
+        EQxVariableType current;
 
         private void Start() {
             GameTable.instance.onNewDemand += NewDemandListener;
         }
 
-        private void OnDisable() {
-            GameTable.instance.onNewDemand -= NewDemandListener;
-        }
-
         void NewDemandListener(EQxVariableType demand) {
+            Debug.Log("NewDemandListener");
             StopAllCoroutines();
             StartCoroutine(ChangeDemand(EQxVariableDatabase.instance.GetVariable(demand)));
         }
@@ -62,6 +51,13 @@ namespace EQx.Game.Table {
                 displayContent += letter;
                 text.text = displayContent;
                 yield return new WaitForSeconds(typeInterval);
+            }
+        }
+
+        private void Update() {
+            if(current != GameTable.instance.currentDemand) {
+                current = GameTable.instance.currentDemand;
+                NewDemandListener(current);
             }
         }
     }

@@ -185,6 +185,11 @@ namespace EQx.Menu {
 			JSONNode masterServerData = networkManager.MasterServerRegisterData(networker, serverId, serverName, type, mode, comment);
 
 			networkManager.Initialize(networker, masterServerHost, masterServerPort, masterServerData);
+			//NetworkObject.Flush(networker);
+
+			SceneManager.sceneLoaded += (s, l) => NetworkManager.Instance.SceneReady(s, l);
+			//SceneManager.sceneLoaded += (scene, loadmode) => NetworkObject.Flush(networker);
+			SceneManager.sceneLoaded += (a, b) => Debug.Log("SceneLoaded and Flushed");
 
 			if (networker is IServer) {
 				Debug.Log("Hosting Table");

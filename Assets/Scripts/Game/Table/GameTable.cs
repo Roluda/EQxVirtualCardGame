@@ -4,6 +4,7 @@ using BeardedManStudios.Forge.Networking.Unity;
 using EQx.Game.CountryCards;
 using EQx.Game.Player;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +16,8 @@ namespace EQx.Game.Table {
 
         public static GameTable instance = null;
 
+        [SerializeField]
+        float timeBetweenRounds = 20;
         [SerializeField]
         public CardDealer dealer = default;
         [SerializeField]
@@ -38,10 +41,14 @@ namespace EQx.Game.Table {
             player.onEndedTurn += EndTurnListener;
             player.onRequestedCard += dealer.RequestCard;
             player.onPlacedCard += PlaceCard;
+            player.onPlacedCard += (cardPlayer, id) => player.CallEndTurn();
             registeredPlayers.Add(player);
             registeredPlayers.Sort((x, y) => x.networkObject.NetworkId.CompareTo(y.networkObject.NetworkId));
             onPlayerSeated?.Invoke(player);
             onTableUpdated?.Invoke();
+            if(player.networkObject.IsServer) {
+                NewRound();
+            }
         }
 
         public void LeaveTable(CardPlayer player) {
@@ -67,17 +74,15 @@ namespace EQx.Game.Table {
         }
 
         public override void SetDemand(RpcArgs args) {
-            MainThreadManager.Run(() => {
-                Debug.Log(name + "SetDemandRPC");
-                currentDemand = (EQxVariableType)args.GetNext<int>();
-                onNewDemand?.Invoke(currentDemand);
-            });
+            Debug.Log(name + "SetDemandRPC");
+            currentDemand = (EQxVariableType)args.GetNext<int>();
+            onNewDemand?.Invoke(currentDemand);
         }
 
         public void NewRound() {
             Debug.Log(name + "NewRound");
             foreach (var pair in placedCards) {
-                dealer.DiscardCard(pair.Value);
+                dealer.CallDiscardCard(pair.Value);
                 pair.Key.CallRequestCard();
             }
             placedCards.Clear();
@@ -90,7 +95,12 @@ namespace EQx.Game.Table {
         }
 
         void EndRound() {
+            Debug.Log(name + "EndRound");
             onRoundEnded?.Invoke();
+            foreach (var winner in FindWinners()) {
+                winner.Key.CallWinRound();
+            }
+            StartCoroutine(WaitForNewRound());
         }
 
 
@@ -115,6 +125,11 @@ namespace EQx.Game.Table {
 
         private void OnDestroy() {
             instance = null;
+        }
+
+        IEnumerator WaitForNewRound(){
+            yield return new WaitForSeconds(timeBetweenRounds);
+            NewRound();
         }
 
 

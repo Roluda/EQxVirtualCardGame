@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"string\"][\"int\"][][][\"int\"][]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"name\"][\"id\"][][][\"id\"][]]")]
+	[GeneratedRPC("{\"types\":[[\"string\"][\"int\"][][][\"int\"][][]]")]
+	[GeneratedRPCVariableNames("{\"types\":[[\"name\"][\"id\"][][][\"id\"][][]]")]
 	public abstract partial class CardPlayerBehavior : NetworkBehavior
 	{
 		public const byte RPC_SET_NAME = 0 + 5;
@@ -14,6 +14,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		public const byte RPC_START_TURN = 3 + 5;
 		public const byte RPC_RECEIVE_CARD = 4 + 5;
 		public const byte RPC_REQUEST_CARD = 5 + 5;
+		public const byte RPC_WIN_ROUND = 6 + 5;
 		
 		public CardPlayerNetworkObject networkObject = null;
 
@@ -33,6 +34,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.RegisterRpc("StartTurn", StartTurn);
 			networkObject.RegisterRpc("ReceiveCard", ReceiveCard, typeof(int));
 			networkObject.RegisterRpc("RequestCard", RequestCard);
+			networkObject.RegisterRpc("WinRound", WinRound);
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -135,6 +137,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		/// Arguments:
 		/// </summary>
 		public abstract void RequestCard(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// </summary>
+		public abstract void WinRound(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

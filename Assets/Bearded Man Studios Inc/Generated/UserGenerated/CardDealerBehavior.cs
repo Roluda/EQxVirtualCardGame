@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"int\"]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"id\"]]")]
+	[GeneratedRPC("{\"types\":[[\"int\"][\"int\"][]]")]
+	[GeneratedRPCVariableNames("{\"types\":[[\"id\"][\"id\"][]]")]
 	public abstract partial class CardDealerBehavior : NetworkBehavior
 	{
 		public const byte RPC_DISCARD_CARD = 0 + 5;
+		public const byte RPC_DEAL_CARD = 1 + 5;
+		public const byte RPC_RESHUFFLE = 2 + 5;
 		
 		public CardDealerNetworkObject networkObject = null;
 
@@ -23,6 +25,8 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 			base.SetupHelperRpcs(networkObject);
 			networkObject.RegisterRpc("DiscardCard", DiscardCard, typeof(int));
+			networkObject.RegisterRpc("DealCard", DealCard, typeof(int));
+			networkObject.RegisterRpc("Reshuffle", Reshuffle);
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -104,6 +108,15 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		/// int id
 		/// </summary>
 		public abstract void DiscardCard(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// int id
+		/// </summary>
+		public abstract void DealCard(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// </summary>
+		public abstract void Reshuffle(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

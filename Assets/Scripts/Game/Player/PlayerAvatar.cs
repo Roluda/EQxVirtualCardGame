@@ -15,6 +15,11 @@ namespace EQx.Game.Player {
         TMP_Text nameText = default;
 
         [SerializeField]
+        TMP_Text wins = default;
+
+
+
+        [SerializeField]
         Color standardColor = default;
         [SerializeField]
         Color turnColor = default;
@@ -28,18 +33,27 @@ namespace EQx.Game.Player {
         [SerializeField]
         string playedCardStatusMessage = "played card";
 
+        int winsCounter;
         Vector3 statusOrigin = default;
 
         public void Initialize(CardPlayer player) {
+            Debug.Log(name + "Initialize");
             observedPlayer = player;
             observedPlayer.onPlacedCard += CardPlacedListener;
             observedPlayer.onEndedTurn += EndedTurnListener;
             observedPlayer.onStartedTurn += StartedTurnListener;
             observedPlayer.onSetName += SetNameListener;
+            observedPlayer.onWinRound += WinRoundListener;
             nameText.text = player.playerName;
+            wins.text = "Wins: " + winsCounter;
             shade.color = standardColor;
             statusOrigin = statusText.transform.position;
             statusText.gameObject.SetActive(false);
+        }
+
+        private void WinRoundListener(CardPlayer player) {
+            winsCounter++;
+            wins.text = "Wins: " + winsCounter;
         }
 
         private void SetNameListener(CardPlayer player, string name) {
@@ -47,10 +61,12 @@ namespace EQx.Game.Player {
         }
 
         private void StartedTurnListener(CardPlayer player) {
+            Debug.Log(name + "StartedTurnListener");
             shade.color = turnColor;
         }
 
         private void EndedTurnListener(CardPlayer player) {
+            Debug.Log(name + "EndedTurnListener");
             shade.color = standardColor;
         }
 
