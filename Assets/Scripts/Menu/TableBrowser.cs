@@ -123,7 +123,9 @@ namespace EQx.Menu {
 
 									if (protocol == "tcp") {
 										socket = new TCPClient();
+										Debug.Log("Trying to connect to :" + address + " on Port: " + port);
 										((TCPClient)socket).Connect(address, port);
+										Debug.Log("Connected?");
 									}
 
 									if (socket == null)
@@ -147,7 +149,7 @@ namespace EQx.Menu {
 		}
 
 		public void Host() {
-			server = new TCPServer(64);
+			server = new TCPServer(6);
 			((TCPServer)server).Connect();
 
 			server.playerTimeout += (player, sender) =>
@@ -166,7 +168,9 @@ namespace EQx.Menu {
 			if (!networker.IsBound) {
 				Debug.LogError("NetWorker failed to bind");
 				return;
-			}
+            } else {
+				Debug.Log("NetWorker bound");
+            }
 
 			if (networkManager == null && networkManagerPrefab == null) {
 				Debug.LogWarning("A network manager was not provided, generating a new one instead");

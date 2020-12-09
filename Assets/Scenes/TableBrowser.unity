@@ -520,9 +520,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26166f2ef28a784ba14286a42cf9bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterServerHost: 127.0.0.1
+  masterServerHost: 207.154.246.10
   masterServerPort: 15940
-  refreshInterval: 10
+  refreshInterval: 60
   gameName: any
   gameType: any
   gameMode: all
