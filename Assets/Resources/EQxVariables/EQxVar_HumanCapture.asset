@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
   m_Name: EQxVar_HumanCapture
   m_EditorClassIdentifier: 
-  variable: 10
+  type: 10
   variableName: Human Capture
   level: 3
   color: {r: 0.81568635, g: 0.7294118, b: 0.16862746, a: 1}
   iconTransparent: {fileID: 21300000, guid: 313993ce1df4d8240a53856cc8df2e50, type: 3}
   iconWhite: {fileID: 21300000, guid: a32a0913dc7c0ef429fef43071f5e151, type: 3}
   iconBlack: {fileID: 21300000, guid: 0bcb3617b5e806a4a93f69f4d77e90d0, type: 3}
-  description: 
+  description: Default Description please change this in the future. You look good
+    today.

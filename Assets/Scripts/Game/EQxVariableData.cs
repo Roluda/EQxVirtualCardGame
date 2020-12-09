@@ -6,7 +6,7 @@ namespace EQx.Game {
     [CreateAssetMenu(fileName = "EQxVar_New", menuName = "Data/EQxVariable", order = 1)]
     public class EQxVariableData : ScriptableObject {
         [SerializeField]
-        public EQxVariableType variable = default;
+        public EQxVariableType type = default;
         [SerializeField]
         public string variableName = default;
         [SerializeField]

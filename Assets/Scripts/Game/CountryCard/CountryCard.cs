@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace EQx.Game.CountryCards {
     public class CountryCard : MonoBehaviour {
 
-        public delegate void NewCardData();
-        public event NewCardData onNewCardData;
-        public delegate void CardPlayed();
-        public event CardPlayed onCardPlayed;
-        public delegate void CardSelected();
-        public event CardSelected onCardSelected;
-        public delegate void CardUnselected();
-        public event CardUnselected onCardUnselected;
+        public UnityAction onNewCardData;
+        public UnityAction onCardPlayed;
+        public UnityAction<CountryCard> onCardSelected;
+        public UnityAction<CountryCard> onCardUnselected;
+
+        [SerializeField]
+        public CardMotor motor = default;
+        [SerializeField]
+        public Canvas cardCanvas;
 
         [SerializeField]
         CountryCardData dataCache = default;
@@ -30,24 +32,36 @@ namespace EQx.Game.CountryCards {
             onNewCardData?.Invoke();
         }
 
+        public void PlayCard() {
+            onCardPlayed?.Invoke();
+        }
+
         bool selectedCache = false;
         public bool selected {
-            get => selected;
+            get => selectedCache;
             set {
                 if(value == selectedCache) {
                     return;
                 }
                 selectedCache = value;
                 if (value) {
-                    onCardSelected?.Invoke();
+                    onCardSelected?.Invoke(this);
                 } else {
-                    onCardUnselected?.Invoke();
+                    onCardUnselected?.Invoke(this);
                 }
             }
         }
 
         private void Start() {
             onNewCardData?.Invoke();
+        }
+
+        private void OnMouseDown() {
+            selected = true;
+        }
+
+        private void OnMouseUp() {
+            selected = false;
         }
     }
 }

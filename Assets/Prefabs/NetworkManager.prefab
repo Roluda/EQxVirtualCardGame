@@ -43,7 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe5b082a785e7641bf1a62b930a3f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CardDealerNetworkObject: []
+  CardPlayerNetworkObject:
+  - {fileID: 4752798874831480478, guid: 2393c1f7f3a9aed49a7bc9c37115ea7a, type: 3}
   ChatManagerNetworkObject: []
-  TestPlayerNetworkObject:
-  - {fileID: 5851508550452581041, guid: 6a83569297ec78a4d816976a945592a0, type: 3}
+  GameTableNetworkObject: []
+  TestPlayerNetworkObject: []
   automaticScenes: 1

@@ -35,8 +35,8 @@ namespace EQx.Game.CountryCards {
         }
 
         protected virtual void NewCardDataListener() { }
-        protected virtual void CardSelectedListener() { }
-        protected virtual void CardUnselectedListener() { }
+        protected virtual void CardSelectedListener(CountryCard card) { }
+        protected virtual void CardUnselectedListener(CountryCard card) { }
         protected virtual void CardPlayedListener() { }
 
         protected virtual void Validate() { }

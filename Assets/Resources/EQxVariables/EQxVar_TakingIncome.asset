@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
   m_Name: EQxVar_TakingIncome
   m_EditorClassIdentifier: 
-  variable: 15
+  type: 15
   variableName: Taking Income
   level: 3
   color: {r: 0.3529412, g: 0.54509807, b: 0.67058825, a: 1}
   iconTransparent: {fileID: 21300000, guid: 832daf95f40c5394796135aa71ace023, type: 3}
   iconWhite: {fileID: 21300000, guid: d3f1eded46bcac64497d93a4ff83d7ec, type: 3}
   iconBlack: {fileID: 21300000, guid: 0f7aac069f72b7b48b20df55959e198b, type: 3}
-  description: 
+  description: Default Description please change this in the future. You look good
+    today.

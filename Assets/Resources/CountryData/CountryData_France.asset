@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f95ab1aff5f8ea4da37f50c2e0a93ef, type: 3}
   m_Name: CountryData_France
   m_EditorClassIdentifier: 
-  cardID: 1
+  cardID: 2
   country: France
   flag: {fileID: 21300000, guid: 623359ffa206953419bc653314deb135, type: 3}
   variables:

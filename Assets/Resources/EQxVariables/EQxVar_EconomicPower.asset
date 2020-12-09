@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
   m_Name: EQxVar_EconomicPower
   m_EditorClassIdentifier: 
-  variable: 5
+  type: 5
   variableName: Economic Power
   level: 2
   color: {r: 0.77647066, g: 0.30588236, b: 0.35686275, a: 1}
   iconTransparent: {fileID: 0}
   iconWhite: {fileID: 0}
   iconBlack: {fileID: 0}
-  description: 
+  description: Default Description please change this in the future. You look good
+    today.

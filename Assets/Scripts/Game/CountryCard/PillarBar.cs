@@ -51,13 +51,13 @@ namespace EQx.Game.CountryCards {
             UpdatePillar();
         }
 
-        protected override void CardSelectedListener() {
+        protected override void CardSelectedListener(CountryCard card) {
             currentValue = 0;
         }
 
         protected override void NewCardDataListener() {
             currentValue = 0;
-            targetValue = observedCard.data.GetValue(data.variable);
+            targetValue = observedCard.data.GetValue(data.type);
         }
 
         public void InitializePillar() {

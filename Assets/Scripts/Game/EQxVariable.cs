@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace EQx.Game {
+﻿namespace EQx.Game {
     public enum EQxVariableType{
         ValueCreation = 0,
         ValueExtraction = 1,
