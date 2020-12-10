@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using BeardedManStudios.Forge.Networking;
 using BeardedManStudios.Forge.Networking.Unity;
+using BeardedManStudios.Forge.Networking.Nat;
 
 namespace EQx.Menu {
     public class TableBrowser : MonoBehaviour {
@@ -11,6 +12,12 @@ namespace EQx.Menu {
 		string masterServerHost = "127.0.0.1";
 		[SerializeField]
 		ushort masterServerPort = 15940;
+		[SerializeField]
+		string natServerHost = "";
+		[SerializeField]
+		ushort natServerPort = NatHolePunch.DEFAULT_NAT_SERVER_PORT;
+		[SerializeField]
+		bool useTCP = false;
 
 		[SerializeField, Range(0, 180)]
 		float refreshInterval = 10;
@@ -21,6 +28,8 @@ namespace EQx.Menu {
 		string gameType = "any";
 		[SerializeField]
 		string gameMode = "all";
+		[SerializeField]
+		int maxClients = 6;
 
 		[SerializeField]
 		string hostGamePrefix = "Table of ";
@@ -48,10 +57,27 @@ namespace EQx.Menu {
 		}
 
 		private void Start() {
+			if (!useTCP) {
+				// Do any firewall opening requests on the operating system
+				NetWorker.PingForFirewall(15937);
+			}
+
 			if (useMainThreadManagerForRPCs)
 				Rpc.MainThreadRunner = MainThreadManager.Instance;
 			Refresh();
 		}
+
+        private void OnEnable() {
+			NetWorker.localServerLocated += CreateLanOption;
+		}
+
+        private void OnDisable() {
+			NetWorker.localServerLocated -= CreateLanOption;
+		}
+
+        private void CreateLanOption(NetWorker.BroadcastEndpoints endpoint, NetWorker sender) {
+            throw new NotImplementedException();
+        }
 
         private void Update() {
 			timer += Time.deltaTime;
@@ -70,6 +96,10 @@ namespace EQx.Menu {
 					browserItem.SetData(name, callback);
 			});
 		}
+
+		public void RefreshLAN() {
+
+        }
 
 		public void Refresh() {
 			// Clear out all the currently listed servers
@@ -121,11 +151,12 @@ namespace EQx.Menu {
 									// Determine which protocol should be used when this client connects
 									NetWorker socket = null;
 
-									if (protocol == "tcp") {
+									if (protocol == "udp") {
+										socket = new UDPClient();
+										((UDPClient)socket).Connect(address, port, natServerHost, natServerPort);
+									} else if (protocol == "tcp") {
 										socket = new TCPClient();
-										Debug.Log("Trying to connect to :" + address + " on Port: " + port);
 										((TCPClient)socket).Connect(address, port);
-										Debug.Log("Connected?");
 									}
 
 									if (socket == null)
@@ -149,13 +180,17 @@ namespace EQx.Menu {
 		}
 
 		public void Host() {
-			server = new TCPServer(6);
-			((TCPServer)server).Connect();
+			if (useTCP) {
+				server = new TCPServer(maxClients);
+				((TCPServer)server).Connect();
+			} else {
+				server = new UDPServer(maxClients);
 
-			server.playerTimeout += (player, sender) =>
-			{
-				Debug.Log("Player " + player.NetworkId + " timed out");
-			};
+				if (natServerHost.Trim().Length == 0)
+					((UDPServer)server).Connect();
+				else
+					((UDPServer)server).Connect(natHost: natServerHost, natPort: natServerPort);
+			}
 
 			Connected(server);
 		}
@@ -192,10 +227,10 @@ namespace EQx.Menu {
 			//NetworkObject.Flush(networker);
 
 			SceneManager.sceneLoaded += (s, l) => NetworkManager.Instance.SceneReady(s, l);
-			//SceneManager.sceneLoaded += (scene, loadmode) => NetworkObject.Flush(networker);
 			SceneManager.sceneLoaded += (a, b) => Debug.Log("SceneLoaded and Flushed");
 
 			if (networker is IServer) {
+				AddNetworkListeners(networker);
 				Debug.Log("Hosting Table");
 				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 			} else {
@@ -210,6 +245,17 @@ namespace EQx.Menu {
 		private void OnApplicationQuit() {
 			if (server != null)
 				server.Disconnect(true);
+		}
+
+		void AddNetworkListeners(NetWorker networker) {
+			networker.playerConnected += (net, player) => Debug.Log(player + "Connected");
+			networker.playerAccepted += (net, player) => Debug.Log(player + "Accepted");
+			networker.playerAuthenticated += (net, player) => Debug.Log(player + "Authenticated");
+			networker.playerDisconnected += (net, player) => Debug.Log(player + "Disconnected");
+			networker.playerTimeout += (net, player) => Debug.Log(player + "Timed out");
+			networker.playerRejected += (net, player) => Debug.Log(player + "Rejected");
+			networker.forcedDisconnect += (net) => Debug.Log("networker Forced Disconnect");
+			networker.disconnected += (net) => Debug.Log("DISONNECTED");
 		}
 	}
 }
