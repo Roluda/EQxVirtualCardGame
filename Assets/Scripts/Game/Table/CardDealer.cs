@@ -1,63 +1,72 @@
-﻿using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using BeardedManStudios.Forge.Networking.Unity;
-using EQx.Game.CountryCards;
+﻿using EQx.Game.CountryCards;
 using EQx.Game.Player;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace EQx.Game.Table {
-    public class CardDealer : CardDealerBehavior {
+    public class CardDealer : MonoBehaviourPunCallbacks {
 
-        public List<int> drawPile;
-        public List<int> discardPile;
+        public static CardDealer instance = null;
 
-        public override void DiscardCard(RpcArgs args) {
+        List<int> drawPile;
+        List<int> discardPile;
+
+        [PunRPC]
+        void DiscardCardRPC(int id) {
             Debug.Log(name + "DiscardCardRPC");
-            discardPile.Add(args.GetNext<int>());
+            discardPile.Add(id);
         }
 
-        public void CallDiscardCard(int id) {
-            if (networkObject.IsOwner) {
-                networkObject.SendRpc(RPC_DISCARD_CARD, Receivers.AllBuffered, id);
+        public void DiscardCard(int id) {
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("DiscardCardRPC", RpcTarget.AllBuffered, id);
             }
         }
 
-        public override void Reshuffle(RpcArgs args) {
+        [PunRPC]
+        void ReshuffleRPC() {
             Debug.Log(name + "ReshuffleRPC");
             drawPile.AddRange(discardPile);
             discardPile.Clear();
         }
 
-        public override void DealCard(RpcArgs args) {
+        [PunRPC]
+        void DrawCardRPC(int id) {
             Debug.Log(name + "DealCardRPC");
-            drawPile.Remove(args.GetNext<int>());
+            drawPile.Remove(id);
+        }
+
+        public void Register(CardPlayer player) {
+            player.onRequestedCard += RequestCard;
+        }
+
+        public void Unregister(CardPlayer player) {
+            player.onRequestedCard -= RequestCard;
         }
 
         public void RequestCard(CardPlayer player) {
             Debug.Log(name + "RequestCard");
-            if(networkObject ==null) {
-                Debug.LogWarning("NetworkObject Null");
-                return;
-            }
-            if (networkObject.IsServer) {
+            
+            if (PhotonNetwork.IsMasterClient) {
                 if(drawPile.Count == 0) {
-                    networkObject.SendRpc(RPC_RESHUFFLE, Receivers.OthersBuffered);
-                    drawPile.AddRange(discardPile);
-                    discardPile.Clear();
+                    photonView.RPC("ReshuffleRPC", RpcTarget.All);
                 }
                 if (drawPile.Count > 0) {
                     int randomIndex = Random.Range(0, drawPile.Count - 1);
                     int randomCard = drawPile[randomIndex];
-                    player.CallReceiveCard(randomCard);
-                    networkObject.SendRpc(RPC_DEAL_CARD, Receivers.OthersBuffered, randomCard);
-                    drawPile.RemoveAt(randomIndex);
+                    photonView.RPC("DrawCardRPC", RpcTarget.AllBuffered, randomCard);
+                    player.ReceiveCard(randomCard);
                 }
             }
         }
 
-        protected override void NetworkStart() {
-            base.NetworkStart();
+        private void Awake() {
+            if(instance != null) {
+                Destroy(gameObject);
+            } else {
+                instance = this;
+            }
         }
 
         // Start is called before the first frame update
@@ -74,11 +83,9 @@ namespace EQx.Game.Table {
             }
         }
 
-        // Update is called once per frame
-        void Update() {
-
+        private void OnDestroy() {
+            if (instance == this)
+                instance = null;
         }
-
-
     }
 }

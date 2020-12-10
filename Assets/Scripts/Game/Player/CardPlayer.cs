@@ -1,14 +1,10 @@
-﻿using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using BeardedManStudios.Forge.Networking.Unity;
-using EQx;
-using EQx.Game.Table;
+﻿using EQx.Game.Table;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 namespace EQx.Game.Player {
-    public class CardPlayer : CardPlayerBehavior {
+    public class CardPlayer : MonoBehaviourPunCallbacks {
         public static CardPlayer localPlayer = null;
         public static UnityAction<CardPlayer> localPlayerReady;
         [SerializeField]
@@ -27,43 +23,50 @@ namespace EQx.Game.Player {
         bool onTurn = false;
         int cardsPlacedThisTurn = 0;
 
-        public override void StartTurn(RpcArgs args) {
+        [PunRPC]
+        void StartTurnRPC() {
             Debug.Log(name + "StartTurnRPC");
             cardsPlacedThisTurn = 0;
             onTurn = true;
             onStartedTurn?.Invoke(this);
         }
 
-        public override void EndTurn(RpcArgs args) {
+        [PunRPC]
+        void EndTurnRPC() {
             Debug.Log(name + "EndTurnRPC");
             onTurn = false;
             onEndedTurn?.Invoke(this);
         }
 
-        public override void RequestCard(RpcArgs args) {
+        [PunRPC]
+        void RequestCardRPC() {
             Debug.Log(name + "RequestCardRPC");
             onRequestedCard?.Invoke(this);
         }
 
-        public override void ReceiveCard(RpcArgs args) {
+        [PunRPC]
+        void ReceiveCardRPC(int id) {
             Debug.Log(name + "ReceiveCardRPC");
-            onReceivedCard?.Invoke(this, args.GetNext<int>());
+            onReceivedCard?.Invoke(this, id);
         }
 
-        public override void PlaceCard(RpcArgs args) {
+        [PunRPC]
+        void PlaceCardRPC(int id) {
             Debug.Log(name + "PlaceCardRPC");
             cardsPlacedThisTurn++;
-            onPlacedCard?.Invoke(this, args.GetNext<int>());
+            onPlacedCard?.Invoke(this, id);
         }
 
-        public override void SetName(RpcArgs args) {
-            Debug.Log(name + "SetNameRPC");
-            playerName = args.GetNext<string>();
-            name = playerName;
-            onSetName?.Invoke(this, playerName);
+        [PunRPC]
+        void SetNameRPC(string newName) {
+            Debug.Log(newName + "SetNameRPC");
+            playerName = newName;
+            name = newName;
+            onSetName?.Invoke(this, newName);
         }
 
-        public override void WinRound(RpcArgs args) {
+        [PunRPC]
+        void WinRoundRPC() {
             Debug.Log(name + "WinRoundRPC");
             onWinRound?.Invoke(this);
         }
@@ -71,70 +74,65 @@ namespace EQx.Game.Player {
 
 
 
-        public void CallStartTurn() {
+        public void StartTurn() {
             Debug.Log(name + "StartTurn");
-            if (networkObject.IsOwner) {
-                networkObject.SendRpc(RPC_START_TURN, Receivers.AllBuffered);
+            if (photonView.IsMine) {
+                photonView.RPC("StartTurnRPC", RpcTarget.AllBuffered);
             }
         }
 
-        public void CallEndTurn() {
+        public void EndTurn() {
             Debug.Log(name + "EndTurn");
-            if (networkObject.IsOwner && onTurn) {
-                networkObject.SendRpc(RPC_END_TURN, Receivers.AllBuffered);
+            if (photonView.IsMine) {
+                photonView.RPC("EndTurnRPC", RpcTarget.AllBuffered);
             }
         }
 
-        public void CallRequestCard() {
+        public void RequestCard() {
             Debug.Log(name + "RequestCard");
-            if (networkObject.IsOwner) {
-                networkObject.SendRpc(RPC_REQUEST_CARD, Receivers.AllBuffered);
+            if (photonView.IsMine) {
+                photonView.RPC("RequestCardRPC", RpcTarget.AllBuffered);
             }
         }
 
-        public void CallReceiveCard(int id) {
+        public void ReceiveCard(int id) {
             Debug.Log(name + "ReceiveCard");
-            networkObject.SendRpc(RPC_RECEIVE_CARD, Receivers.AllBuffered, id);
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("ReceiveCardRPC", RpcTarget.AllBuffered);
+            }
         }
 
-        public void CallPlaceCard(int id) {
+        public void PlaceCard(int id) {
             Debug.Log(name + "PlaceCard");
-            if (networkObject.IsOwner && onTurn && cardsPlacedThisTurn<cardPlacingLimit) {
-                networkObject.SendRpc(RPC_PLACE_CARD, Receivers.AllBuffered, id);
+            if (photonView.IsMine && onTurn && cardsPlacedThisTurn < cardPlacingLimit) {
+                photonView.RPC("PlaceCardRPC", RpcTarget.AllBuffered, id);
             }
         }
 
         public void CallWinRound() {
             Debug.Log(name + "CallWinRound");
-            if (networkObject.IsOwner) {
-                networkObject.SendRpc(RPC_WIN_ROUND, Receivers.AllBuffered);
+            if (photonView.IsMine) {
+                photonView.RPC("WinRoundRPC", RpcTarget.AllBuffered);
             }
         }
 
-
-        protected override void NetworkStart() {
-            base.NetworkStart();
-            Debug.Log(name + "NetworkStart");
-            GameTable.instance.TakeSeat(this);
-            if (networkObject.IsOwner) {
-                networkObject.SendRpc(RPC_SET_NAME, Receivers.AllBuffered, PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, "Anonymous"));
+        void Start() {
+            Debug.Log(name + "Start");
+            RoundManager.instance.Register(this);
+            CardDealer.instance.Register(this);
+            if (photonView.IsMine) {
+                photonView.RPC("SetNameRPC", RpcTarget.AllBuffered, PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, "Anonymous"));
                 localPlayer = this;
                 localPlayerReady?.Invoke(this);
-                FindObjectOfType<Hand>().Initialize(this);
             }
-            networkObject.Owner.disconnected += DisconnectedListener;
         }
 
-        void DisconnectedListener(NetWorker sender) {
-            Debug.Log(name + "DisconnectedListener");
-            GameTable.instance.LeaveTable(this);
-            if (networkObject.IsOwner) {
-                localPlayer = null;
-                SceneManager.LoadScene(0);
+        public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer) {
+            if (photonView.Owner == otherPlayer) {
+                RoundManager.instance.Unregister(this);
+                CardDealer.instance.Unregister(this);
+                Destroy(gameObject);
             }
-            networkObject.Destroy();
         }
-
-
     }
 }

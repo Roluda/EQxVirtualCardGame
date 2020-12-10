@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace EQx.Game.Table {
     public class PlayerAvatarSeater : MonoBehaviour {
-
         [SerializeField]
         PlayerAvatar avatarPrefab = default;
 
@@ -43,9 +42,9 @@ namespace EQx.Game.Table {
 
         // Start is called before the first frame update
         void Start() {
-            GameTable.instance.onTableUpdated += TableUpdatedListener;
-            GameTable.instance.onPlayerSeated += PlayerSeatedListener;
-            GameTable.instance.onPlayerLeftTable += PlayerLeftTableListener;
+            RoundManager.instance.onTableUpdated += TableUpdatedListener;
+            RoundManager.instance.onPlayerSeated += PlayerSeatedListener;
+            RoundManager.instance.onPlayerLeftTable += PlayerLeftTableListener;
         }
 
         // Update is called once per frame

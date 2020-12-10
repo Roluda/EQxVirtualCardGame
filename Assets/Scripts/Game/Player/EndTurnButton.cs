@@ -18,7 +18,7 @@ namespace EQx.Game.Player {
             player.onEndedTurn += EndedTurnListener;
             player.onStartedTurn += StartedTurnListener;
             button.gameObject.SetActive(false);
-            button.onClick.AddListener(delegate { player.CallEndTurn(); });
+            button.onClick.AddListener(delegate { player.EndTurn(); });
             button.onClick.AddListener(delegate { button.gameObject.SetActive(false); });
         }
 

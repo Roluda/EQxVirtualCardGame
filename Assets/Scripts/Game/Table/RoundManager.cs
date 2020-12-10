@@ -1,9 +1,6 @@
-﻿using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using BeardedManStudios.Forge.Networking.Unity;
-using EQx.Game.CountryCards;
+﻿using EQx.Game.CountryCards;
 using EQx.Game.Player;
-using System;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +9,14 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace EQx.Game.Table {
-    public class GameTable : GameTableBehavior {
+    public class RoundManager : MonoBehaviourPunCallbacks {
 
-        public static GameTable instance = null;
+        public static RoundManager instance = null;
 
         [SerializeField]
         float timeBetweenRounds = 20;
         [SerializeField]
-        public CardDealer dealer = default;
+        int initialCards = 3;
         [SerializeField]
         List<EQxVariableType> possibleDemands = default;
 
@@ -36,25 +33,28 @@ namespace EQx.Game.Table {
         public EQxVariableType currentDemand;
 
 
-        public void TakeSeat(CardPlayer player) {
-            Debug.Log(name + "TakeSeat by" +player.name);
+        public void Register(CardPlayer player) {
+            Debug.Log(name + "TakeSeat by" + player.name);
             player.onEndedTurn += EndTurnListener;
-            player.onRequestedCard += dealer.RequestCard;
+            player.onRequestedCard += CardDealer.instance.RequestCard;
             player.onPlacedCard += PlaceCard;
-            player.onPlacedCard += (cardPlayer, id) => player.CallEndTurn();
+            player.onPlacedCard += (cardPlayer, id) => player.EndTurn();
             registeredPlayers.Add(player);
-            registeredPlayers.Sort((x, y) => x.networkObject.NetworkId.CompareTo(y.networkObject.NetworkId));
+            registeredPlayers.Sort((x, y) => x.photonView.Owner.ActorNumber.CompareTo(y.photonView.Owner.ActorNumber));
             onPlayerSeated?.Invoke(player);
             onTableUpdated?.Invoke();
-            if(player.networkObject.IsServer) {
+            for (int i = 0; i< initialCards; i++) {
+                player.RequestCard();
+            }
+            if (PhotonNetwork.IsMasterClient) {
                 NewRound();
             }
         }
 
-        public void LeaveTable(CardPlayer player) {
+        public void Unregister(CardPlayer player) {
             Debug.Log(name + "LeftTable by" + player.playerName);
             player.onEndedTurn -= EndTurnListener;
-            player.onRequestedCard -= dealer.RequestCard;
+            player.onRequestedCard -= CardDealer.instance.RequestCard;
             player.onPlacedCard -= PlaceCard;
             registeredPlayers.Remove(player);
             onPlayerLeftTable?.Invoke(player);
@@ -69,28 +69,29 @@ namespace EQx.Game.Table {
                 EndRound();
             } else {
                 index++;
-                registeredPlayers[index].CallStartTurn();
+                registeredPlayers[index].StartTurn();
             }
         }
 
-        public override void SetDemand(RpcArgs args) {
+        [PunRPC]
+        public void SetDemand(int demand) {
             Debug.Log(name + "SetDemandRPC");
-            currentDemand = (EQxVariableType)args.GetNext<int>();
+            currentDemand = (EQxVariableType)demand;
             onNewDemand?.Invoke(currentDemand);
         }
 
         public void NewRound() {
             Debug.Log(name + "NewRound");
-            foreach (var pair in placedCards) {
-                dealer.CallDiscardCard(pair.Value);
-                pair.Key.CallRequestCard();
-            }
             placedCards.Clear();
-            if (networkObject.IsOwner) {
+            if (PhotonNetwork.IsMasterClient) {
+                foreach (var pair in placedCards) {
+                    CardDealer.instance.DiscardCard(pair.Value);
+                    pair.Key.RequestCard();
+                }
                 int newDemand = (int)possibleDemands[UnityEngine.Random.Range(0, possibleDemands.Count)];
-                networkObject.SendRpc(RPC_SET_DEMAND, Receivers.AllBuffered, newDemand);
+                photonView.RPC("SetDemand", RpcTarget.AllBuffered, newDemand);
             }
-            registeredPlayers[0].CallStartTurn();
+            registeredPlayers[0].StartTurn();
             onRoundStarted?.Invoke();
         }
 
@@ -111,7 +112,7 @@ namespace EQx.Game.Table {
 
         // Start is called before the first frame update
         void Start() {
-            NetworkManager.Instance.InstantiateCardPlayer();
+
         }
 
         private void Awake() {
@@ -124,10 +125,11 @@ namespace EQx.Game.Table {
         }
 
         private void OnDestroy() {
-            instance = null;
+            if (instance == this)
+                instance = null;
         }
 
-        IEnumerator WaitForNewRound(){
+        IEnumerator WaitForNewRound() {
             yield return new WaitForSeconds(timeBetweenRounds);
             NewRound();
         }

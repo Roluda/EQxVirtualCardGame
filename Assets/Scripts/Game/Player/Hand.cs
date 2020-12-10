@@ -88,16 +88,17 @@ namespace EQx.Game.Player {
         void PlaceCard(CountryCard card) {
             Debug.Log(name + "PlaceCard");
             if (cardInventory.Contains(card)) {
-                localPlayer.CallPlaceCard(card.data.cardID);
+                localPlayer.PlaceCard(card.data.cardID);
             }
         }
 
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize");
             localPlayer = player;
-            for (int i = 0; i < initialCards; i++) {
-                localPlayer.CallRequestCard();
-            }
+        }
+
+        private void Awake() {
+            CardPlayer.localPlayerReady += Initialize;
         }
 
         // Update is called once per frame
