@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3825483197867100996}
   - component: {fileID: 3825483197867100999}
+  - component: {fileID: 1133764640224539136}
   m_Layer: 0
-  m_Name: GameTable
+  m_Name: RoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +45,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenRounds: 2
-  dealer: {fileID: 0}
+  initialCards: 3
   possibleDemands: 08000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
   registeredPlayers: []
   currentDemand: 0
+--- !u!114 &1133764640224539136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825483197867100997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3825483197867100999}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

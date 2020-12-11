@@ -15,14 +15,14 @@ namespace EQx.Game.Table {
 
         List<PlayerAvatar> avatars = new List<PlayerAvatar>();
 
-        private void PlayerLeftTableListener(CardPlayer player) {
+        private void PlayerUnregisteredListener(CardPlayer player) {
             Debug.Log(name + "PlayerLeftTableListener");
             var removedAvatar = avatars.Where(avatar => avatar.observedPlayer == player).First();
             avatars.Remove(removedAvatar);
-            Destroy(removedAvatar);
+            Destroy(removedAvatar.gameObject);
         }
 
-        private void PlayerSeatedListener(CardPlayer player) {
+        private void PlayerRegisteredListener(CardPlayer player) {
             Debug.Log(name + "PlayerSeatedListener");
             var newAvatar = Instantiate(avatarPrefab, transform);
             newAvatar.Initialize(player);
@@ -35,6 +35,7 @@ namespace EQx.Game.Table {
         }
 
         private void MapAvatarsToSeats() {
+            avatars.Sort((a, b) => a.observedPlayer.seatNumber.CompareTo(b.observedPlayer.seatNumber));
             for(int i=0; i < avatars.Count; i++) {
                 avatars[i].transform.position = seats[i].position;
             }
@@ -42,9 +43,9 @@ namespace EQx.Game.Table {
 
         // Start is called before the first frame update
         void Start() {
-            RoundManager.instance.onTableUpdated += TableUpdatedListener;
-            RoundManager.instance.onPlayerSeated += PlayerSeatedListener;
-            RoundManager.instance.onPlayerLeftTable += PlayerLeftTableListener;
+            RoundManager.instance.onRegisterUpdate += TableUpdatedListener;
+            RoundManager.instance.onPlayerRegister += PlayerRegisteredListener;
+            RoundManager.instance.onPlayerUnregister += PlayerUnregisteredListener;
         }
 
         // Update is called once per frame

@@ -7,9 +7,6 @@ using System.Collections.Generic;
 
 namespace EQx.Menu {
     public class TableBrowser : MonoBehaviourPunCallbacks {
-		[SerializeField, Range(0, 180)]
-		float refreshInterval = 10;
-
 		[SerializeField]
 		string gameVersion = "Develop";
 		[SerializeField]
@@ -25,9 +22,6 @@ namespace EQx.Menu {
 		[SerializeField]
 		GameObject serverOption = null;
 
-		float timer = 0;
-
-
 		private void Start() {
 			ConnectToPhoton();
 		}
@@ -38,6 +32,15 @@ namespace EQx.Menu {
 				PhotonNetwork.AutomaticallySyncScene = true;
 				PhotonNetwork.GameVersion = gameVersion;
             }
+        }
+
+        public override void OnConnectedToMaster() {
+			Debug.Log("ConnectedToMaster");
+			PhotonNetwork.JoinLobby();
+        }
+
+        public override void OnJoinedLobby() {
+			Debug.Log("ConnectedToLobby");
         }
 
         public void CreateServerOption(string name, UnityEngine.Events.UnityAction callback) {
@@ -58,7 +61,15 @@ namespace EQx.Menu {
 			PhotonNetwork.CreateRoom(roomName, roomOptions);
 		}
 
+		public void JoinRandomRoom() {
+            if (!PhotonNetwork.IsConnected) {
+				return;
+            }
+			PhotonNetwork.JoinRandomRoom();
+        }
+
         public override void OnRoomListUpdate(List<RoomInfo> roomList) {
+			Debug.Log("Updated Room List");
 			for (int i = content.childCount - 1; i >= 0; --i)
 				Destroy(content.GetChild(i).gameObject);
 

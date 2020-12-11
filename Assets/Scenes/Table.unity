@@ -508,6 +508,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3395886138040969636, guid: 013b315ef6d37f643b742a99bfaa691b,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5587719179522801722, guid: 013b315ef6d37f643b742a99bfaa691b,
         type: 3}
       propertyPath: m_Name
@@ -737,7 +742,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 880509391}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6090420767246044928}
+        m_MethodName: LeaveRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &880509391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,20 +1455,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1133764640224539136, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3825483197867100996, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -49.274918
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3825483197867100996, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.85959387
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3825483197867100996, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 34.422485
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3825483197867100996, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
         type: 3}
@@ -1497,7 +1518,12 @@ PrefabInstance:
     - target: {fileID: 3825483197867100997, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
         type: 3}
       propertyPath: m_Name
-      value: GameTable
+      value: RoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3825483197867100997, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3825483197867100999, guid: 1bab7a27ee097d34cbdb35d154b2fa32,
         type: 3}
@@ -1749,3 +1775,90 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 934ffffc477b6344fb852a1d689a239e, type: 3}
+--- !u!1001 &6090420767246044927
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 964039665459522888, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_Name
+      value: RoomManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3813595298216659937, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025717896616452070, guid: 447feae4b3f89834db8d54e788c39024,
+        type: 3}
+      propertyPath: cardPlayerPrefab
+      value: 
+      objectReference: {fileID: 4752798874831480479, guid: 2393c1f7f3a9aed49a7bc9c37115ea7a,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 447feae4b3f89834db8d54e788c39024, type: 3}
+--- !u!114 &6090420767246044928 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7025717896616452070, guid: 447feae4b3f89834db8d54e788c39024,
+    type: 3}
+  m_PrefabInstance: {fileID: 6090420767246044927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2deaba93504d1e248a5f099db2d7c58b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -8,9 +8,6 @@ using System;
 namespace EQx.Game.Player {
     public class Hand : MonoBehaviour {
         [SerializeField]
-        int initialCards = 3;
-
-        [SerializeField]
         CountryCard cardPrefab;
 
         [SerializeField]
