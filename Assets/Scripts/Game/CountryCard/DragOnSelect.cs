@@ -13,13 +13,22 @@ namespace EQx.Game.CountryCards {
 
         Plane movingPlane = default;
 
+        int previousLayer;
+
         protected override void CardSelectedListener(CountryCard card) {
+
             movingPlane = new Plane(normal, card.transform.position);
+            previousLayer = card.layer;
+        }
+
+        protected override void CardUnselectedListener(CountryCard card) {
+            base.CardUnselectedListener(card);
+            card.layer = previousLayer;
         }
 
         void Update() {
-            if (observedCard.selected) {
-                observedCard.cardCanvas.sortingOrder = sortingOrder;
+            if (observedCard.selected) { 
+                observedCard.layer = sortingOrder;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 movingPlane.Raycast(ray, out float enter);
                 observedCard.transform.position = ray.GetPoint(enter);

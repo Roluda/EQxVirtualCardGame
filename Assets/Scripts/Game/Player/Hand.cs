@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using EQx.Game.Table;
 
 namespace EQx.Game.Player {
     public class Hand : MonoBehaviour {
@@ -17,19 +18,18 @@ namespace EQx.Game.Player {
         int sortingOrderStart = 1;
         [SerializeField]
         Vector3 spaceBetweenCards = default;
-        [SerializeField]
-        Vector3 fanWeightDirection = default;
+        [SerializeField, Range(-90, 90)]
+        float degreeBetweenCards = 20;
         [SerializeField]
         Transform fanAnchor = default;
         [SerializeField]
         Transform spawnLocation = default;
         [SerializeField]
         Transform despawnLocation = default;
-        [SerializeField]
-        Transform lookAtTransform = default;
 
 
         public List<CountryCard> cardInventory = new List<CountryCard>();
+        public CountryCard placedCard = default;
 
         CardPlayer playerCache;
         public CardPlayer localPlayer {
@@ -59,11 +59,21 @@ namespace EQx.Game.Player {
 
         }
 
+        void RemovePlacedCard() {
+            if (placedCard != null) {
+                Destroy(placedCard.gameObject);
+            }
+        }
+
         void PlacedCardListener(CardPlayer player, int id) {
             Debug.Log(name + "PlaceCardListener");
             var removedCard = cardInventory.Where(card => card.data.cardID == id).First();
             cardInventory.Remove(removedCard);
-            removedCard.motor.targetPosition = despawnLocation.position;
+            removedCard.SetTargetPosition(despawnLocation.position);
+            removedCard.SetTargetRotation(despawnLocation.rotation.eulerAngles);
+            removedCard.PlayCard();
+            removedCard.layer = sortingOrderStart - 1;
+            placedCard = removedCard;
         }
 
         void ReceivedCardListener(CardPlayer player, int id) {
@@ -73,6 +83,8 @@ namespace EQx.Game.Player {
             cardInventory.Add(newCard);
             newCard.onCardUnselected += CheckPlayDistance;
             newCard.transform.position = spawnLocation.transform.position;
+            newCard.transform.rotation = spawnLocation.transform.rotation;
+            newCard.DrawCard();
         }
 
         void CheckPlayDistance(CountryCard card) {
@@ -98,19 +110,28 @@ namespace EQx.Game.Player {
             CardPlayer.localPlayerReady += Initialize;
         }
 
+        private void Start() {
+            RoundManager.instance.onRoundStarted += RemovePlacedCard;
+        }
+
         // Update is called once per frame
         void Update() {
             var fan = cardInventory.Where(car => !car.selected).ToList();           ;
             foreach (var card in fan) {
-                card.motor.targetPosition = CalculateFanPosition(fan.IndexOf(card));
-                card.motor.targetUpDirection = card.transform.position - fanAnchor.position + fanWeightDirection;
-                card.motor.targetLookDirection = lookAtTransform.position - card.transform.position;
-                card.cardCanvas.sortingOrder = sortingOrderStart + fan.IndexOf(card);
+                card.SetTargetPosition(CalculateFanPosition(fan.IndexOf(card), fan.Count));
+                card.SetTargetRotation(CalculateFanRotation(fan.IndexOf(card), fan.Count));
+                card.layer = sortingOrderStart + fan.IndexOf(card);
             }
         }
 
-        Vector3 CalculateFanPosition(int index) {
-            return fanAnchor.position + spaceBetweenCards * --index / 2;
+        Vector3 CalculateFanPosition(int index, int count) {
+            Vector3 leftmost = fanAnchor.position - (spaceBetweenCards * (count - 1) / 2);
+            return leftmost + spaceBetweenCards * index;
+        }
+
+        Vector3 CalculateFanRotation(int index, int count) {
+            float leftmost = -degreeBetweenCards * (count - 1) / 2;
+            return new Vector3(0, 0, leftmost + degreeBetweenCards * index);
         }
 
         private void OnDestroy() {

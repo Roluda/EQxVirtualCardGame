@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TableBrowser.unity
     guid: e2ef31b9eb6b8ae4a8f087896fd0bad3
   - enabled: 1
-    path: Assets/Scenes/Table.unity
-    guid: a9ba0c15ed9edaa4f8a799413e285d5e
+    path: Assets/Scenes/PlayGround.unity
+    guid: 27e61790811cac84f86ad56272cf2641
   m_configObjects: {}

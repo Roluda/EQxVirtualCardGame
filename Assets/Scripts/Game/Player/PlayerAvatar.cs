@@ -10,31 +10,19 @@ namespace EQx.Game.Player {
 
         public CardPlayer observedPlayer = default;
         [SerializeField]
-        Image shade = default;
+        SpriteRenderer shade = default;
         [SerializeField]
         TMP_Text nameText = default;
 
         [SerializeField]
-        TMP_Text wins = default;
-
-
+        public Transform placedCardAnchor = default;
 
         [SerializeField]
         Color standardColor = default;
         [SerializeField]
         Color turnColor = default;
-        [SerializeField]
-        TMP_Text statusText = default;
-        [SerializeField]
-        Vector3 statusPath = default;
-        [SerializeField]
-        float statusDisplayDuration = 1;
-
-        [SerializeField]
-        string playedCardStatusMessage = "played card";
 
         int winsCounter;
-        Vector3 statusOrigin = default;
 
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize");
@@ -45,15 +33,11 @@ namespace EQx.Game.Player {
             observedPlayer.onSetName += SetNameListener;
             observedPlayer.onWinRound += WinRoundListener;
             nameText.text = player.playerName;
-            wins.text = "Wins: " + winsCounter;
             shade.color = player.onTurn? turnColor : standardColor;
-            statusOrigin = statusText.transform.position;
-            statusText.gameObject.SetActive(false);
         }
 
         private void WinRoundListener(CardPlayer player) {
             winsCounter++;
-            wins.text = "Wins: " + winsCounter;
         }
 
         private void SetNameListener(CardPlayer player, string name) {
@@ -71,18 +55,10 @@ namespace EQx.Game.Player {
         }
 
         private void CardPlacedListener(CardPlayer player, int id) {
-            StartCoroutine(ShowStatusText(playedCardStatusMessage));
-        }
+            if(CardPlayer.localPlayer != player) {
 
-        IEnumerator ShowStatusText(string status) {
-            statusText.gameObject.SetActive(true);
-            statusText.transform.position = statusOrigin;
-            statusText.text = status;
-            float timer = 0;
-            while (timer < statusDisplayDuration) {
-                timer += Time.deltaTime;
-                yield return null;
-                statusText.transform.position = Vector3.Lerp(statusOrigin, statusOrigin + statusPath, timer / statusDisplayDuration);
+            } else {
+
             }
         }
 
