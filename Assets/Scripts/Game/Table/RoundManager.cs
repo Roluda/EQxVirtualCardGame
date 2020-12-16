@@ -12,9 +12,6 @@ namespace EQx.Game.Table {
     public class RoundManager : MonoBehaviourPunCallbacks , IPunObservable {
 
         public static RoundManager instance = null;
-
-        [SerializeField]
-        float timeBetweenRounds = 20;
         [SerializeField]
         List<EQxVariableType> possibleDemands = default;
 
@@ -22,7 +19,7 @@ namespace EQx.Game.Table {
         public UnityAction<CardPlayer> onPlayerRegister;
         public UnityAction<CardPlayer> onPlayerUnregister;
         public UnityAction onRegisterUpdate;
-        public UnityAction onRoundEnded;
+        public UnityAction onPlacingEnded;
         public UnityAction onRoundStarted;
 
         Dictionary<CardPlayer, int> placedCards = new Dictionary<CardPlayer, int>();
@@ -43,15 +40,15 @@ namespace EQx.Game.Table {
             }
             onPlayerRegister?.Invoke(player);
             onRegisterUpdate?.Invoke();
-            if (PhotonNetwork.IsMasterClient && registeredPlayers.Count == 1) {
-                NewRound();
-            }
         }
 
         public void Unregister(CardPlayer player) {
             Debug.Log(name + ".Unregister by" + player.playerName);
             player.onEndedTurn -= EndTurnListener;
             player.onPlacedCard -= PlaceCard;
+            if (player.onTurn) {
+                EndTurnListener(player);
+            }
             registeredPlayers.Remove(player);
             onPlayerUnregister?.Invoke(player);
             onRegisterUpdate?.Invoke();
@@ -62,7 +59,7 @@ namespace EQx.Game.Table {
             int index = registeredPlayers.IndexOf(player);
             int maxIndex = registeredPlayers.Count - 1;
             if (index >= maxIndex) {
-                EndRound();
+                EndPlacingRound();
             } else {
                 index++;
                 registeredPlayers[index].StartTurn();
@@ -83,10 +80,9 @@ namespace EQx.Game.Table {
             }
         }
 
-
-
-        public void NewRound() {
-            Debug.Log(name + ".NewRound");
+        [PunRPC]
+        void StartPlacingRoundRPC() {
+            Debug.Log(name + ".StartPlacingRoundRPC");
             foreach (var pair in placedCards) {
                 CardDealer.instance.DiscardCard(pair.Value);
                 pair.Key.RequestCard();
@@ -97,24 +93,31 @@ namespace EQx.Game.Table {
             onRoundStarted?.Invoke();
         }
 
-        void EndRound() {
-            Debug.Log(name + ".EndRound");
-            onRoundEnded?.Invoke();
+        public void StartPlacingRound() {
+            Debug.Log(name + ".StartPlacingRound");
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("StartPlacingRoundRPC", RpcTarget.AllBuffered);
+            }
+        }
+
+        [PunRPC]
+        void EndPlacingRoundRPC() {
+            Debug.Log(name + ".EndPlacingRoundRPC");
+            onPlacingEnded?.Invoke();
             foreach (var winner in FindWinners()) {
                 winner.Key.CallWinRound();
             }
-            StartCoroutine(WaitForNewRound());
         }
 
+        public void EndPlacingRound() {
+            Debug.Log(name + ".EndPlacingRound");
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("EndPlacingRoundRPC", RpcTarget.AllBuffered);
+            }
+        }
 
         public void PlaceCard(CardPlayer player, int id) {
             placedCards.Add(player, id);
-        }
-
-
-        // Start is called before the first frame update
-        void Start() {
-
         }
 
         private void Awake() {
@@ -131,27 +134,22 @@ namespace EQx.Game.Table {
                 instance = null;
         }
 
-        IEnumerator WaitForNewRound() {
-            yield return new WaitForSeconds(timeBetweenRounds);
-            NewRound();
-        }
-
-
         public Dictionary<CardPlayer, int> FindWinners() {
             var winningCards = new Dictionary<CardPlayer, int>();
             foreach (var card in placedCards) {
-
-                if (winningCards.Count == 0) {
-                    winningCards.Add(card.Key, card.Value);
-                } else {
-                    float candidateValue = CountryCardDatabase.instance.GetCountry(card.Value).GetValue(currentDemand);
-                    float beatValue = CountryCardDatabase.instance.GetCountry(winningCards.First().Value).GetValue(currentDemand);
-                    if (candidateValue > beatValue) {
-                        winningCards.Clear();
+                if (registeredPlayers.Contains(card.Key)) {
+                    if (winningCards.Count == 0) {
                         winningCards.Add(card.Key, card.Value);
-                    }
-                    if (candidateValue == beatValue) {
-                        winningCards.Add(card.Key, card.Value);
+                    } else {
+                        float candidateValue = CountryCardDatabase.instance.GetCountry(card.Value).GetValue(currentDemand);
+                        float beatValue = CountryCardDatabase.instance.GetCountry(winningCards.First().Value).GetValue(currentDemand);
+                        if (candidateValue > beatValue) {
+                            winningCards.Clear();
+                            winningCards.Add(card.Key, card.Value);
+                        }
+                        if (candidateValue == beatValue) {
+                            winningCards.Add(card.Key, card.Value);
+                        }
                     }
                 }
             }

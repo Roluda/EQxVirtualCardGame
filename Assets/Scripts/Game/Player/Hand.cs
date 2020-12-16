@@ -112,5 +112,9 @@ namespace EQx.Game.Player {
         Vector3 CalculateFanPosition(int index) {
             return fanAnchor.position + spaceBetweenCards * --index / 2;
         }
+
+        private void OnDestroy() {
+            CardPlayer.localPlayerReady -= Initialize;
+        }
     }
 }

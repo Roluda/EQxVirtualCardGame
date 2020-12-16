@@ -53,6 +53,9 @@ namespace EQx.Game.Table {
         public void Unregister(CardPlayer player) {
             Debug.Log(name + ".Unregister" + player.name);
             player.onRequestedCard -= RequestCard;
+            foreach(int card in player.cardsInHand) {
+                DiscardCard(card);
+            }
         }
 
         public void RequestCard(CardPlayer player) {

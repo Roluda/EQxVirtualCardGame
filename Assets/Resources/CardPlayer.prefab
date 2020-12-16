@@ -48,6 +48,8 @@ MonoBehaviour:
   playerName: 
   seatNumber: 0
   onTurn: 0
+  cardsPlacedThisTurn: 0
+  cardsInHand: 
 --- !u!114 &-8434983263080755558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +67,7 @@ MonoBehaviour:
   prefixField: -1
   observableSearch: 2
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   ObservedComponents:
   - {fileID: 4752798874831480479}
   viewIdField: 0

@@ -57,7 +57,7 @@ namespace EQx.Menu {
 				return;
             }
 			string roomName = hostGamePrefix + PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, hostDefaultName);
-			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers };
+			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0};
 			PhotonNetwork.CreateRoom(roomName, roomOptions);
 		}
 

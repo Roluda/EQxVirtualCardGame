@@ -1,5 +1,6 @@
 ﻿using EQx.Game.Table;
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,7 +23,8 @@ namespace EQx.Game.Player {
         public string playerName;
         public int seatNumber = -1;
         public bool onTurn = false;
-        int cardsPlacedThisTurn = 0;
+        public int cardsPlacedThisTurn = 0;
+        public List<int> cardsInHand = new List<int>();
 
         [PunRPC]
         void RegisterRPC() {
@@ -55,6 +57,7 @@ namespace EQx.Game.Player {
         [PunRPC]
         void ReceiveCardRPC(int id) {
             Debug.Log(name + ".ReceiveCardRPC");
+            cardsInHand.Add(id);
             onReceivedCard?.Invoke(this, id);
         }
 
@@ -62,6 +65,7 @@ namespace EQx.Game.Player {
         void PlaceCardRPC(int id) {
             Debug.Log(name + ".PlaceCardRPC");
             cardsPlacedThisTurn++;
+            cardsInHand.Remove(id);
             onPlacedCard?.Invoke(this, id);
         }
 
@@ -143,7 +147,7 @@ namespace EQx.Game.Player {
             if (photonView.Owner == otherPlayer) {
                 RoundManager.instance.Unregister(this);
                 CardDealer.instance.Unregister(this);
-                Destroy(gameObject);
+                Destroy(this);
             }
         }
 
