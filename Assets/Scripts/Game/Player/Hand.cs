@@ -8,9 +8,6 @@ using System;
 namespace EQx.Game.Player {
     public class Hand : MonoBehaviour {
         [SerializeField]
-        int initialCards = 3;
-
-        [SerializeField]
         CountryCard cardPrefab;
 
         [SerializeField]
@@ -88,16 +85,17 @@ namespace EQx.Game.Player {
         void PlaceCard(CountryCard card) {
             Debug.Log(name + "PlaceCard");
             if (cardInventory.Contains(card)) {
-                localPlayer.CallPlaceCard(card.data.cardID);
+                localPlayer.PlaceCard(card.data.cardID);
             }
         }
 
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize");
             localPlayer = player;
-            for (int i = 0; i < initialCards; i++) {
-                localPlayer.CallRequestCard();
-            }
+        }
+
+        private void Awake() {
+            CardPlayer.localPlayerReady += Initialize;
         }
 
         // Update is called once per frame
@@ -113,6 +111,10 @@ namespace EQx.Game.Player {
 
         Vector3 CalculateFanPosition(int index) {
             return fanAnchor.position + spaceBetweenCards * --index / 2;
+        }
+
+        private void OnDestroy() {
+            CardPlayer.localPlayerReady -= Initialize;
         }
     }
 }

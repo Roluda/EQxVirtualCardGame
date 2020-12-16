@@ -24,7 +24,7 @@ namespace EQx.Game.Table {
         EQxVariableType current;
 
         private void Start() {
-            GameTable.instance.onNewDemand += NewDemandListener;
+            RoundManager.instance.onNewDemand += NewDemandListener;
         }
 
         void NewDemandListener(EQxVariableType demand) {
@@ -55,8 +55,8 @@ namespace EQx.Game.Table {
         }
 
         private void Update() {
-            if(current != GameTable.instance.currentDemand) {
-                current = GameTable.instance.currentDemand;
+            if(current != RoundManager.instance.currentDemand) {
+                current = RoundManager.instance.currentDemand;
                 NewDemandListener(current);
             }
         }

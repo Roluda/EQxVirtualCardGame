@@ -46,7 +46,7 @@ namespace EQx.Game.Player {
             observedPlayer.onWinRound += WinRoundListener;
             nameText.text = player.playerName;
             wins.text = "Wins: " + winsCounter;
-            shade.color = standardColor;
+            shade.color = player.onTurn? turnColor : standardColor;
             statusOrigin = statusText.transform.position;
             statusText.gameObject.SetActive(false);
         }
