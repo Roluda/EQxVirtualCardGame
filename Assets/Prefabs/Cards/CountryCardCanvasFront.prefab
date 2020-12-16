@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 840cdfd3abd340744afa33c76bc90caf, type: 2}
   m_Color: {r: 0.023529414, g: 0.62352943, b: 0.9843138, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
@@ -2229,7 +2229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 1f4fbe20369ad384ea34bbb6d43e5977, type: 2}
   m_Color: {r: 0.97647065, g: 0.9058824, b: 0.23137257, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
@@ -2532,7 +2532,7 @@ GameObject:
   - component: {fileID: 8714298150396406810}
   - component: {fileID: 8714298150396406811}
   m_Layer: 5
-  m_Name: CountryCardCanvas
+  m_Name: CountryCardCanvasFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
