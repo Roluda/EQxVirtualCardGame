@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 namespace EQx.Game.CountryCards {
-    public class DragOnSelect : CountryCardComponent {
+    public class DragAndSelectOnClick : CountryCardComponent {
         // Update is called once per frame
         [SerializeField]
         int sortingOrder = 10;
@@ -15,17 +15,6 @@ namespace EQx.Game.CountryCards {
 
         int previousLayer;
 
-        protected override void CardSelectedListener(CountryCard card) {
-
-            movingPlane = new Plane(normal, card.transform.position);
-            previousLayer = card.layer;
-        }
-
-        protected override void CardUnselectedListener(CountryCard card) {
-            base.CardUnselectedListener(card);
-            card.layer = previousLayer;
-        }
-
         void Update() {
             if (observedCard.selected) { 
                 observedCard.layer = sortingOrder;
@@ -33,6 +22,17 @@ namespace EQx.Game.CountryCards {
                 movingPlane.Raycast(ray, out float enter);
                 observedCard.transform.position = ray.GetPoint(enter);
             }
+        }
+
+        private void OnMouseDown() {
+            previousLayer = observedCard.layer;
+            observedCard.selected = true;
+            movingPlane = new Plane(normal, observedCard.transform.position);
+        }
+
+        private void OnMouseUp() {
+            observedCard.layer = previousLayer;
+            observedCard.selected = false;
         }
     }
 }

@@ -59,7 +59,7 @@ namespace EQx.Game.Player {
 
         }
 
-        void RemovePlacedCard() {
+        public void RemovePlacedCard() {
             if (placedCard != null) {
                 Destroy(placedCard.gameObject);
             }
@@ -72,7 +72,7 @@ namespace EQx.Game.Player {
             removedCard.SetTargetPosition(despawnLocation.position);
             removedCard.SetTargetRotation(despawnLocation.rotation.eulerAngles);
             removedCard.PlayCard();
-            removedCard.layer = sortingOrderStart - 1;
+            removedCard.layer = sortingOrderStart - 2;
             placedCard = removedCard;
         }
 

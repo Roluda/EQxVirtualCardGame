@@ -12,7 +12,7 @@ namespace EQx.Game.CountryCards {
         public UnityAction<Vector3> onTargetRotationSet;
         public UnityAction<CountryCard> onCardSelected;
         public UnityAction<CountryCard> onCardUnselected;
-        public UnityAction<EQxVariable> onVariableHighlighted;
+        public UnityAction<EQxVariableType> onVariableHighlighted;
 
         [SerializeField]
         Canvas frontCanvas = default;
@@ -56,7 +56,7 @@ namespace EQx.Game.CountryCards {
             onCardDrawn?.Invoke();
         }
 
-        public void HighlightVariabe(EQxVariable variable) {
+        public void HighlightVariabe(EQxVariableType variable) {
             onVariableHighlighted?.Invoke(variable);
         }
 
@@ -86,14 +86,6 @@ namespace EQx.Game.CountryCards {
 
         private void Start() {
             onNewCardData?.Invoke();
-        }
-
-        private void OnMouseDown() {
-            selected = true;
-        }
-
-        private void OnMouseUp() {
-            selected = false;
         }
     }
 }

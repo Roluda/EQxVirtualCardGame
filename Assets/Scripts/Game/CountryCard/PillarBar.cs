@@ -24,6 +24,9 @@ namespace EQx.Game.CountryCards {
         float gainRate = 20;
 
         [SerializeField]
+        Material highlightMaterial = default;
+
+        [SerializeField]
         float maximumValue = 100;
 
         [SerializeField]
@@ -36,6 +39,11 @@ namespace EQx.Game.CountryCards {
         public float targetValue = 70;
         public float currentValue = 50;
 
+        Material defaultMaterial;
+
+        private void Start() {
+            defaultMaterial = bar.material;
+        }
 
         protected override void Validate() {
             InitializePillar();
@@ -49,6 +57,16 @@ namespace EQx.Game.CountryCards {
                 currentValue = targetValue;
             }
             UpdatePillar();
+        }
+
+        protected override void VariableHighlightedListener(EQxVariableType variable) {
+            if(data.type == variable) {
+                icon.material = highlightMaterial;
+                bar.material = highlightMaterial;
+            } else {
+                icon.material = defaultMaterial;
+                bar.material = defaultMaterial;
+            }
         }
 
         protected override void CardSelectedListener(CountryCard card) {

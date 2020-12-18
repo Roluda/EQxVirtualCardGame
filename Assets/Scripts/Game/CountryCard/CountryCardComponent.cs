@@ -52,7 +52,7 @@ namespace EQx.Game.CountryCards {
         protected virtual void TargetPositionSetListener(Vector3 target) { }
         protected virtual void CardSelectedListener(CountryCard card) { }
         protected virtual void CardUnselectedListener(CountryCard card) { }
-        protected virtual void VariableHighlightedListener(EQxVariable variable) { }
+        protected virtual void VariableHighlightedListener(EQxVariableType variable) { }
 
         protected virtual void Validate() { }
         protected virtual void Enable() { }

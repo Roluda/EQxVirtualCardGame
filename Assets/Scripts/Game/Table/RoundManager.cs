@@ -22,7 +22,7 @@ namespace EQx.Game.Table {
         public UnityAction onPlacingEnded;
         public UnityAction onRoundStarted;
 
-        Dictionary<CardPlayer, int> placedCards = new Dictionary<CardPlayer, int>();
+        public Dictionary<CardPlayer, int> placedCards = new Dictionary<CardPlayer, int>();
         public List<CardPlayer> registeredPlayers = new List<CardPlayer>();
 
         public EQxVariableType currentDemand;
@@ -40,6 +40,11 @@ namespace EQx.Game.Table {
             }
             onPlayerRegister?.Invoke(player);
             onRegisterUpdate?.Invoke();
+            if (PhotonNetwork.IsMasterClient) {
+                if (registeredPlayers.Count == 1) {
+                    StartPlacingRound();
+                }
+            }
         }
 
         public void Unregister(CardPlayer player) {
@@ -104,7 +109,7 @@ namespace EQx.Game.Table {
         void EndPlacingRoundRPC() {
             Debug.Log(name + ".EndPlacingRoundRPC");
             onPlacingEnded?.Invoke();
-            foreach (var winner in FindWinners()) {
+            foreach (var winner in CurrentWinners()) {
                 winner.Key.CallWinRound();
             }
         }
@@ -134,7 +139,7 @@ namespace EQx.Game.Table {
                 instance = null;
         }
 
-        public Dictionary<CardPlayer, int> FindWinners() {
+        public Dictionary<CardPlayer, int> CurrentWinners() {
             var winningCards = new Dictionary<CardPlayer, int>();
             foreach (var card in placedCards) {
                 if (registeredPlayers.Contains(card.Key)) {
