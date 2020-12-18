@@ -16,6 +16,9 @@ namespace EQx.Game.Table {
         List<PlayerAvatar> avatars = new List<PlayerAvatar>();
 
         private void PlayerUnregisteredListener(CardPlayer player) {
+            if (player == CardPlayer.localPlayer) {
+                return;
+            }
             Debug.Log(name + "PlayerLeftTableListener");
             var removedAvatar = avatars.Where(avatar => avatar.observedPlayer == player).First();
             avatars.Remove(removedAvatar);
@@ -23,6 +26,9 @@ namespace EQx.Game.Table {
         }
 
         private void PlayerRegisteredListener(CardPlayer player) {
+            if (player == CardPlayer.localPlayer) {
+                return;
+            }
             Debug.Log(name + "PlayerSeatedListener");
             var newAvatar = Instantiate(avatarPrefab, transform);
             newAvatar.Initialize(player);
@@ -35,9 +41,17 @@ namespace EQx.Game.Table {
         }
 
         private void MapAvatarsToSeats() {
+            int mySeatNumber = CardPlayer.localPlayer.seatNumber;
             avatars.Sort((a, b) => a.observedPlayer.seatNumber.CompareTo(b.observedPlayer.seatNumber));
             for(int i=0; i < avatars.Count; i++) {
-                avatars[i].transform.position = seats[i].position;
+                int offset = avatars[i].observedPlayer.seatNumber - mySeatNumber;
+                if (offset < 0) {
+                    offset = seats.Count + offset;
+                } else {
+                    offset--;
+                }
+                avatars[i].transform.position = seats[offset].position;
+                avatars[i].transform.rotation = seats[offset].rotation;
             }
         }
 

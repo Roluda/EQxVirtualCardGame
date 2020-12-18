@@ -304,6 +304,7 @@ MonoBehaviour:
   value: {fileID: 5085854843021791703}
   label: {fileID: 5085854844600151178}
   gainRate: 80
+  highlightMaterial: {fileID: 2100000, guid: 9441a3e975475b24c81bfd632e6c9a41, type: 2}
   maximumValue: 100
   maximumBarWidth: 280
   valueOffset: 80

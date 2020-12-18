@@ -6,13 +6,18 @@ namespace EQx.Game.CountryCards {
 
         public UnityAction onNewCardData;
         public UnityAction onCardPlayed;
+        public UnityAction onCardRevealed;
+        public UnityAction onCardDrawn;
+        public UnityAction<Vector3> onTargetPositionSet;
+        public UnityAction<Vector3> onTargetRotationSet;
         public UnityAction<CountryCard> onCardSelected;
         public UnityAction<CountryCard> onCardUnselected;
+        public UnityAction<EQxVariableType> onVariableHighlighted;
 
         [SerializeField]
-        public CardMotor motor = default;
+        Canvas frontCanvas = default;
         [SerializeField]
-        public Canvas cardCanvas;
+        Canvas backCanvas = default;
 
         [SerializeField]
         CountryCardData dataCache = default;
@@ -28,12 +33,39 @@ namespace EQx.Game.CountryCards {
             }
         }
 
-        private void OnValidate() {
-            onNewCardData?.Invoke();
+        [SerializeField]
+        int layerCache;
+        public int layer {
+            get => layerCache;
+            set {
+                frontCanvas.sortingOrder = value;
+                backCanvas.sortingOrder = value;
+                layerCache = value;
+            }
         }
 
         public void PlayCard() {
             onCardPlayed?.Invoke();
+        }
+
+        public void RevealCard() {
+            onCardRevealed?.Invoke();
+        }
+
+        public void DrawCard() {
+            onCardDrawn?.Invoke();
+        }
+
+        public void HighlightVariabe(EQxVariableType variable) {
+            onVariableHighlighted?.Invoke(variable);
+        }
+
+        public void SetTargetPosition(Vector3 target) {
+            onTargetPositionSet?.Invoke(target);
+        }
+
+        public void SetTargetRotation(Vector3 target) {
+            onTargetRotationSet?.Invoke(target);
         }
 
         bool selectedCache = false;
@@ -54,14 +86,6 @@ namespace EQx.Game.CountryCards {
 
         private void Start() {
             onNewCardData?.Invoke();
-        }
-
-        private void OnMouseDown() {
-            selected = true;
-        }
-
-        private void OnMouseUp() {
-            selected = false;
         }
     }
 }
