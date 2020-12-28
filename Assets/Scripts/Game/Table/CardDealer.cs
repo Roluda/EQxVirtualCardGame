@@ -41,7 +41,7 @@ namespace EQx.Game.Table {
         }
 
         public void Register(CardPlayer player) {
-            Debug.Log(name+".Register"+ player.name);
+            Debug.Log(name + ".Register" + player.name);
             player.onRequestedCard += RequestCard;
             if (PhotonNetwork.IsMasterClient) {
                 for (int i = 0; i < initialCards; i++) {
@@ -53,7 +53,7 @@ namespace EQx.Game.Table {
         public void Unregister(CardPlayer player) {
             Debug.Log(name + ".Unregister" + player.name);
             player.onRequestedCard -= RequestCard;
-            foreach(int card in player.cardsInHand) {
+            foreach (int card in player.cardsInHand) {
                 DiscardCard(card);
             }
         }
@@ -79,7 +79,7 @@ namespace EQx.Game.Table {
         }
 
         private void Awake() {
-            if(instance != null) {
+            if (instance != null) {
                 Destroy(gameObject);
             } else {
                 instance = this;
@@ -95,8 +95,8 @@ namespace EQx.Game.Table {
             Debug.Log(name + ".BuildDeck");
             drawPile = new List<int>();
             discardPile = new List<int>();
-            foreach(var card in CountryCardDatabase.instance.data) {
-                drawPile.Add(card.cardID);
+            for (int i = 0; i < CountryCardDatabase.instance.length; i++) {
+                drawPile.Add(i);
             }
         }
 

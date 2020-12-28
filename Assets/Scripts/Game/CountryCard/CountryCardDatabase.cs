@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 namespace EQx.Game.CountryCards {
     public class CountryCardDatabase : MonoBehaviour {
 
         public static CountryCardDatabase instance = null;
         [SerializeField]
-        public List<CountryCardData> data;
+        public EQxDataSet data = default;
+
+        public int length { get => data.eqxCountryData.Length; }
 
         // Start is called before the first frame update
         void Awake() {
@@ -20,12 +23,19 @@ namespace EQx.Game.CountryCards {
             }
         }
 
-        public CountryCardData GetCountry(int id) {
-            return data.Where(country => country.cardID == id).FirstOrDefault();
+        public int GetIndex(EQxCountryData countryData) {
+            return Array.IndexOf(data.eqxCountryData, countryData);
         }
 
-        public CountryCardData GetCountry(string name) {
-            return data.Where(country => country.country == name).FirstOrDefault();
+        public EQxCountryData GetCountry(int id) {
+            if(id >= data.eqxCountryData.Length) {
+                return data.eqxCountryData[0];
+            }
+            return data.eqxCountryData[id];
+        }
+
+        public EQxCountryData GetCountry(string name) {
+            return data.eqxCountryData.Where(country => country.countryName == name).FirstOrDefault();
         }
     }
 }
