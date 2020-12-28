@@ -11,10 +11,12 @@ namespace EQx.Game.CountryCards {
         Image flagIcon = default;
         [SerializeField]
         TMP_Text label = default;
+        [SerializeField]
+        string path = "Flags";
 
         protected override void NewCardDataListener() {
-            label.text = observedCard.data.country;
-            flagIcon.sprite = observedCard.data.flag;
+            label.text = observedCard.data.countryName;
+            flagIcon.sprite = Resources.Load<Sprite>(path + "/" + observedCard.data.isoCountryCode.ToLower());
         }
     }
 }

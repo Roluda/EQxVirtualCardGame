@@ -20,8 +20,8 @@ namespace EQx.Game.CountryCards {
         Canvas backCanvas = default;
 
         [SerializeField]
-        CountryCardData dataCache = default;
-        public CountryCardData data {
+        EQxCountryData dataCache = default;
+        public EQxCountryData data {
             get {
                 return dataCache;
             }
@@ -32,6 +32,7 @@ namespace EQx.Game.CountryCards {
                 }
             }
         }
+        public int id { get => CountryCardDatabase.instance.GetIndex(data); }
 
         [SerializeField]
         int layerCache;

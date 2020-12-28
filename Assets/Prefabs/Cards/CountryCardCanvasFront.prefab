@@ -2769,6 +2769,7 @@ MonoBehaviour:
   observedCard: {fileID: 0}
   flagIcon: {fileID: 8714298150817785315}
   label: {fileID: 8714298150446049121}
+  path: Flags
 --- !u!1 &8714298150474699452
 GameObject:
   m_ObjectHideFlags: 0

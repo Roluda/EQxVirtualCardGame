@@ -67,7 +67,7 @@ namespace EQx.Game.Player {
 
         void PlacedCardListener(CardPlayer player, int id) {
             Debug.Log(name + "PlaceCardListener");
-            var removedCard = cardInventory.Where(card => card.data.cardID == id).First();
+            var removedCard = cardInventory.Where(card => card.id == id).First();
             cardInventory.Remove(removedCard);
             removedCard.SetTargetPosition(despawnLocation.position);
             removedCard.SetTargetRotation(despawnLocation.rotation.eulerAngles);
@@ -97,7 +97,7 @@ namespace EQx.Game.Player {
         void PlaceCard(CountryCard card) {
             Debug.Log(name + "PlaceCard");
             if (cardInventory.Contains(card)) {
-                localPlayer.PlaceCard(card.data.cardID);
+                localPlayer.PlaceCard(card.id);
             }
         }
 

@@ -50,7 +50,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontCanvas: {fileID: 3810593996932013083}
   backCanvas: {fileID: 9066274067681409237}
-  dataCache: {fileID: 11400000, guid: 8a56c5eb7e0b43b45b5a7a0a63296628, type: 2}
+  dataCache:
+    countryName: default
+    isoCountryCode: 
+    valueCreation: 0
+    valueExtraction: 0
+    power: 0
+    value: 0
+    politicalPower: 0
+    economicPower: 0
+    politicalValue: 0
+    economicValue: 0
+    stateCapture: 0
+    regulatoryCapture: 0
+    humanCapture: 0
+    industryDominance: 0
+    firmDominance: 0
+    creativeDestruction: 0
+    givingIncome: 0
+    takingIncome: 0
+    unearnedIncome: 0
+    producerRent: 0
+    capitalRent: 0
+    laborRent: 0
   layerCache: 0
 --- !u!114 &5480481563703173220
 MonoBehaviour:
