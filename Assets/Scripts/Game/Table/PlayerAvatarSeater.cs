@@ -11,9 +11,15 @@ namespace EQx.Game.Table {
         PlayerAvatar avatarPrefab = default;
 
         [SerializeField]
-        List<Transform> seats = default;
+        List<Seat> seats = default;
 
         List<PlayerAvatar> avatars = new List<PlayerAvatar>();
+
+        public void RemoveAllPlacedCards() {
+            foreach(var avatar in avatars) {
+                avatar.RemovePlacedCard();
+            }
+        }
 
         private void PlayerUnregisteredListener(CardPlayer player) {
             if (player == CardPlayer.localPlayer) {
@@ -50,8 +56,7 @@ namespace EQx.Game.Table {
                 } else {
                     offset--;
                 }
-                avatars[i].transform.position = seats[offset].position;
-                avatars[i].transform.rotation = seats[offset].rotation;
+                avatars[i].TakeSeat(seats[offset]);
             }
         }
 
@@ -60,11 +65,6 @@ namespace EQx.Game.Table {
             RoundManager.instance.onRegisterUpdate += TableUpdatedListener;
             RoundManager.instance.onPlayerRegister += PlayerRegisteredListener;
             RoundManager.instance.onPlayerUnregister += PlayerUnregisteredListener;
-        }
-
-        // Update is called once per frame
-        void Update() {
-
         }
     }
 }
