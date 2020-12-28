@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EQx.Game.CountryCards;
+using EQx.Game.Table;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,15 +15,16 @@ namespace EQx.Game.Player {
         SpriteRenderer shade = default;
         [SerializeField]
         TMP_Text nameText = default;
-
-        [SerializeField]
-        public Transform placedCardAnchor = default;
-
         [SerializeField]
         Color standardColor = default;
         [SerializeField]
         Color turnColor = default;
 
+        [SerializeField]
+        CountryCard countryCardPrefab;
+
+        CountryCard placedCard;
+        Seat mySeat;
         int winsCounter;
 
         public void Initialize(CardPlayer player) {
@@ -34,6 +37,18 @@ namespace EQx.Game.Player {
             observedPlayer.onWinRound += WinRoundListener;
             nameText.text = player.playerName;
             shade.color = player.onTurn? turnColor : standardColor;
+        }
+
+        public void TakeSeat(Seat seat) {
+            mySeat = seat;
+            transform.position = seat.transform.position;
+            transform.rotation = seat.transform.rotation;
+        }
+
+        public void RemovePlacedCard() {
+            if (placedCard) {
+                Destroy(placedCard.gameObject);
+            }
         }
 
         private void WinRoundListener(CardPlayer player) {
@@ -55,10 +70,14 @@ namespace EQx.Game.Player {
         }
 
         private void CardPlacedListener(CardPlayer player, int id) {
-            if(CardPlayer.localPlayer != player) {
-
-            } else {
-
+            if(mySeat && mySeat.cardPlace) {
+                if (placedCard) {
+                    Destroy(placedCard);
+                }
+                placedCard = Instantiate(countryCardPrefab, mySeat.cardPlace.position, mySeat.cardPlace.rotation);
+                placedCard.SetTargetPosition(mySeat.cardPlace.position);
+                placedCard.SetTargetRotation(mySeat.cardPlace.rotation.eulerAngles);
+                placedCard.data = CountryCardDatabase.instance.GetCountry(id);
             }
         }
 
