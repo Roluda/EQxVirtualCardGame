@@ -62,6 +62,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2097860625764172748, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Political PowerInfo
+      objectReference: {fileID: 0}
     - target: {fileID: 2097860625764172749, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -517,6 +522,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8247609367237521870, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Taking IncomePillar
+      objectReference: {fileID: 0}
     - target: {fileID: 8247609367237521871, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -592,6 +602,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 36.666668
       objectReference: {fileID: 0}
+    - target: {fileID: 8247609367445434063, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Capital RentPillar
+      objectReference: {fileID: 0}
     - target: {fileID: 8247609367555774299, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -642,6 +657,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 36.666668
       objectReference: {fileID: 0}
+    - target: {fileID: 8247609367573422353, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: State CapturePillar
+      objectReference: {fileID: 0}
     - target: {fileID: 8247609367799286320, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -667,6 +687,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 36.666668
       objectReference: {fileID: 0}
+    - target: {fileID: 8247609367799286321, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Giving IncomePillar
+      objectReference: {fileID: 0}
     - target: {fileID: 8247609367985293322, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -691,6 +716,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 36.666668
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247609367985293323, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Creative DestructionPillar
       objectReference: {fileID: 0}
     - target: {fileID: 8247609368417166382, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
@@ -717,6 +747,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 36.666668
       objectReference: {fileID: 0}
+    - target: {fileID: 8247609368417166383, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Firm DominancePillar
+      objectReference: {fileID: 0}
     - target: {fileID: 8247609368910349418, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -741,6 +776,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 36.666668
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247609368910349419, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Unearned IncomePillar
       objectReference: {fileID: 0}
     - target: {fileID: 8247609368912804909, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}
@@ -816,6 +856,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 36.666668
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247609368981110703, guid: 48e37b2585bfc59448859a298e615337,
+        type: 3}
+      propertyPath: m_Name
+      value: Labor RentPillar
       objectReference: {fileID: 0}
     - target: {fileID: 8694886967592730367, guid: 48e37b2585bfc59448859a298e615337,
         type: 3}

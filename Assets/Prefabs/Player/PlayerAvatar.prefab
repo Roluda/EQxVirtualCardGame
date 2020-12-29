@@ -227,8 +227,6 @@ MonoBehaviour:
   turnColor: {r: 0.5421413, g: 0.7123734, b: 0.8773585, a: 0.9019608}
   countryCardPrefab: {fileID: 5480481563703173222, guid: 48e37b2585bfc59448859a298e615337,
     type: 3}
-  placedCard: {fileID: 0}
-  mySeat: {fileID: 0}
 --- !u!1 &6890530384426152854
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +276,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ac4f9b693eb255843b614ffcc6af6a4e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
