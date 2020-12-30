@@ -39,6 +39,7 @@ namespace EQx.Game.Scenery {
         }
 
         public void CalculateRings() {
+#if UNITY_EDITOR
             foreach(var ring in rings) {
                 if (ring) {
                     DestroyImmediate(ring.gameObject);
@@ -49,6 +50,7 @@ namespace EQx.Game.Scenery {
                 rings.Add(PrefabUtility.InstantiatePrefab(ringPrefab, transform) as AudienceRing);
             }
             UpdateRings();
+#endif
         }
     }
 }
