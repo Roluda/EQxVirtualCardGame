@@ -111,7 +111,7 @@ namespace EQx.Game.Player {
         }
 
         private void Start() {
-            RoundManager.instance.onRoundStarted += RemovePlacedCard;
+            RoundManager.instance.onPlacingStarted += RemovePlacedCard;
         }
 
         // Update is called once per frame

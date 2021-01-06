@@ -12,6 +12,7 @@ namespace EQx.Menu {
 		[SerializeField]
 		int maxPlayers = 6;
 
+
 		[SerializeField]
 		string hostGamePrefix = "Table of ";
 		[SerializeField]
@@ -22,12 +23,17 @@ namespace EQx.Menu {
 		[SerializeField]
 		GameObject serverOption = null;
 
+		static string userID = "";
+
 		private void Start() {
 			ConnectToPhoton();
 		}
 
         private void ConnectToPhoton() {
             if (!PhotonNetwork.IsConnected) {
+				if (!string.IsNullOrEmpty(userID)) {
+					PhotonNetwork.AuthValues.UserId = userID;
+				}
 				PhotonNetwork.ConnectUsingSettings();
 				PhotonNetwork.AutomaticallySyncScene = true;
 				PhotonNetwork.GameVersion = gameVersion;
@@ -35,6 +41,7 @@ namespace EQx.Menu {
         }
 
         public override void OnConnectedToMaster() {
+			userID = PhotonNetwork.LocalPlayer.UserId;
 			Debug.Log("ConnectedToMaster");
 			PhotonNetwork.JoinLobby();
         }
@@ -57,7 +64,7 @@ namespace EQx.Menu {
 				return;
             }
 			string roomName = hostGamePrefix + PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, hostDefaultName);
-			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0};
+			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0, PublishUserId = true};
 			PhotonNetwork.CreateRoom(roomName, roomOptions);
 		}
 
