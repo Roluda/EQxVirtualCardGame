@@ -15,7 +15,7 @@ namespace EQx.Game.Investing {
         [SerializeField, Range(0, 30)]
         float spawnFrequency = 2;
         [SerializeField, Range(0,100)]
-        int maxCoins = 10;
+        public int maxCoins = 10;
         [SerializeField, Range(0,20)]
         int spawnHeight = 1;
 
@@ -25,7 +25,8 @@ namespace EQx.Game.Investing {
         [SerializeField]
         int removeCoins = 0;
 
-        public int count => pile.Count;
+        public float maxRadius => coinPrefab.radius + coinPrefab.radius * axisShift;
+        int count => pile.Count;
 
         Queue<Coin> pile = new Queue<Coin>();
         int spawnRequest = 0;
@@ -42,6 +43,7 @@ namespace EQx.Game.Investing {
             }
         }
 
+        public int targetAmount = 0;
 
         /// <summary>
         /// returns the exchange if the pile is full
@@ -49,22 +51,18 @@ namespace EQx.Game.Investing {
         /// <param name="amount"></param>
         /// <returns></returns>
         public int AddCoins(int amount) {
-            int space = maxCoins - count + spawnRequest;
-            spawnRequest += amount > space ? space : amount;
+            Debug.Log(name + ".AddCoins: " + amount);
+            int space = maxCoins - targetAmount;
+            targetAmount += amount > space ? space : amount;
             int exchange = amount > space ? amount - space : 0;
             return exchange;
         }
 
-        public void RemoveCoins(int amount) {
-            int current = count;
-            for(int i=0; i < (amount > current? current : amount); i++) {
-                Destroy(pile.Dequeue().gameObject);
-            }
-        }
-
-        // Start is called before the first frame update
-        void Start() {
-
+        public int RemoveCoins(int amount) {
+            Debug.Log(name + ".RemoveCoins: " + amount);
+            int exchange = amount > targetAmount ? amount - targetAmount : 0;
+            targetAmount -= amount > targetAmount ? targetAmount : amount;
+            return exchange;
         }
 
         // Update is called once per frame
@@ -72,9 +70,10 @@ namespace EQx.Game.Investing {
             timer += Time.deltaTime;
             if (timer >= 1 / spawnFrequency) {
                 timer = 0;
-                if(spawnRequest > 0) {
-                    spawnRequest--;
+                if (count < targetAmount) {
                     pile.Enqueue(Instantiate(coinPrefab, CalculateSpawnPosition(), CalculateRotation(), transform));
+                }else if(count > targetAmount) {
+                    Destroy(pile.Dequeue().gameObject);
                 }
             }
         }

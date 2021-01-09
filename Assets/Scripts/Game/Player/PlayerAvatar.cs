@@ -1,4 +1,5 @@
 ﻿using EQx.Game.CountryCards;
+using EQx.Game.Investing;
 using EQx.Game.Table;
 using System;
 using System.Collections;
@@ -22,10 +23,12 @@ namespace EQx.Game.Player {
 
         [SerializeField]
         CountryCard countryCardPrefab;
+        [SerializeField]
+        CommitmentPile commitmentPilePrefab = default;
 
         CountryCard placedCard;
+        CommitmentPile playerPile;
         Seat mySeat;
-        int winsCounter;
 
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize");
@@ -34,25 +37,23 @@ namespace EQx.Game.Player {
             observedPlayer.onEndedTurn += EndedTurnListener;
             observedPlayer.onStartedTurn += StartedTurnListener;
             observedPlayer.onSetName += SetNameListener;
-            observedPlayer.onWinRound += WinRoundListener;
             nameText.text = player.playerName;
             shade.color = player.onTurn? turnColor : standardColor;
+            playerPile = Instantiate(commitmentPilePrefab, transform);
+            playerPile.Initialize(player);
         }
 
         public void TakeSeat(Seat seat) {
             mySeat = seat;
             transform.position = seat.transform.position;
             transform.rotation = seat.transform.rotation;
+            playerPile.transform.position = seat.commitmentPlace.position;
         }
 
         public void RemovePlacedCard() {
             if (placedCard) {
                 Destroy(placedCard.gameObject);
             }
-        }
-
-        private void WinRoundListener(CardPlayer player) {
-            winsCounter++;
         }
 
         private void SetNameListener(CardPlayer player, string name) {

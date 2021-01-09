@@ -11,30 +11,42 @@ namespace EQx.Game.Player {
         public static UnityAction<CardPlayer> localPlayerReady;
 
         public UnityAction<CardPlayer> onRegister;
+        public UnityAction<CardPlayer> onUnregister;
         public UnityAction<CardPlayer, int> onPlacedCard;
         public UnityAction<CardPlayer, int> onReceivedCard;
         public UnityAction<CardPlayer, int> onReceivedCoins;
         public UnityAction<CardPlayer, int> onInvestedCoins;
         public UnityAction<CardPlayer, int> onExtractedCoins;
+        public UnityAction<CardPlayer> onCommited;
         public UnityAction<CardPlayer> onPayedBlind;
         public UnityAction<CardPlayer, string> onSetName;
         public UnityAction<CardPlayer> onRequestedCard;
         public UnityAction<CardPlayer> onEndedTurn;
         public UnityAction<CardPlayer> onStartedTurn;
-        public UnityAction<CardPlayer> onWinRound;
 
         public string playerName;
         public int seatNumber = -1;
         public bool onTurn = false;
         public bool cardPlaced = false;
+        public bool lost = false;
         public List<int> cardsInHand = new List<int>();
 
         [PunRPC]
         void RegisterRPC() {
             Debug.Log(name + ".RegisterRPC");
-            RoundManager.instance.Register(this);
             CardDealer.instance.Register(this);
             InvestmentManager.instance.Register(this);
+            RoundManager.instance.Register(this);
+            onRegister?.Invoke(this);
+        }
+
+        [PunRPC]
+        void UnregisterRPC() {
+            Debug.Log(name + ".UnregisterRPC");
+            CardDealer.instance.Unregister(this);
+            InvestmentManager.instance.Unregister(this);
+            RoundManager.instance.Unregister(this);
+            onUnregister?.Invoke(this);
         }
 
         [PunRPC]
@@ -81,14 +93,6 @@ namespace EQx.Game.Player {
         }
 
         [PunRPC]
-        void WinRoundRPC() {
-            Debug.Log(name + ".WinRoundRPC");
-            onWinRound?.Invoke(this);
-        }
-
-
-
-        [PunRPC]
         void ReceiveCoinsRPC(int amount) {
             Debug.Log(name + ".ReceiveCoinsRPC" + amount);
             onReceivedCoins?.Invoke(this, amount);
@@ -108,8 +112,14 @@ namespace EQx.Game.Player {
 
         [PunRPC]
         void PayBlindRPC(){
-            Debug.Log(name + ".PayBlindRPc");
+            Debug.Log(name + ".PayBlindRPC");
             onPayedBlind?.Invoke(this);
+        }
+
+        [PunRPC]
+        void CommitRPC() {
+            Debug.Log(name + ".CommitRPC");
+            onCommited?.Invoke(this);
         }
 
 
@@ -142,13 +152,6 @@ namespace EQx.Game.Player {
             }
         }
 
-        public void WinRound() {
-            Debug.Log(name + ".CallWinRound");
-            if (photonView.IsMine) {
-                photonView.RPC("WinRoundRPC", RpcTarget.AllBuffered);
-            }
-        }
-
         public void InvestCoins(int amount) {
             Debug.Log(name + ".InvestCoins" + amount);
             if (photonView.IsMine) {
@@ -170,6 +173,13 @@ namespace EQx.Game.Player {
             }
         }
 
+        public void Commit() {
+            Debug.Log(name + ".Commit");
+            if (photonView.IsMine) {
+                photonView.RPC("CommitRPC", RpcTarget.AllBuffered);
+            }
+        }
+
 
         //Server Side RPCs
         public void ReceiveCard(int id) {
@@ -186,6 +196,12 @@ namespace EQx.Game.Player {
             }
         }
 
+        public void Unregister() {
+            Debug.Log(name + ".Unregister");
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("UnregisterRPC", RpcTarget.AllBuffered);
+            }
+        }
 
 
 
@@ -196,7 +212,6 @@ namespace EQx.Game.Player {
                 localPlayerReady?.Invoke(this);
                 photonView.RPC("SetNameRPC", RpcTarget.AllBuffered, PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, "Anonymous"));
                 photonView.RPC("RegisterRPC", RpcTarget.AllBuffered);
-
             }
         }
 

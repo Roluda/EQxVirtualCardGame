@@ -7,7 +7,7 @@ namespace EQx.Game.Table {
         // Start is called before the first frame update
         void Start() {
             RoundManager.instance.onPlacingStarted += Play;
-            RoundManager.instance.onPlacingEnded += Stop;
+            RoundManager.instance.onBettingEnded += Stop;
         }
     }
 }

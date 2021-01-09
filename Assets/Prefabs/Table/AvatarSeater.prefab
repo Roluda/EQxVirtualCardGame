@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 729781285116039425}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
 --- !u!1 &763581109853442427
 GameObject:
@@ -59,6 +59,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6599316827604618094}
+  - {fileID: 5143861444392717569}
   m_Father: {fileID: 5421931160032734708}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 37, z: 0}
@@ -75,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 6599316827604618094}
+  commitmentPlace: {fileID: 5143861444392717569}
 --- !u!1 &831995297572207384
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +105,7 @@ Transform:
   m_LocalPosition: {x: -2, y: 1.5, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6827561235117194778}
   - {fileID: 2487633433151931088}
   m_Father: {fileID: 5421931160032734708}
   m_RootOrder: 0
@@ -120,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 2487633433151931088}
+  commitmentPlace: {fileID: 6827561235117194778}
 --- !u!1 &3251697764572582802
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +153,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7955931485142910165}
+  - {fileID: 9075613218824730475}
   m_Father: {fileID: 5421931160032734708}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 37, z: 0}
@@ -165,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 7955931485142910165}
+  commitmentPlace: {fileID: 9075613218824730475}
 --- !u!1 &3644356203680963495
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +230,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5061535124520006590}
+  - {fileID: 2912435087024325757}
   m_Father: {fileID: 5421931160032734708}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 37, z: 0}
@@ -240,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 5061535124520006590}
+  commitmentPlace: {fileID: 2912435087024325757}
 --- !u!1 &4364342243121199197
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +306,36 @@ MonoBehaviour:
   - {fileID: 4886020078208066018}
   - {fileID: 8785263465320862817}
   - {fileID: 8851896477472122362}
+--- !u!1 &4581762604440651706
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5143861444392717569}
+  m_Layer: 0
+  m_Name: CommitmentPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5143861444392717569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4581762604440651706}
+  m_LocalRotation: {x: -0.09841022, y: -0.7002253, z: -0.7002253, w: 0.09841022}
+  m_LocalPosition: {x: -1.391, y: 0.204, z: -1.702}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1189908126420846752}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5184469175039057918
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +394,7 @@ Transform:
   m_LocalPosition: {x: -2, y: 1.5, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2213200913998128392}
   - {fileID: 2730084003513676103}
   m_Father: {fileID: 5421931160032734708}
   m_RootOrder: 1
@@ -373,6 +412,97 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 2730084003513676103}
+  commitmentPlace: {fileID: 2213200913998128392}
+--- !u!1 &6702148123890619072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2912435087024325757}
+  m_Layer: 0
+  m_Name: CommitmentPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2912435087024325757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6702148123890619072}
+  m_LocalRotation: {x: -0.09841022, y: -0.7002253, z: -0.7002253, w: 0.09841022}
+  m_LocalPosition: {x: -1.963, y: -0.52, z: 0.32}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7012191688552346866}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7075093028945037853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 619456557497278217}
+  m_Layer: 0
+  m_Name: CommitmentPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &619456557497278217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7075093028945037853}
+  m_LocalRotation: {x: -0.49999994, y: -0.50000006, z: -0.50000006, w: 0.49999994}
+  m_LocalPosition: {x: 2.21, y: -0.52, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 172631442430693365}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7111702502339292316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9075613218824730475}
+  m_Layer: 0
+  m_Name: CommitmentPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9075613218824730475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7111702502339292316}
+  m_LocalRotation: {x: -0.09841022, y: -0.7002253, z: -0.7002253, w: 0.09841022}
+  m_LocalPosition: {x: -2.06, y: -0.52, z: 0.29}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6228906530034971360}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8470969230524552938
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,8 +531,38 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 736392035106013419}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}
+--- !u!1 &8638237270252533687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6827561235117194778}
+  m_Layer: 0
+  m_Name: CommitmentPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6827561235117194778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638237270252533687}
+  m_LocalRotation: {x: -0.5, y: -0.50000006, z: -0.50000006, w: 0.5}
+  m_LocalPosition: {x: 1.333, y: -0.52, z: 0.21999994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 736392035106013419}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8971555615581920254
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +591,7 @@ Transform:
   m_LocalPosition: {x: -2, y: 1.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 619456557497278217}
   - {fileID: 1685862818995865280}
   m_Father: {fileID: 5421931160032734708}
   m_RootOrder: 2
@@ -448,6 +609,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 1685862818995865280}
+  commitmentPlace: {fileID: 619456557497278217}
+--- !u!1 &9009696492419085044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2213200913998128392}
+  m_Layer: 0
+  m_Name: CommitmentPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2213200913998128392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9009696492419085044}
+  m_LocalRotation: {x: -0.49999994, y: -0.50000006, z: -0.50000006, w: 0.49999994}
+  m_LocalPosition: {x: 1.77, y: -0.52, z: 0.331}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 729781285116039425}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9039486518150890341
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,5 +698,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 172631442430693365}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: 0}

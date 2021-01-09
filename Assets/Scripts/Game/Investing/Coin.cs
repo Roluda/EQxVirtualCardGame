@@ -9,8 +9,8 @@ namespace EQx.Game.Investing {
         [SerializeField]
         BoxCollider attachedCollider = default;
 
-        public float height => attachedCollider.size.y;
-        public float radius=> attachedCollider.size.x / 2;
+        public float height => attachedCollider.size.y * transform.localScale.y;
+        public float radius=> attachedCollider.size.x / 2 * transform.localScale.x;
         public bool isKinematic => attachedRigidbody.isKinematic;
 
         // Start is called before the first frame update

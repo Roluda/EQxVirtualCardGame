@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using EQx.Game.Table;
 
 namespace EQx.Game.Investing {
     public class InvestmentManager : MonoBehaviourPunCallbacks, IPunObservable {
@@ -19,13 +20,27 @@ namespace EQx.Game.Investing {
         [SerializeField]
         AnimationCurve investmentPayoff = default;
 
-        public int prize = 0;
+        [SerializeField]
+        int prizePool = 0;
+        public int prize {
+            get => prizePool;
+            set {
+                int oldPool = prizePool;
+                prizePool = value;
+                if (oldPool != prizePool) {
+                    onPrizeUpdated?.Invoke();
+                }
+            }
+        }
 
-        public UnityAction onAllBlindsPayed;
+        public UnityAction onPrizeUpdated;
+        public UnityAction<CardPlayer> onCapitalUpdated;
+        public UnityAction<CardPlayer> onPayedBlind;
+        public UnityAction<CardPlayer> onInvested;
+        public UnityAction<CardPlayer> onExtracted;
+        public UnityAction<CardPlayer> onCommited;
 
         public List<Account> accounts = new List<Account>();
-
-        List<CardPlayer> payedBlind = new List<CardPlayer>();
 
         public void Register(CardPlayer player) {
             Debug.Log(name + ".Register: " + player);
@@ -33,6 +48,7 @@ namespace EQx.Game.Investing {
             player.onInvestedCoins += InvestedCoinsListener;
             player.onPayedBlind += PayedBlindListener;
             player.onExtractedCoins += ExtractedCoinsListener;
+            player.onCommited += CommitedListener;
 
             string userID = player.photonView.Owner.UserId;
             var account = accounts.Where(acc => acc.userID == userID).FirstOrDefault();
@@ -48,26 +64,29 @@ namespace EQx.Game.Investing {
 
         public void Unregister(CardPlayer player) {
             var account = accounts.Where(acc => acc.player == player).First();
-            prize += account.TakeCommitment();
+            player.Commit();
             account.isActive = false;
             player.onReceivedCoins -= ReceivedCoinsListener;
             player.onInvestedCoins -= InvestedCoinsListener;
             player.onPayedBlind -= PayedBlindListener;
             player.onExtractedCoins -= ExtractedCoinsListener;
+            player.onCommited -= CommitedListener;
         }
 
 
         private void ExtractedCoinsListener(CardPlayer player, int amount) {
+            Debug.Log(name + ".ExtractedCoins: " + player + "," + amount);
             var account = accounts.Where(acc => acc.player == player).First();
             if (account.CanExtract(amount)) {
                 account.extraction += amount;
                 account.capital += amount;
             }
+            onExtracted?.Invoke(player);
+            onCapitalUpdated?.Invoke(player);
         }
 
         private void PayedBlindListener(CardPlayer player) {
             Debug.Log(name + ".PayedBlind: " + player);
-            payedBlind.Add(player);
             var account = accounts.Where(acc => acc.player == player).First();
             if (account.AbleToPay(blind)) {
                 account.capital -= blind;
@@ -76,11 +95,9 @@ namespace EQx.Game.Investing {
                 account.payedBlind = account.capital;
                 account.capital -= account.capital;
             }
-
-            if (accounts.Where(acc => acc.isActive).All(acc => payedBlind.Contains(acc.player))){
-                onAllBlindsPayed?.Invoke();
-                payedBlind.Clear();
-            }
+            Debug.Log(player + " payed " + account.payedBlind);
+            onPayedBlind?.Invoke(player);
+            onCapitalUpdated?.Invoke(player);
         }
 
         private void InvestedCoinsListener(CardPlayer player, int amount) {
@@ -93,21 +110,38 @@ namespace EQx.Game.Investing {
                 account.investment += account.capital;
                 account.capital -= account.capital;
             }
+            onInvested?.Invoke(player);
+            onCapitalUpdated?.Invoke(player);
         }
 
         private void ReceivedCoinsListener(CardPlayer player, int amount) {
             Debug.Log(name + ".ReceivedCoins: "+ player + ","+ amount);
             var account = accounts.Where(acc => acc.player == player).First();
             account.capital += amount;
+            onCapitalUpdated?.Invoke(player);
         }
 
-        public void WinPrize(List<CardPlayer> winners) {
-            prize += accounts.Sum(acc => acc.TakeCommitment());
-            int share = prize / winners.Count;
-            foreach(var winner in winners) {
-                winner.ReceiveCoins(share);
+        private void CommitedListener(CardPlayer player) {
+            Debug.Log(name + ".CommitedListener: "+ player);
+            prize += TakeCommitment(player);
+            onCommited?.Invoke(player);
+        }
+
+        public void CommitAll() {
+            foreach(var account in accounts.Where(acc => acc.isActive)) {
+                account.player.Commit();
             }
-            prize -= share * winners.Count;
+        }
+
+        public void WinPrize() {
+            var winners = RoundManager.instance.winners;
+            if (winners.Count > 0) {
+                int share = prize / winners.Count;
+                foreach (var winner in winners) {
+                    winner.ReceiveCoins(share);
+                }
+                prize -= share * winners.Count;
+            }
         }
 
 
@@ -123,20 +157,36 @@ namespace EQx.Game.Investing {
             return accounts.Where(acc => acc.player == player).First().SufficientBlind(blind);
         }
 
+        public int Capital(CardPlayer player) {
+            return accounts.Where(acc => acc.player == player).First().capital;
+        }
+
         public int Investment(CardPlayer player) {
             return accounts.Where(acc => acc.player == player).First().investment;
+        }
+
+        public int Extraction(CardPlayer player) {
+            return accounts.Where(acc => acc.player == player).First().extraction;
+        }
+
+        public int PayedBlind(CardPlayer player) {
+            return accounts.Where(acc => acc.player == player).First().payedBlind;
         }
 
         public int Commitment(CardPlayer player) {
             return accounts.Where(acc => acc.player == player).First().commitment;
         }
 
-        public float BonusValue(int investment) {
-            return investmentPayoff.Evaluate(investment);
+        public int TakeCommitment(CardPlayer player) {
+            return accounts.Where(acc => acc.player == player).First().TakeCommitment();
+        }
+
+        public float BonusValue(int investment, int extraction) {
+            return investmentPayoff.Evaluate(investment-extraction);
         }
 
         public float BonusValue(CardPlayer player) {
-            return investmentPayoff.Evaluate(Investment(player));
+            return investmentPayoff.Evaluate(Investment(player)-Extraction(player));
         }
 
         private void Awake() {

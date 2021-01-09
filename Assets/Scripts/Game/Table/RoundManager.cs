@@ -13,6 +13,13 @@ using UnityEngine.Events;
 namespace EQx.Game.Table {
     public class RoundManager : MonoBehaviourPunCallbacks , IPunObservable {
 
+        public enum RoundState {
+            pre,
+            placing,
+            betting,
+            post
+        }
+
         public static RoundManager instance = null;
         [SerializeField]
         List<EQxVariableType> possibleDemands = default;
@@ -28,27 +35,32 @@ namespace EQx.Game.Table {
 
         public Dictionary<CardPlayer, int> placedCards = new Dictionary<CardPlayer, int>();
         public List<CardPlayer> registeredPlayers = new List<CardPlayer>();
+        public List<CardPlayer> preRegisteredPlayers = new List<CardPlayer>();
+        public List<CardPlayer> winners = new List<CardPlayer>();
 
         public EQxVariableType currentDemand;
-        public bool bettingRound = false;
-
-
+        public RoundState roundState = RoundState.pre;
 
         public void Register(CardPlayer player) {
             Debug.Log(name + ".Register by" + player.name);
-            player.onEndedTurn += EndTurnListener;
-            player.onPlacedCard += PlacedCardListener;
-            registeredPlayers.Add(player);
-            registeredPlayers.Sort((x, y) => x.photonView.Owner.ActorNumber.CompareTo(y.photonView.Owner.ActorNumber));
-            for(int i=0; i < registeredPlayers.Count; i++) {
-                registeredPlayers[i].seatNumber = i;
-            }
-            onPlayerRegister?.Invoke(player);
-            onRegisterUpdate?.Invoke();
-            if (PhotonNetwork.IsMasterClient) {
-                if (registeredPlayers.Count == 1) {
-                    StartRound();
+            if (OpenForRegistration()) {
+                player.onEndedTurn += EndTurnListener;
+                player.onPlacedCard += PlacedCardListener;
+                player.onPayedBlind += PayedBlindListener;
+                registeredPlayers.Add(player);
+                registeredPlayers.Sort((x, y) => x.photonView.Owner.ActorNumber.CompareTo(y.photonView.Owner.ActorNumber));
+                for (int i = 0; i < registeredPlayers.Count; i++) {
+                    registeredPlayers[i].seatNumber = i;
                 }
+                onPlayerRegister?.Invoke(player);
+                onRegisterUpdate?.Invoke();
+                if (PhotonNetwork.IsMasterClient) {
+                    if (registeredPlayers.Count == 1) {
+                        StartRound();
+                    }
+                }
+            } else {
+                preRegisteredPlayers.Add(player);
             }
         }
 
@@ -56,43 +68,68 @@ namespace EQx.Game.Table {
             Debug.Log(name + ".Unregister by" + player.playerName);
             player.onEndedTurn -= EndTurnListener;
             player.onPlacedCard -= PlacedCardListener;
+            player.onPayedBlind -= PayedBlindListener;
             if (player.onTurn) {
                 EndTurnListener(player);
             }
+            player.seatNumber = -1;
             registeredPlayers.Remove(player);
             onPlayerUnregister?.Invoke(player);
             onRegisterUpdate?.Invoke();
         }
 
-        void EndTurnListener(CardPlayer player) {
-            Debug.Log(name + ".TurnEnded by" + player.playerName);
-            int index = registeredPlayers.IndexOf(player);
-            int maxIndex = registeredPlayers.Count - 1;
-            if (index >= maxIndex) {
-                if (bettingRound) {
-                    EndBettingRound();
-                } else {
-                    EndPlacingRound();
-                }
-            } else {
-                index++;
-                registeredPlayers[index].StartTurn();
+        private void PayedBlindListener(CardPlayer player) {
+            if (InvestmentManager.instance.SufficientBlind(player)) {
+                player.RequestCard();
+            }else if (player.cardsInHand.Count == 0) {
+                player.Unregister();
             }
         }
-
 
         public void PlacedCardListener(CardPlayer player, int id) {
             placedCards.Add(player, id);
             player.EndTurn();
         }
 
+        void EndTurnListener(CardPlayer player) {
+            Debug.Log(name + ".TurnEnded by" + player.playerName);
+            int index = registeredPlayers.IndexOf(player);
+            int maxIndex = registeredPlayers.Count - 1;
+            switch (roundState) {
+                case RoundState.placing:
+                    if (index >= maxIndex) {
+                        EndPlacingRound();
+                    } else {
+                        index++;
+                        registeredPlayers[index].PayBlind();
+                        registeredPlayers[index].StartTurn();
+                    }
+                    break;
+                case RoundState.betting:
+                    if (index >= maxIndex) {
+                        EndBettingRound();
+                    } else {
+                        index++;
+                        registeredPlayers[index].StartTurn();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
 
         #region RoundBehaviour
 
 
         public void StartRound() {
+            roundState = RoundState.pre;
+            foreach (var player in preRegisteredPlayers) {
+                Register(player);
+            }
+            preRegisteredPlayers.Clear();
             SetDemand();
-            RequestBlinds();
         }
 
         void SetDemand() {
@@ -108,25 +145,6 @@ namespace EQx.Game.Table {
             Debug.Log(name + ".SetDemandRPC");
             currentDemand = (EQxVariableType)demand;
             onNewDemand?.Invoke(currentDemand);
-        }
-
-        void RequestBlinds() {
-            Debug.Log(name + ".RequestBlinds");
-            if (PhotonNetwork.IsMasterClient) {
-                photonView.RPC("RequestBlindsRPC", RpcTarget.AllBuffered);
-            }
-        }
-
-        [PunRPC]
-        void RequestBlindsRPC() {
-            Debug.Log(name + ".RequestBlindsRPC");
-            foreach (var player in registeredPlayers) {
-                player.PayBlind();
-            }
-        }
-
-        private void BlindsPayedListener() {
-            Debug.Log(name + "BlindsPayedListener");
             StartPlacingRound();
         }
 
@@ -142,16 +160,14 @@ namespace EQx.Game.Table {
             Debug.Log(name + ".StartPlacingRoundRPC");
             foreach (var pair in placedCards) {
                 CardDealer.instance.DiscardCard(pair.Value);
-                if (InvestmentManager.instance.SufficientBlind(pair.Key)) {
-                    pair.Key.RequestCard();
-                }
             }
             foreach (var player in registeredPlayers) {
                 player.cardPlaced = false;
             }
-            bettingRound = false;
+            roundState = RoundState.placing;
             placedCards.Clear();
             registeredPlayers[0].StartTurn();
+            registeredPlayers[0].PayBlind();
             onPlacingStarted?.Invoke();
         }
 
@@ -179,7 +195,7 @@ namespace EQx.Game.Table {
         [PunRPC]
         void StartBettingRoundRPC() {
             Debug.Log(name + ".StartBettingRoundRPC");
-            bettingRound = true;
+            roundState = RoundState.betting;
             registeredPlayers[0].StartTurn();
             onBettingStarted?.Invoke();
         }
@@ -195,11 +211,8 @@ namespace EQx.Game.Table {
         void EndBettingRoundRPC() {
             Debug.Log(name + ".EndBettingRoundRPC");
             onBettingEnded?.Invoke();
-            List<CardPlayer> winners = CurrentWinners().Keys.ToList();
-            foreach (var winner in winners) {
-                winner.WinRound();
-            }
-            InvestmentManager.instance.WinPrize(winners);            
+            winners = CurrentWinners().Keys.ToList();
+            roundState = RoundState.post;
         }
 
 
@@ -215,10 +228,6 @@ namespace EQx.Game.Table {
             } else {
                 instance = this;
             }
-        }
-
-        void Start() {
-            InvestmentManager.instance.onAllBlindsPayed += BlindsPayedListener;
         }
 
         private void OnDestroy() {
@@ -261,6 +270,10 @@ namespace EQx.Game.Table {
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        }
+
+        public bool OpenForRegistration() {
+            return roundState != RoundState.betting;
         }
     }
 }

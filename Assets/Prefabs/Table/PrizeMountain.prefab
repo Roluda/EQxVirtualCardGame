@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4752798874831480478
+--- !u!1 &7965470537321421530
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,68 +8,59 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4752798874831480472}
-  - component: {fileID: 4752798874831480479}
-  - component: {fileID: -8434983263080755558}
+  - component: {fileID: 7102655764144915837}
+  - component: {fileID: 93110781303535098}
+  - component: {fileID: 5261173779367163859}
   m_Layer: 0
-  m_Name: CardPlayer
+  m_Name: PrizeMountain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4752798874831480472
+--- !u!4 &7102655764144915837
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4752798874831480478}
+  m_GameObject: {fileID: 7965470537321421530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.025, y: 1.096, z: -1.441}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4752798874831480479
+--- !u!114 &93110781303535098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4752798874831480478}
+  m_GameObject: {fileID: 7965470537321421530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22fdcd8e772a80241934da5977e53925, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bf1ed2662bf1ca4995274850c471897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: 
-  seatNumber: 0
-  onTurn: 0
-  cardPlaced: 0
-  lost: 0
-  cardsInHand: 
---- !u!114 &-8434983263080755558
+  mountain: {fileID: 5261173779367163859}
+--- !u!114 &5261173779367163859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4752798874831480478}
+  m_GameObject: {fileID: 7965470537321421530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 24865462d497e8c4293ebb7b1f911ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 3
-  OwnershipTransfer: 1
-  ObservedComponents:
-  - {fileID: 4752798874831480479}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  pileBase: {fileID: 7102655764144915837}
+  pilePrefab: {fileID: 2722671675099169090, guid: 920be844c1e1fe84ea29da8404f05dea,
+    type: 3}
+  columns: 3
+  rows: 2
+  pileDistance: 0.1
+  capitalPiles: []
