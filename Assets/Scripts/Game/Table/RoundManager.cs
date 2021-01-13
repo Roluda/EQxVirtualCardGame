@@ -79,11 +79,7 @@ namespace EQx.Game.Table {
         }
 
         private void PayedBlindListener(CardPlayer player) {
-            if (InvestmentManager.instance.SufficientBlind(player)) {
-                player.RequestCard();
-            }else if (player.cardsInHand.Count == 0) {
-                player.Unregister();
-            }
+            player.RequestCard();
         }
 
         public void PlacedCardListener(CardPlayer player, int id) {

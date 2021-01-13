@@ -103,6 +103,7 @@ namespace EQx.Game.Player {
 
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize");
+            CardPlayer.localPlayerReady -= Initialize;
             localPlayer = player;
         }
 
@@ -132,10 +133,6 @@ namespace EQx.Game.Player {
         Vector3 CalculateFanRotation(int index, int count) {
             float leftmost = -degreeBetweenCards * (count - 1) / 2;
             return new Vector3(0, 0, leftmost + degreeBetweenCards * index);
-        }
-
-        private void OnDestroy() {
-            CardPlayer.localPlayerReady -= Initialize;
         }
     }
 }

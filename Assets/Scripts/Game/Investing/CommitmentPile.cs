@@ -15,13 +15,12 @@ namespace EQx.Game.Investing {
         }
 
         public void UpdateCommitment(CardPlayer player) {
-            targetAmount = InvestmentManager.instance.Commitment(player);
-            backup = targetAmount;
+            SetAmount(InvestmentManager.instance.Commitment(player));
+            backup = amount;
         }
 
         private void Start() {
             InvestmentManager.instance.onPayedBlind += PayedBlindListener;
-            InvestmentManager.instance.onExtracted += ExtractedCoinsListener;
             InvestmentManager.instance.onInvested += InvestedCoinsListener;
             InvestmentManager.instance.onCommited += CommitedListener;
         }
@@ -30,7 +29,7 @@ namespace EQx.Game.Investing {
             Debug.Log(name + "PayedBlindListener: " + player);
             if (player == observedPlayer) {
                 AddCoins(InvestmentManager.instance.PayedBlind(player));
-                backup = targetAmount;
+                backup = amount;
             }
         }
 
@@ -38,31 +37,24 @@ namespace EQx.Game.Investing {
             Debug.Log(name + "InvestedCoinsListener");
             if (player == observedPlayer) {
                 AddCoins(InvestmentManager.instance.Investment(player));
-                backup = targetAmount;
-            }
-        }
-
-        private void ExtractedCoinsListener(CardPlayer player) {
-            Debug.Log(name + "ExtractedCoinsListener");
-            if (player == observedPlayer) {
-                RemoveCoins(InvestmentManager.instance.Extraction(player));
-                backup = targetAmount;
+                backup = amount;
             }
         }
 
         private void CommitedListener(CardPlayer player) {
             Debug.Log(name + "CommitedListener");
             if (player == observedPlayer) {
-                RemoveCoins(targetAmount);
-                backup = targetAmount;
+                SetAmount(0);
+                backup = amount;
             }
         }
 
         private void OnDestroy() {
-            InvestmentManager.instance.onPayedBlind -= PayedBlindListener;
-            InvestmentManager.instance.onExtracted -= ExtractedCoinsListener;
-            InvestmentManager.instance.onInvested -= InvestedCoinsListener;
-            InvestmentManager.instance.onCommited -= CommitedListener;
+            if (InvestmentManager.instance != null) {
+                InvestmentManager.instance.onPayedBlind -= PayedBlindListener;
+                InvestmentManager.instance.onInvested -= InvestedCoinsListener;
+                InvestmentManager.instance.onCommited -= CommitedListener;
+            }
         }
     }
 }

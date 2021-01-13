@@ -42,14 +42,14 @@ namespace EQx.Game.Investing {
         [SerializeField]
         Button confirmButton = default;
 
-        public UnityAction onAdjustedCommit;
+        public UnityAction<int> onInvestmentChange;
 
         EQxCountryData currentCountry;
         EQxVariableData currentVariable;
         public int plannedInvestment = 0;
-        public int plannedExtraction = 0;
+
         float cardValue => currentCountry.GetValue(currentVariable.type);
-        float bonusValue => InvestmentManager.instance.BonusValue(plannedInvestment, plannedExtraction);
+        float bonusValue => InvestmentManager.instance.BonusValue(plannedInvestment);
 
         bool commited = false;
         // Start is called before the first frame update
@@ -94,25 +94,20 @@ namespace EQx.Game.Investing {
         }
 
 
-        public void AdjustCommitment(int commitment) {
-            Debug.Log(name + ".AdjustCommitment: " + commitment);
-            if (commitment < 0) {
-                plannedInvestment = 0;
-                plannedExtraction = -commitment;
-            } else {
-                plannedExtraction = 0;
-                plannedInvestment = commitment;
-            }
-            onAdjustedCommit?.Invoke();
+        public void AdjustCommitment(int investment) {
+            Debug.Log(name + ".AdjustCommitment: " + investment);
+            plannedInvestment = investment;
+            onInvestmentChange?.Invoke(investment);
             UpdateSliderValues();
         }
 
         public void ConfirmCommitment() {
             Debug.Log(name + ".ConfirmCommitment");
-            commited = true;
-            CardPlayer.localPlayer.ExtractCoins(plannedExtraction);
-            CardPlayer.localPlayer.InvestCoins(plannedInvestment);
-            CardPlayer.localPlayer.EndTurn();
+            if (!commited) {
+                commited = true;
+                CardPlayer.localPlayer.InvestCoins(plannedInvestment);
+                CardPlayer.localPlayer.EndTurn();
+            }
         }
 
         private void StartedTurnListener(CardPlayer player) {
@@ -139,6 +134,7 @@ namespace EQx.Game.Investing {
 
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize");
+            CardPlayer.localPlayerReady -= Initialize;
             player.onPlacedCard += CardPlacedListener;
             player.onStartedTurn += StartedTurnListener;
             player.onEndedTurn += EndedTurnListener;

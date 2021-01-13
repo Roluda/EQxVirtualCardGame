@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace EQx.Game.Player {
@@ -12,20 +13,44 @@ namespace EQx.Game.Player {
         [SerializeField]
         PileMountain capitalMountain = default;
         [SerializeField]
+        PileMountain debtMountain = default;
+        [SerializeField]
         CommitmentPile commitmentPile = default;
 
         int capitalBackup;
 
+        int capital {
+            get {
+                return capitalMountain.capital - debtMountain.capital;
+            }
+            set {
+                capitalMountain.capital = value;
+                debtMountain.capital = -value;
+            }
+        }
+
+        [SerializeField]
+        int debugCapital = 0;
+        [SerializeField]
+        bool setDebugCapital = false;
+
+        private void OnValidate() {
+            if (setDebugCapital) {
+                setDebugCapital = false;
+                capital = debugCapital;
+            }
+        }
+
         // Start is called before the first frame update
         void Start() {
             InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
-            laptop.onAdjustedCommit += CommitAdjustmListener;
+            laptop.onInvestmentChange += InvestmentChangedListener;
         }
 
-        private void CommitAdjustmListener() {
-            Debug.Log("backup: " + commitmentPile.backup + " investment: " + laptop.plannedInvestment + " extraction: "+laptop.plannedExtraction);
-            commitmentPile.targetAmount = commitmentPile.backup + laptop.plannedInvestment - laptop.plannedExtraction;
-            capitalMountain.capital = capitalBackup - laptop.plannedInvestment + laptop.plannedExtraction;
+        private void InvestmentChangedListener(int investment) {
+            Debug.Log("backup: " + commitmentPile.backup + " investment: " + investment);
+            commitmentPile.SetAmount(commitmentPile.backup + investment);
+            capital = capitalBackup - investment;
         }
 
         private void Awake() {
@@ -35,7 +60,7 @@ namespace EQx.Game.Player {
         void CapitalUpdatedListener(CardPlayer player) {
             if (player == CardPlayer.localPlayer) {
                 Debug.Log(name + ".CapitalUpdateListener: new Capital: " + InvestmentManager.instance.Capital(player));
-                capitalMountain.capital = InvestmentManager.instance.Capital(player);
+                capital = InvestmentManager.instance.Capital(player);
                 capitalBackup = capitalMountain.capital;
             }
         }

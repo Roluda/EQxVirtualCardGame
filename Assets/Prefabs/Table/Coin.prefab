@@ -77,6 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attachedRigidbody: {fileID: 8364658921548481579}
   attachedCollider: {fileID: 5736143759096023769}
+  coinRenderer: {fileID: 8135362671051980010}
+  highlightColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &7432919188414668910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,7 +145,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 32f5ef7ac1cd45a4e952282265ead838, type: 2}
+      objectReference: {fileID: 2100000, guid: aa54836d312661541a1fba75069f85d7, type: 2}
     - target: {fileID: 919132149155446097, guid: 7e53eaeb83db24e4aa93e96be533809d,
         type: 3}
       propertyPath: m_Name
@@ -154,6 +156,12 @@ PrefabInstance:
 --- !u!4 &6966419789864060805 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7e53eaeb83db24e4aa93e96be533809d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7432919188414668910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8135362671051980010 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 7e53eaeb83db24e4aa93e96be533809d,
     type: 3}
   m_PrefabInstance: {fileID: 7432919188414668910}
   m_PrefabAsset: {fileID: 0}

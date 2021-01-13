@@ -20,39 +20,31 @@ namespace EQx.Game.Investing {
         int maxPiles => columns * rows;
 
         [SerializeField]
-        List<CoinPile> capitalPiles = default;
+        List<CoinPile> coinPiles = default;
 
-        int maxCapital => capitalPiles.Sum(pile => pile.maxCoins);
+        public int coins => coinPiles.Sum(pile => pile.count);
+
+        int maxCoins => coinPiles.Sum(pile => pile.maxCoins);
         public int capital {
-            get => capitalPiles.Sum(pile => pile.targetAmount);
+            get => coinPiles.Sum(pile => pile.amount);
             set {
-                value = Mathf.Clamp(value, 0, maxCapital);
-
-                int i = 0;
+                value = Mathf.Clamp(value, 0, maxCoins);
                 if (value > capital) {
                     int diff = value - capital;
                     while (diff > 0) {
-                        diff = capitalPiles.Where(pile => pile.targetAmount < pile.maxCoins).First().AddCoins(diff);
+                        diff = coinPiles.Where(pile => pile.amount < pile.maxCoins).First().AddCoins(diff);
                         
                     }
                 } else if (value < capital) {
-                    int diff = capital - value;
-                    while (diff > 0) {
-                        diff = capitalPiles.Where(pile => pile.targetAmount > 0).First().RemoveCoins(diff);
+                    int diff = value - capital;
+                    while (diff < 0) {
+                        diff = coinPiles.Where(pile => pile.amount > 0).First().AddCoins(diff);
                     }
                 }
             }
         }
 
-        [SerializeField]
-        bool gainTenCoins = false;
-
-        private void OnValidate() {
-            if (gainTenCoins) {
-                gainTenCoins = false;
-                capital += 10;
-            }
-        }
+        public bool highlighted => coinPiles.Any(pile => pile.highlighted);
 
         private void Start() {
             BuildPiles();
@@ -60,14 +52,14 @@ namespace EQx.Game.Investing {
 
         private void BuildPiles() {
             Debug.Log(name + ".BuildPiles");
-            capitalPiles = new List<CoinPile>();
+            coinPiles = new List<CoinPile>();
             for (int c = 0; c<columns; c++) {
                 for(int r = 0;r<rows; r++) {
                     float distance = pilePrefab.maxRadius * 2 + pileDistance;
                     float column = c * distance + (distance / 2) * r % 2;
                     float row = - r * distance / Mathf.Cos(60);
                     Vector3 localPosition = new Vector3(column, 0, row);
-                    capitalPiles.Add(Instantiate(pilePrefab, pileBase.position + localPosition, pileBase.rotation, pileBase));
+                    coinPiles.Add(Instantiate(pilePrefab, pileBase.position + localPosition, pileBase.rotation, pileBase));
                 }
             }
         }

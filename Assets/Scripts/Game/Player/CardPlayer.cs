@@ -16,7 +16,6 @@ namespace EQx.Game.Player {
         public UnityAction<CardPlayer, int> onReceivedCard;
         public UnityAction<CardPlayer, int> onReceivedCoins;
         public UnityAction<CardPlayer, int> onInvestedCoins;
-        public UnityAction<CardPlayer, int> onExtractedCoins;
         public UnityAction<CardPlayer> onCommited;
         public UnityAction<CardPlayer> onPayedBlind;
         public UnityAction<CardPlayer, string> onSetName;
@@ -105,12 +104,6 @@ namespace EQx.Game.Player {
         }
 
         [PunRPC]
-        void ExtractCoinsRPC(int amount) {
-            Debug.Log(name + ".ExtractCoinsRPC" + amount);
-            onExtractedCoins?.Invoke(this, amount);
-        }
-
-        [PunRPC]
         void PayBlindRPC(){
             Debug.Log(name + ".PayBlindRPC");
             onPayedBlind?.Invoke(this);
@@ -156,13 +149,6 @@ namespace EQx.Game.Player {
             Debug.Log(name + ".InvestCoins" + amount);
             if (photonView.IsMine) {
                 photonView.RPC("InvestCoinsRPC", RpcTarget.AllBuffered, amount);
-            }
-        }
-
-        public void ExtractCoins(int amount) {
-            Debug.Log(name + ".ExtractCoins" + amount);
-            if (photonView.IsMine) {
-                photonView.RPC("ExtractCoinsRPC", RpcTarget.AllBuffered, amount);
             }
         }
 
