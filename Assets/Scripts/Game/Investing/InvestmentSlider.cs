@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -20,6 +22,10 @@ namespace EQx.Game.Investing {
         Color extractionColor = Color.yellow;
         [SerializeField]
         Color investmentColor = Color.blue;
+        [SerializeField]
+        HorizontalLayoutGroup segmentLineGroup = default;
+        [SerializeField]
+        TMP_Text segmentLinePrefab = default;
 
         float segment;
 
@@ -52,6 +58,15 @@ namespace EQx.Game.Investing {
         void Start() {
             slider.onValueChanged.AddListener(UpdateSlider);
             segment = slider.GetComponent<RectTransform>().rect.width / (maxExtraction + maxInvestment);
+            SetSegments();
+        }
+
+        private void SetSegments() {
+            segmentLineGroup.padding.left = segmentLineGroup.padding.right = (int)(-segment / 2);
+            for(int i=0; i<= (maxExtraction + maxInvestment); i++) {
+                var text = Instantiate(segmentLinePrefab, segmentLineGroup.transform);
+                text.text = (i - maxExtraction).ToString();
+            }
         }
     }
 }
