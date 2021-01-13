@@ -6,8 +6,8 @@ namespace EQx.Game.Table {
     public class RoundStartedTimeline : CallTimeline {
         // Start is called before the first frame update
         void Start() {
-            RoundManager.instance.onRoundStarted += Play;
-            RoundManager.instance.onPlacingEnded += Stop;
+            RoundManager.instance.onPlacingStarted += Play;
+            RoundManager.instance.onBettingEnded += Stop;
         }
     }
 }

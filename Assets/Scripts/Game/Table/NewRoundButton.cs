@@ -11,7 +11,7 @@ namespace EQx.Game.Table {
 
         void Start() {
             RoundManager.instance.onPlacingEnded += ActivateButton;
-            RoundManager.instance.onRoundStarted += () => inRound = true;
+            RoundManager.instance.onPlacingStarted += () => inRound = true;
             if (!PhotonNetwork.IsMasterClient) {
                 gameObject.SetActive(false);
             }

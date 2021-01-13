@@ -47,6 +47,9 @@ namespace EQx.Game.Table {
         }
 
         private void MapAvatarsToSeats() {
+            if (!CardPlayer.localPlayer) {
+                return;
+            }
             int mySeatNumber = CardPlayer.localPlayer.seatNumber;
             avatars.Sort((a, b) => a.observedPlayer.seatNumber.CompareTo(b.observedPlayer.seatNumber));
             for(int i=0; i < avatars.Count; i++) {

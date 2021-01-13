@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fdcd8e772a80241934da5977e53925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPlacingLimit: 1
   playerName: 
   seatNumber: 0
   onTurn: 0
-  cardsPlacedThisTurn: 0
+  cardPlaced: 0
+  lost: 0
   cardsInHand: 
 --- !u!114 &-8434983263080755558
 MonoBehaviour:

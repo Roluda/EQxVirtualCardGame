@@ -1,4 +1,5 @@
-﻿using EQx.Game.Table;
+﻿using EQx.Game.Investing;
+using EQx.Game.Table;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,35 +9,48 @@ namespace EQx.Game.Player {
     public class CardPlayer : MonoBehaviourPunCallbacks , IPunObservable {
         public static CardPlayer localPlayer = null;
         public static UnityAction<CardPlayer> localPlayerReady;
-        [SerializeField]
-        int cardPlacingLimit = 1;
 
         public UnityAction<CardPlayer> onRegister;
+        public UnityAction<CardPlayer> onUnregister;
         public UnityAction<CardPlayer, int> onPlacedCard;
         public UnityAction<CardPlayer, int> onReceivedCard;
+        public UnityAction<CardPlayer, int> onReceivedCoins;
+        public UnityAction<CardPlayer, int> onInvestedCoins;
+        public UnityAction<CardPlayer> onCommited;
+        public UnityAction<CardPlayer> onPayedBlind;
         public UnityAction<CardPlayer, string> onSetName;
         public UnityAction<CardPlayer> onRequestedCard;
         public UnityAction<CardPlayer> onEndedTurn;
         public UnityAction<CardPlayer> onStartedTurn;
-        public UnityAction<CardPlayer> onWinRound;
 
         public string playerName;
         public int seatNumber = -1;
         public bool onTurn = false;
-        public int cardsPlacedThisTurn = 0;
+        public bool cardPlaced = false;
+        public bool lost = false;
         public List<int> cardsInHand = new List<int>();
 
         [PunRPC]
         void RegisterRPC() {
             Debug.Log(name + ".RegisterRPC");
-            RoundManager.instance.Register(this);
             CardDealer.instance.Register(this);
+            InvestmentManager.instance.Register(this);
+            RoundManager.instance.Register(this);
+            onRegister?.Invoke(this);
+        }
+
+        [PunRPC]
+        void UnregisterRPC() {
+            Debug.Log(name + ".UnregisterRPC");
+            CardDealer.instance.Unregister(this);
+            InvestmentManager.instance.Unregister(this);
+            RoundManager.instance.Unregister(this);
+            onUnregister?.Invoke(this);
         }
 
         [PunRPC]
         void StartTurnRPC() {
             Debug.Log(name + ".StartTurnRPC");
-            cardsPlacedThisTurn = 0;
             onTurn = true;
             onStartedTurn?.Invoke(this);
         }
@@ -64,7 +78,7 @@ namespace EQx.Game.Player {
         [PunRPC]
         void PlaceCardRPC(int id) {
             Debug.Log(name + ".PlaceCardRPC");
-            cardsPlacedThisTurn++;
+            cardPlaced = true;
             cardsInHand.Remove(id);
             onPlacedCard?.Invoke(this, id);
         }
@@ -78,11 +92,28 @@ namespace EQx.Game.Player {
         }
 
         [PunRPC]
-        void WinRoundRPC() {
-            Debug.Log(name + ".WinRoundRPC");
-            onWinRound?.Invoke(this);
+        void ReceiveCoinsRPC(int amount) {
+            Debug.Log(name + ".ReceiveCoinsRPC" + amount);
+            onReceivedCoins?.Invoke(this, amount);
         }
 
+        [PunRPC]
+        void InvestCoinsRPC(int amount) {
+            Debug.Log(name + ".InvestCoinsRPC" + amount);
+            onInvestedCoins?.Invoke(this, amount);
+        }
+
+        [PunRPC]
+        void PayBlindRPC(){
+            Debug.Log(name + ".PayBlindRPC");
+            onPayedBlind?.Invoke(this);
+        }
+
+        [PunRPC]
+        void CommitRPC() {
+            Debug.Log(name + ".CommitRPC");
+            onCommited?.Invoke(this);
+        }
 
 
         //Client Side RPCs
@@ -109,23 +140,52 @@ namespace EQx.Game.Player {
 
         public void PlaceCard(int id) {
             Debug.Log(name + ".PlaceCard");
-            if (photonView.IsMine && onTurn && cardsPlacedThisTurn < cardPlacingLimit) {
+            if (photonView.IsMine && onTurn && !cardPlaced) {
                 photonView.RPC("PlaceCardRPC", RpcTarget.AllBuffered, id);
             }
         }
 
-        public void CallWinRound() {
-            Debug.Log(name + ".CallWinRound");
+        public void InvestCoins(int amount) {
+            Debug.Log(name + ".InvestCoins" + amount);
             if (photonView.IsMine) {
-                photonView.RPC("WinRoundRPC", RpcTarget.AllBuffered);
+                photonView.RPC("InvestCoinsRPC", RpcTarget.AllBuffered, amount);
+            }
+        }
+
+        public void PayBlind() {
+            Debug.Log(name + ".PayBlind");
+            if (photonView.IsMine) {
+                photonView.RPC("PayBlindRPC", RpcTarget.AllBuffered);
+            }
+        }
+
+        public void Commit() {
+            Debug.Log(name + ".Commit");
+            if (photonView.IsMine) {
+                photonView.RPC("CommitRPC", RpcTarget.AllBuffered);
             }
         }
 
 
+        //Server Side RPCs
         public void ReceiveCard(int id) {
-            Debug.Log(name + ".ReceiveCard");
+            Debug.Log(name + ".ReceiveCard: "+id);
             if (PhotonNetwork.IsMasterClient) {
                 photonView.RPC("ReceiveCardRPC", RpcTarget.AllBuffered, id);
+            }
+        }
+
+        public void ReceiveCoins(int amount) {
+            Debug.Log(name + ".ReceiveCoins: " + amount);
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("ReceiveCoinsRPC", RpcTarget.AllBuffered, amount);
+            }
+        }
+
+        public void Unregister() {
+            Debug.Log(name + ".Unregister");
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("UnregisterRPC", RpcTarget.AllBuffered);
             }
         }
 
@@ -138,7 +198,6 @@ namespace EQx.Game.Player {
                 localPlayerReady?.Invoke(this);
                 photonView.RPC("SetNameRPC", RpcTarget.AllBuffered, PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, "Anonymous"));
                 photonView.RPC("RegisterRPC", RpcTarget.AllBuffered);
-
             }
         }
 
@@ -147,6 +206,7 @@ namespace EQx.Game.Player {
             if (photonView.Owner == otherPlayer) {
                 RoundManager.instance.Unregister(this);
                 CardDealer.instance.Unregister(this);
+                InvestmentManager.instance.Unregister(this);
                 Destroy(this);
             }
         }
