@@ -19,5 +19,11 @@ MonoBehaviour:
   iconTransparent: {fileID: 21300000, guid: 313993ce1df4d8240a53856cc8df2e50, type: 3}
   iconWhite: {fileID: 21300000, guid: a32a0913dc7c0ef429fef43071f5e151, type: 3}
   iconBlack: {fileID: 21300000, guid: 0bcb3617b5e806a4a93f69f4d77e90d0, type: 3}
-  description: Default Description please change this in the future. You look good
-    today.
+  description: "Human Capture attempts to measure the power of labor and civil service
+    coalitions, including their privileges in the political system. This might be
+    reflected by their ability to influence their own wages and working conditions.
+    In this Pillar, evidence of their Political Power is measured by Unionization
+    rates (UNI, i.3), or Public sector employees as % of total employment (PSE, i.3).
+    Other areas of human capture are operationalized by the Women, Business and the
+    Law (WBL, i.3) Indicator, or the extreme phenomena of modern slavery by the Global
+    Slavery Index (GSI, i.3).\u200B"

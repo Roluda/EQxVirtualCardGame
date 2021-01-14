@@ -19,5 +19,11 @@ MonoBehaviour:
   iconTransparent: {fileID: 21300000, guid: c73f83c178dc72e49a14ceaa66fb411e, type: 3}
   iconWhite: {fileID: 21300000, guid: af383a7d43f078f4ba0ceaaf9f6a01e0, type: 3}
   iconBlack: {fileID: 21300000, guid: eaa57cbd54e4beb4e869fd0abd1bceb0, type: 3}
-  description: Default Description please change this in the future. You look good
-    today.
+  description: "Labor Rent seeks to determine all rents arising from interventions
+    in or related to labor markets by participants on both supply and demand sides.
+    For this purpose, the Pillar will include the Unemployment rate (UEM, iv.12)
+    and other measures which often are the result of intra-labor rent seeking. Value
+    Extraction phenomena in which rent seeking can a priori occur on either the employers
+    or employee side are also measured, like the Delta real wage vs labor productivity
+    (WLP, iv.12). More clear-cut Value Extraction models considered are the Gender
+    wage gap (GWG, iv.12) and the planned Cost of Thriving Index (CTI, iv.12).\u200B"

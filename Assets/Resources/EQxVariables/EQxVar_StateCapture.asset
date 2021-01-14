@@ -19,5 +19,9 @@ MonoBehaviour:
   iconTransparent: {fileID: 21300000, guid: fee7b644ba1fb814c923530f5a198fea, type: 3}
   iconWhite: {fileID: 21300000, guid: b4521e857ba7b8842be56be371fceb5c, type: 3}
   iconBlack: {fileID: 21300000, guid: 2b456d319c6363644b8ffd0f98c31bfc, type: 3}
-  description: Default Description please change this in the future. You look good
-    today.
+  description: "State Capture focuses on the direct capture by distributional coalitions
+    of the state and its government branches. This Pillar measures diverse manifestations
+    of elite power ranging from political centralization to gender parity at the
+    state\u2019s top echelons. Specific Indicators measure Social Mobility (MOB,
+    i.1) and any evidence that the state has been captured, as for instance evidenced
+    by Political corruption (COR, i.1).\u200B"

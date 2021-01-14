@@ -19,5 +19,10 @@ MonoBehaviour:
   iconTransparent: {fileID: 21300000, guid: b6e9f70061529a34382d55b53d8a0e66, type: 3}
   iconWhite: {fileID: 21300000, guid: b0c4dc8f3aa53fa47956d1a3b6ba90b1, type: 3}
   iconBlack: {fileID: 21300000, guid: cb24cf2a74740b64a8a71eafc32cfb3f, type: 3}
-  description: Default Description please change this in the future. You look good
-    today.
+  description: "Giving Income focuses on how the government uses and manages public
+    finances. Redistribution of state income in the form of Subsidies and transfers
+    as % of expenses (SNT, iii.7) is an important Indicator of this Pillar; many
+    of these processes often divert resources away from most efficient uses and create
+    hidden cost 4. The Pillar also evaluates Indicators conducive to Value Creation,
+    like public education provision or health including Covid-19 safety (COV, iii.7),
+    that increase competition in many markets and act to curb rent seeking behaviors.\u200B"

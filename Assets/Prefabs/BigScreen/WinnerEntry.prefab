@@ -848,5 +848,5 @@ MonoBehaviour:
   addedValue: {fileID: 9204508466627096564}
   reducedValue: {fileID: 3625787841177930925}
   loseColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
-  winHeight: 120
+  winHeight: 100
   presentSpeed: 10
