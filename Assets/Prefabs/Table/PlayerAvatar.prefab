@@ -224,7 +224,7 @@ MonoBehaviour:
   shade: {fileID: 1153595664565217712}
   nameText: {fileID: 7163884063840166539}
   standardColor: {r: 0.9, g: 0.9, b: 0.9, a: 0.9019608}
-  turnColor: {r: 0.5421413, g: 0.7123734, b: 0.8773585, a: 0.9019608}
+  turnColor: {r: 1, g: 0.94316745, b: 0.41037738, a: 0.9019608}
   countryCardPrefab: {fileID: 5480481563703173222, guid: 48e37b2585bfc59448859a298e615337,
     type: 3}
   commitmentPilePrefab: {fileID: 519680903006523901, guid: 8140ce38a47fe3647a6e8de68738e76e,

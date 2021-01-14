@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AudienceDude
-  m_Shader: {fileID: -6465566751694194690, guid: e8f1865e6b294c24ea8dec1f9a18f0d7,
+  m_Shader: {fileID: -6465566751694194690, guid: 7fc5931550e5f8d4fbc567fd25f1d42f,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -22,6 +22,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_4A82A7C7:
+        m_Texture: {fileID: 2800000, guid: 6f1bc89cf9b3edb4bad594ee3b0e278d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_EA08774C:
         m_Texture: {fileID: 2800000, guid: 6f1bc89cf9b3edb4bad594ee3b0e278d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -105,6 +109,8 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - Vector2_22F2EFD2: {r: 0.1, g: -0.01, b: 0, a: 0}
+    - Vector2_319B9047: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_747739E0: {r: 0, g: 0, b: 0, a: 0}
     - Vector2_81F45919: {r: 1, g: 0.3, b: 0, a: 0}
     - _BaseColor: {r: 0.7725491, g: 0.30588236, b: 0.3529412, a: 1}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
