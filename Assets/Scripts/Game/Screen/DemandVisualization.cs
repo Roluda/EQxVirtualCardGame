@@ -1,12 +1,11 @@
-﻿using EQx.Game.Table;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EQx.Game.Screen {
+namespace EQx.Game.Table {
     public class DemandVisualization : MonoBehaviour {
 
         [SerializeField]

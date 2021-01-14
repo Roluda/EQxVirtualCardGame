@@ -1,5 +1,6 @@
 ﻿using EQx.Game.CountryCards;
 using EQx.Game.Player;
+using EQx.Game.Screen;
 using EQx.Game.Table;
 using System;
 using System.Collections;
@@ -85,10 +86,14 @@ namespace EQx.Game.Investing {
                 addedValue.SetValue(cardValue + bonusValue);
                 actualValue.SetValueInstant(cardValue);
                 reducedValue.SetValueInstant(0);
-            } else {
-                addedValue.SetValueInstant(0);
+            } else if (bonusValue <0){
+                addedValue.SetValueInstant(cardValue);
                 actualValue.SetValue(cardValue + bonusValue);
                 reducedValue.SetValueInstant(cardValue);
+            } else {
+                addedValue.SetValue(cardValue);
+                actualValue.SetValue(cardValue);
+                reducedValue.SetValue(cardValue);
             }
             combinedValue.text = ((int)(cardValue + bonusValue)).ToString();
         }

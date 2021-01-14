@@ -12,7 +12,6 @@ using UnityEngine.Events;
 
 namespace EQx.Game.Table {
     public class RoundManager : MonoBehaviourPunCallbacks , IPunObservable {
-
         public enum RoundState {
             pre,
             placing,
@@ -34,6 +33,7 @@ namespace EQx.Game.Table {
         public UnityAction onBettingStarted;
 
         public Dictionary<CardPlayer, int> placedCards = new Dictionary<CardPlayer, int>();
+        public List<PlayerStats> playerStats = new List<PlayerStats>();
         public List<CardPlayer> registeredPlayers = new List<CardPlayer>();
         public List<CardPlayer> preRegisteredPlayers = new List<CardPlayer>();
         public List<CardPlayer> winners = new List<CardPlayer>();
@@ -162,6 +162,7 @@ namespace EQx.Game.Table {
             }
             roundState = RoundState.placing;
             placedCards.Clear();
+            playerStats.Clear();
             registeredPlayers[0].StartTurn();
             registeredPlayers[0].PayBlind();
             onPlacingStarted?.Invoke();
@@ -208,6 +209,15 @@ namespace EQx.Game.Table {
             Debug.Log(name + ".EndBettingRoundRPC");
             onBettingEnded?.Invoke();
             winners = CurrentWinners().Keys.ToList();
+            foreach (var player in registeredPlayers) {
+                var stats = new PlayerStats();
+                stats.player = player;
+                stats.placedCard = placedCards[player];
+                stats.baseValue = CountryCardDatabase.instance.GetCountry(stats.placedCard).GetValue(currentDemand);
+                stats.bonusValue = InvestmentManager.instance.BonusValue(player);
+                stats.won = winners.Contains(player);
+                playerStats.Add(stats);
+            }
             roundState = RoundState.post;
         }
 
