@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameVersion: Develop
-  maxPlayers: 6
+  maxPlayers: 5
   hostGamePrefix: 'Table of '
   hostDefaultName: Anonymous
   content: {fileID: 1511091329}
