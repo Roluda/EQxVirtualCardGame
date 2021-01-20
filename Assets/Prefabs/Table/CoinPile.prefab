@@ -54,6 +54,7 @@ MonoBehaviour:
   countDisplay: {fileID: 8439609667838159461}
   displayPrefix: 
   displayHeight: 0.1
+  coinSFX: {fileID: 11400000, guid: 87a39d4d8b3e8b44aa8852640cd33d04, type: 2}
   spawnCoins: 0
 --- !u!1001 &1214315394504985433
 PrefabInstance:

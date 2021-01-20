@@ -79,6 +79,10 @@ MonoBehaviour:
   attachedCollider: {fileID: 5736143759096023769}
   coinRenderer: {fileID: 8135362671051980010}
   highlightColor: {r: 1, g: 1, b: 1, a: 1}
+  coinSFX: {fileID: 11400000, guid: 87a39d4d8b3e8b44aa8852640cd33d04, type: 2}
+  movingPlaneNormal: {x: 0, y: 0, z: 1}
+  highlighted: 0
+  dragging: 0
 --- !u!1001 &7432919188414668910
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,7 +61,7 @@ namespace EQx.Game.Player {
             if (player == CardPlayer.localPlayer) {
                 Debug.Log(name + ".CapitalUpdateListener: new Capital: " + InvestmentManager.instance.Capital(player));
                 capital = InvestmentManager.instance.Capital(player);
-                capitalBackup = capitalMountain.capital;
+                capitalBackup = capital;
             }
         }
 

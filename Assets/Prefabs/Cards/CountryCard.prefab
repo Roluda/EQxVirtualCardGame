@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5480481563703173220}
   - component: {fileID: 3372512215888634547}
   - component: {fileID: 4591527473284169547}
+  - component: {fileID: 6185163255559335501}
   m_Layer: 0
   m_Name: CountryCard
   m_TagString: Untagged
@@ -121,6 +122,20 @@ MonoBehaviour:
   observedCard: {fileID: 5480481563703173222}
   sortingOrder: 10
   normal: {x: 0, y: -0.2, z: 1}
+--- !u!114 &6185163255559335501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480481563703173241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b812347039b226f4692f5bb5d8882094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  observedCard: {fileID: 5480481563703173222}
+  cardSFX: {fileID: 11400000, guid: a06c196b0a292e34e9861581f7f94bd3, type: 2}
 --- !u!1001 &442321119655467394
 PrefabInstance:
   m_ObjectHideFlags: 0

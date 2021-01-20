@@ -223,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 4676794263258245281}
   colorSaturationChange: 0.2
-  lerpSpeed: 3
+  lerpSpeed: 10
   maxValue: 100
   maximumBarWidth: 1000
   barOffset: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 4676794263773314258}
   colorSaturationChange: 0
-  lerpSpeed: 3
+  lerpSpeed: 10
   maxValue: 100
   maximumBarWidth: 1000
   barOffset: 0
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 4676794264487767898}
   colorSaturationChange: -0.2
-  lerpSpeed: 3
+  lerpSpeed: 10
   maxValue: 100
   maximumBarWidth: 1000
   barOffset: 0
