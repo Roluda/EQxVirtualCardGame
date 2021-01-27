@@ -38,14 +38,14 @@ namespace EQx.Game.Screen {
         }
 
         public void PresentBaseValues() {
-            AudioManager.instance.PlayOneShot(drumRoll);
+            drumRoll.Play();
             foreach (var candidate in candidates) {
                 candidate.PresentBaseValues();
             }
         }
 
         public void PresentCombinedValues() {
-            AudioManager.instance.PlayOneShot(drumRoll);
+            drumRoll.Play();
             foreach (var candidate in candidates) {
                 candidate.PresentCombinedValues();
             }
@@ -67,8 +67,8 @@ namespace EQx.Game.Screen {
             foreach (var candidate in candidates) {
                 candidate.Win();
             }
-            AudioManager.instance.PlayOneShot(winApplause);
-            AudioManager.instance.PlayOneShot(winDang);
+            winApplause.Play();
+            winDang.Play();
         }
 
         public void CleanUp() {

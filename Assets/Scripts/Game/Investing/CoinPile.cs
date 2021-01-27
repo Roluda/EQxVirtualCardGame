@@ -88,10 +88,10 @@ namespace EQx.Game.Investing {
                 timer = 0;
                 if (count < targetAmount) {
                     pile.Enqueue(Instantiate(coinPrefab, CalculateSpawnPosition(), CalculateRotation(), transform));
-                    AudioManager.instance.PlayOneShot(coinSFX);
+                    coinSFX.Play();
                 }else if(count > targetAmount) {
                     Destroy(pile.Dequeue().gameObject);
-                    AudioManager.instance.PlayOneShot(coinSFX);
+                    coinSFX.Play();
                 }
             }
             UpdateCountDisplay();

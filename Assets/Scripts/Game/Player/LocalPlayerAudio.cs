@@ -14,7 +14,7 @@ namespace EQx.Game.Player {
         }
 
         void Claps() {
-            AudioManager.instance.PlayOneShot(clapsSFX);
+            clapsSFX.Play();
         }
 
         void Initialize(CardPlayer player) {

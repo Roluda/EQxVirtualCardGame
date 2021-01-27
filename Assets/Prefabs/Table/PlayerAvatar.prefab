@@ -228,7 +228,7 @@ MonoBehaviour:
   cashTextPrefix: 'EliteCoins: '
   cashGainInterval: 0.14
   standardColor: {r: 0.9, g: 0.9, b: 0.9, a: 0.9019608}
-  turnColor: {r: 1, g: 0.94316745, b: 0.41037738, a: 0.9019608}
+  turnColor: {r: 0.40784317, g: 0.75294125, b: 0.50980395, a: 0.9019608}
   countryCardPrefab: {fileID: 5480481563703173222, guid: 48e37b2585bfc59448859a298e615337,
     type: 3}
   commitmentPilePrefab: {fileID: 519680903006523901, guid: 8140ce38a47fe3647a6e8de68738e76e,

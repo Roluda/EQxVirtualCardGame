@@ -12,5 +12,9 @@ namespace EQx.Game.Audio {
         public float volume = 1;
 
         public AudioClip next => clips[Random.Range(0, clips.Length)];
+
+        public void Play() {
+            AudioManager.instance.PlayOneShot(this);
+        }
     }
 }

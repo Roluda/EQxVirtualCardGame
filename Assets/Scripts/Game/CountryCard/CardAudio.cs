@@ -8,15 +8,15 @@ namespace EQx.Game.CountryCards {
 
 
         protected override void CardPlayedListener() {
-            AudioManager.instance.PlayOneShot(cardSFX);
+            cardSFX.Play();
         }
 
         protected override void CardSelectedListener(CountryCard card) {
-            AudioManager.instance.PlayOneShot(cardSFX);
+            cardSFX.Play();
         }
 
         protected override void CardDrawnListener() {
-            AudioManager.instance.PlayOneShot(cardSFX);
+            cardSFX.Play();
         }
     }
 }
