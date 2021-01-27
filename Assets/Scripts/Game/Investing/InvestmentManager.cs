@@ -17,6 +17,8 @@ namespace EQx.Game.Investing {
         int initialCapital = 10;
         [SerializeField, Range(0, 10)]
         int blind = 2;
+        [SerializeField, Range(1,2)]
+        public float economicGrowth = 1.1f;
         [SerializeField]
         AnimationCurve investmentPayoff = default;
 
@@ -34,6 +36,7 @@ namespace EQx.Game.Investing {
         }
 
         public UnityAction onPrizeUpdated;
+        public UnityAction<int> onEconomyGrowth;
         public UnityAction<CardPlayer> onCapitalUpdated;
         public UnityAction<CardPlayer> onReceivedCoins;
         public UnityAction<CardPlayer> onPayedBlind;
@@ -108,6 +111,21 @@ namespace EQx.Game.Investing {
             foreach(var account in accounts.Where(acc => acc.isActive)) {
                 account.player.Commit();
             }
+        }
+
+        public void EconomyGrowth() {
+            Debug.Log(name + ".EconomyGrowth");
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("EconomyGrowthRPC", RpcTarget.AllBuffered);
+            }
+        }
+
+        [PunRPC]
+        void EconomyGrowthRPC() {
+            float currentPrize = prize;
+            int newPrize = (int)(currentPrize * economicGrowth);
+            onEconomyGrowth?.Invoke(newPrize - prize);
+            prize = newPrize;
         }
 
         public void WinPrize() {

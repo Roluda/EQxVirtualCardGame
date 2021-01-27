@@ -17,6 +17,12 @@ namespace EQx.Game.Player {
         [SerializeField]
         TMP_Text nameText = default;
         [SerializeField]
+        TMP_Text cashText = default;
+        [SerializeField]
+        string cashTextPrefix = "EliteCoins: ";
+        [SerializeField]
+        float cashGainInterval = 1.3f;
+        [SerializeField]
         Color standardColor = default;
         [SerializeField]
         Color turnColor = default;
@@ -30,6 +36,25 @@ namespace EQx.Game.Player {
         CommitmentPile playerPile;
         Seat mySeat;
 
+
+        int currentCash = 0;
+        int targetCash = 0;
+        float timer = 0;
+
+        private void Update() {
+            timer += Time.deltaTime;
+            if(timer >=cashGainInterval) {
+                timer = 0;
+                if (currentCash < targetCash) {
+                    currentCash++;
+                    cashText.text = cashTextPrefix + currentCash;
+                }else if(currentCash> targetCash) {
+                    currentCash--;
+                    cashText.text = cashTextPrefix + currentCash;
+                }
+            }
+        }
+
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize");
             observedPlayer = player;
@@ -37,10 +62,17 @@ namespace EQx.Game.Player {
             observedPlayer.onEndedTurn += EndedTurnListener;
             observedPlayer.onStartedTurn += StartedTurnListener;
             observedPlayer.onSetName += SetNameListener;
+            InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
             nameText.text = player.playerName;
             shade.color = player.onTurn? turnColor : standardColor;
             playerPile = Instantiate(commitmentPilePrefab, transform);
             playerPile.Initialize(player);
+        }
+
+        private void CapitalUpdatedListener(CardPlayer player) {
+            if(player == observedPlayer) {
+                targetCash = InvestmentManager.instance.Capital(player);
+            }
         }
 
         public void TakeSeat(Seat seat) {

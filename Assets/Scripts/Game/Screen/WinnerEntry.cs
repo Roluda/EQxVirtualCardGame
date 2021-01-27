@@ -48,6 +48,7 @@ namespace EQx.Game.Screen {
 
         float currentValue = 0;
         bool presentingBaseValue = false;
+        bool presentingCombinedValue = false;
 
         public void Initialize(PlayerStats stats) {
             player = stats.player;
@@ -59,6 +60,10 @@ namespace EQx.Game.Screen {
             flagIcon.sprite = Resources.Load<Sprite>(flagPath + "/" + this.playedCard.isoCountryCode.ToLower());
             SetSliderAppearance();
             UpdateSliderValuesInstant();
+        }
+
+        public void PresentCombinedValues() {
+            presentingCombinedValue = true;
         }
 
         public void PresentBaseValues() {
@@ -108,6 +113,12 @@ namespace EQx.Game.Screen {
         void Update() {
             if (presentingBaseValue) {
                 if (currentValue < baseValue) {
+                    currentValue += Time.deltaTime * presentSpeed;
+                }
+                UpdateSliderValuesInstant();
+            }
+            if (presentingCombinedValue) {
+                if (currentValue < combinedValue) {
                     currentValue += Time.deltaTime * presentSpeed;
                 }
                 UpdateSliderValuesInstant();

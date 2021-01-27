@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EQx.Game.Investing {
     public class Coin : MonoBehaviour {
@@ -23,7 +21,7 @@ namespace EQx.Game.Investing {
         Plane movingPlane = default;
 
         public float height => attachedCollider.size.y * transform.localScale.y;
-        public float radius=> attachedCollider.size.x / 2 * transform.localScale.x;
+        public float radius => attachedCollider.size.x / 2 * transform.localScale.x;
         public bool isKinematic => attachedRigidbody.isKinematic;
 
         Material coinMaterial;

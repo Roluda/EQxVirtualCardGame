@@ -4,6 +4,7 @@ using UnityEngine;
 using EQx.Game.Player;
 using System.Linq;
 using EQx.Game.Table;
+using EQx.Game.Audio;
 
 namespace EQx.Game.Screen {
     public class WinnerVisualization : MonoBehaviour {
@@ -14,6 +15,12 @@ namespace EQx.Game.Screen {
         WinnerEntry winnerEntry = default;
         [SerializeField]
         float baseValuePresentationTime;
+        [SerializeField]
+        RandomSFX winApplause = default;
+        [SerializeField]
+        RandomSFX winDang = default;
+        [SerializeField]
+        RandomSFX drumRoll = default;
 
         List<WinnerEntry> candidates = new List<WinnerEntry>();
 
@@ -31,8 +38,16 @@ namespace EQx.Game.Screen {
         }
 
         public void PresentBaseValues() {
+            drumRoll.Play();
             foreach (var candidate in candidates) {
                 candidate.PresentBaseValues();
+            }
+        }
+
+        public void PresentCombinedValues() {
+            drumRoll.Play();
+            foreach (var candidate in candidates) {
+                candidate.PresentCombinedValues();
             }
         }
 
@@ -52,6 +67,8 @@ namespace EQx.Game.Screen {
             foreach (var candidate in candidates) {
                 candidate.Win();
             }
+            winApplause.Play();
+            winDang.Play();
         }
 
         public void CleanUp() {

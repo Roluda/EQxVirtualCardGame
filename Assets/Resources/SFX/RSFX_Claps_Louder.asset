@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1bc800190116e4d877d328eb2914d5, type: 3}
+  m_Name: RSFX_Claps_Louder
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 7ecf006b4b9a2254c9e7387dbf836952, type: 3}
+  - {fileID: 8300000, guid: 44fe033db61165247b801d97774fa9ee, type: 3}
+  - {fileID: 8300000, guid: 977708562b592dd47a4be15269540bed, type: 3}
+  - {fileID: 8300000, guid: 9e9a4affbcf0b9b438271801a5b8eb4b, type: 3}
+  volume: 0.4

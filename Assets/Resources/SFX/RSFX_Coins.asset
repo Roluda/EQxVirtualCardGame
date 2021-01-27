@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1bc800190116e4d877d328eb2914d5, type: 3}
+  m_Name: RSFX_Coins
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 0560c263e74eadb4a934133b770efe6e, type: 3}
+  - {fileID: 8300000, guid: a43de0d499e5ea14db3d10d5a72ab15e, type: 3}
+  - {fileID: 8300000, guid: 9248e414e26dbba4fb903dc8007d230c, type: 3}
+  - {fileID: 8300000, guid: 3ef89014aad0a974196430afd72f4ff3, type: 3}
+  - {fileID: 8300000, guid: aefdc74898f341b41b89b13cf804e193, type: 3}
+  - {fileID: 8300000, guid: 5d7194e6045736e4685f3f0fa11f3aa2, type: 3}

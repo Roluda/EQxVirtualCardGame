@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using EQx.Game.Audio;
 
 namespace EQx.Game.Investing {
     public class CoinPile : MonoBehaviour {
@@ -26,6 +27,8 @@ namespace EQx.Game.Investing {
         string displayPrefix = "";
         [SerializeField]
         float displayHeight = 0.1f;
+        [SerializeField]
+        RandomSFX coinSFX = default;
 
         [Header("Debug")]
         [SerializeField]
@@ -85,8 +88,10 @@ namespace EQx.Game.Investing {
                 timer = 0;
                 if (count < targetAmount) {
                     pile.Enqueue(Instantiate(coinPrefab, CalculateSpawnPosition(), CalculateRotation(), transform));
+                    coinSFX.Play();
                 }else if(count > targetAmount) {
                     Destroy(pile.Dequeue().gameObject);
+                    coinSFX.Play();
                 }
             }
             UpdateCountDisplay();
