@@ -26,6 +26,10 @@ namespace EQx.Game.Player {
         Transform spawnLocation = default;
         [SerializeField]
         Transform despawnLocation = default;
+        [SerializeField]
+        Transform placingLocation = default;
+        [SerializeField]
+        Transform bettingLocation = default;
 
 
         public List<CountryCard> cardInventory = new List<CountryCard>();
@@ -52,11 +56,20 @@ namespace EQx.Game.Player {
         }
 
         void EndedTurnListener(CardPlayer player) {
-
+            fanAnchor.position = bettingLocation.position;
         }
 
         void StartedTurnListener(CardPlayer player) {
-
+            switch (RoundManager.instance.roundState) {
+                case RoundManager.RoundState.placing:
+                    fanAnchor.position = placingLocation.position;
+                    break;
+                case RoundManager.RoundState.betting:
+                    fanAnchor.position = bettingLocation.position;
+                    break;
+                default:
+                    throw new NotImplementedException("Player should not start turn in this round state");
+            }
         }
 
         public void RemovePlacedCard() {
