@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using Photon.Pun;
+using UnityEngine.Analytics;
+using System.Collections.Generic;
 
 namespace EQx.Analytics {
     public class RoomTracking : MonoBehaviour {

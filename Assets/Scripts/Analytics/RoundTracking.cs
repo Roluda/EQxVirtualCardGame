@@ -17,7 +17,7 @@ namespace EQx.Analytics {
 
         // Start is called before the first frame update
         void Start() {
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
             if (PhotonNetwork.IsMasterClient) {
                 RoundManager.instance.onBettingEnded += BettingEndedListener;
                 RoundManager.instance.onPlacingStarted += PlacingStartedListener;
