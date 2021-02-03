@@ -2,6 +2,7 @@
 using EQx.Game.Player;
 using EQx.Game.Screen;
 using EQx.Game.Table;
+using EQx.Game.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,10 @@ namespace EQx.Game.Investing {
         [Header("Confirmation")]
         [SerializeField]
         Button confirmButton = default;
+        [SerializeField]
+        BlinkingImage warning = default;
+        [SerializeField]
+        float timeUntilWarning = 8;
 
         public UnityAction<int> onInvestmentChange;
 
@@ -53,7 +58,7 @@ namespace EQx.Game.Investing {
         float bonusValue => InvestmentManager.instance.BonusValue(plannedInvestment);
 
         bool commited = false;
-        // Start is called before the first frame update
+        float timer = 0;
 
 
         private void NewDemandListener(EQxVariableType variable) {
@@ -119,6 +124,8 @@ namespace EQx.Game.Investing {
             Debug.Log(name + ".StartedTurnListener: " + player);
             commited = false;
             confirmButton.gameObject.SetActive(true);
+            warning.StopBlink();
+            timer = 0;
         }
 
         private void EndedTurnListener(CardPlayer player) {
@@ -130,6 +137,7 @@ namespace EQx.Game.Investing {
             Debug.Log(name + ".ScreenOn");
             screen.gameObject.SetActive(true);
             investmentSlider.Reset();
+            warning.StopBlink();
         }
 
         private void ScreenOff() {
@@ -145,12 +153,18 @@ namespace EQx.Game.Investing {
             player.onEndedTurn += EndedTurnListener;
         }
 
+        private void Update() {
+            timer += Time.deltaTime;
+            if(timer > timeUntilWarning) {
+                warning.StartBlink();
+            }
+        }
+
         private void Awake() {
             CardPlayer.localPlayerReady += Initialize;
         }
 
         void Start() {
-            RoundManager.instance.onBettingStarted += ScreenOn;
             RoundManager.instance.onBettingEnded += ScreenOff;
             RoundManager.instance.onNewDemand += NewDemandListener;
             confirmButton.onClick.AddListener(ConfirmCommitment);

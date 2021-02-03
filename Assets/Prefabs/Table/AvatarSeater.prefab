@@ -171,83 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 7955931485142910165}
   commitmentPlace: {fileID: 9075613218824730475}
---- !u!1 &3644356203680963495
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5061535124520006590}
-  m_Layer: 0
-  m_Name: CardPlace (5)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5061535124520006590
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3644356203680963495}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -1.273, y: -0.52, z: -0.085}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7012191688552346866}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
---- !u!1 &4231564561064496937
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7012191688552346866}
-  - component: {fileID: 8851896477472122362}
-  m_Layer: 0
-  m_Name: Seat (6)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7012191688552346866
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4231564561064496937}
-  m_LocalRotation: {x: 0, y: 0.31730464, z: 0, w: 0.94832367}
-  m_LocalPosition: {x: 2, y: 1.5, z: -3.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5061535124520006590}
-  - {fileID: 2912435087024325757}
-  m_Father: {fileID: 5421931160032734708}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 37, z: 0}
---- !u!114 &8851896477472122362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4231564561064496937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a933002189606744fa94fcea54ff0aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardPlace: {fileID: 5061535124520006590}
-  commitmentPlace: {fileID: 2912435087024325757}
 --- !u!1 &4364342243121199197
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +204,6 @@ Transform:
   - {fileID: 172631442430693365}
   - {fileID: 6228906530034971360}
   - {fileID: 1189908126420846752}
-  - {fileID: 7012191688552346866}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -305,7 +227,7 @@ MonoBehaviour:
   - {fileID: 7414359307853699558}
   - {fileID: 4886020078208066018}
   - {fileID: 8785263465320862817}
-  - {fileID: 8851896477472122362}
+  - {fileID: 0}
 --- !u!1 &4581762604440651706
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,36 +335,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPlace: {fileID: 2730084003513676103}
   commitmentPlace: {fileID: 2213200913998128392}
---- !u!1 &6702148123890619072
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2912435087024325757}
-  m_Layer: 0
-  m_Name: CommitmentPlace
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2912435087024325757
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6702148123890619072}
-  m_LocalRotation: {x: -0.09841022, y: -0.7002253, z: -0.7002253, w: 0.09841022}
-  m_LocalPosition: {x: -1.963, y: -0.52, z: 0.32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7012191688552346866}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7075093028945037853
 GameObject:
   m_ObjectHideFlags: 0

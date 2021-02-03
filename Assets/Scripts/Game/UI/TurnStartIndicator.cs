@@ -1,8 +1,10 @@
 ﻿using EQx.Game.Audio;
 using EQx.Game.Player;
+using EQx.Game.Table;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -13,7 +15,7 @@ namespace EQx.Game.LocalPlayer {
         [SerializeField]
         Image background = default;
         [SerializeField]
-        GameObject textObject = default;
+        TMP_Text textObject = default;
         [SerializeField]
         Volume vignetteVolume = default;
         [SerializeField]
@@ -28,10 +30,14 @@ namespace EQx.Game.LocalPlayer {
         AnimationCurve backgroundAlphaOverDuration = default;
         [SerializeField]
         RandomSFX notification = default;
+        [SerializeField]
+        string placingMessage = "Place a Card";
+        [SerializeField]
+        string bettingMessage = "Commit Value";
 
         private void Awake() {
             CardPlayer.localPlayerReady += Initialize;
-            textObject.SetActive(false);
+            textObject.gameObject.SetActive(false);
         }
 
         private void Initialize(CardPlayer player) {
@@ -40,10 +46,19 @@ namespace EQx.Game.LocalPlayer {
         }
 
         private void StartedTurnListener(CardPlayer player) {
-            StartCoroutine(DisplayIndication());
+            switch (RoundManager.instance.roundState) {
+                case RoundManager.RoundState.placing:
+                    StartCoroutine(DisplayIndication(placingMessage));
+                    break;
+                case RoundManager.RoundState.betting:
+                    StartCoroutine(DisplayIndication(bettingMessage));
+                    break;
+                default:
+                    throw new NotImplementedException("this state should not have a start turn message");
+            }
         }
 
-        IEnumerator DisplayIndication() {
+        IEnumerator DisplayIndication(string message) {
             float time = 0;
             Vignette vignette;
             vignetteVolume.profile.TryGet(out vignette);
@@ -61,13 +76,14 @@ namespace EQx.Game.LocalPlayer {
                         notification.Play();
                         playedNotification = true;
                     }
-                    textObject.SetActive(true);
+                    textObject.text = message;
+                    textObject.gameObject.SetActive(true);
                 } else {
-                    textObject.SetActive(false);
+                    textObject.gameObject.SetActive(false);
                 }
                 yield return null;
             }
-            textObject.SetActive(false);
+            textObject.gameObject.SetActive(false);
         }
     }
 }

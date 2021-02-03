@@ -15,6 +15,8 @@ namespace EQx.Game.Investing {
 
         [SerializeField]
         float growthInfoDuration = 2;
+        [SerializeField]
+        string grwothPrefix = "Economic Value Created:";
 
         // Start is called before the first frame update
         void Start() {
@@ -25,8 +27,10 @@ namespace EQx.Game.Investing {
 
         private void EconomyGrowthListener(int growth) {
             int increase = (int)(InvestmentManager.instance.economicGrowth * 100) - 100;
-            growthInfo.text = $"+{increase}% ({growth})";
-            StartCoroutine(DisplayGrowthInfo());
+            if (growth > 0) {
+                growthInfo.text = $"{grwothPrefix} {growth}";
+                StartCoroutine(DisplayGrowthInfo());
+            }
         }
 
         IEnumerator DisplayGrowthInfo() {
