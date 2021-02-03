@@ -1,6 +1,7 @@
 ﻿using EQx.Game;
 using EQx.Game.CountryCards;
 using EQx.Game.Table;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,14 +12,22 @@ namespace EQx.Analytics {
     public class RoundTracking : MonoBehaviour {
         [SerializeField]
         string winnerEvent = "winner";
+        [SerializeField]
+        string roundStart = "round_start";
 
         // Start is called before the first frame update
         void Start() {
-#if !UNITY_EDITOR
-            RoundManager.instance.onBettingEnded += BettingEndedListener;
+#if UNITY_EDITOR
+            if (PhotonNetwork.IsMasterClient) {
+                RoundManager.instance.onBettingEnded += BettingEndedListener;
+                RoundManager.instance.onPlacingStarted += PlacingStartedListener;
+            }
 #endif
         }
 
+        private void PlacingStartedListener() {
+            AnalyticsEvent.Custom(roundStart);
+        }
 
         private void BettingEndedListener() {
             foreach(var stat in RoundManager.instance.playerStats) {
