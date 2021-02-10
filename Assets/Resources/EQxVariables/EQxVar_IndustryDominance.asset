@@ -13,16 +13,11 @@ MonoBehaviour:
   m_Name: EQxVar_IndustryDominance
   m_EditorClassIdentifier: 
   type: 11
-  variableName: Industry Dominance
+  variableName: Coalition Dominance
   level: 3
   color: {r: 0.77647066, g: 0.30588236, b: 0.35686275, a: 1}
   iconTransparent: {fileID: 21300000, guid: e146c764cdfd30f41a50223175cde9bd, type: 3}
   iconWhite: {fileID: 21300000, guid: c72bb37a0f95526499f9f0a85cbb74cb, type: 3}
   iconBlack: {fileID: 21300000, guid: e5eb7b75bb5194d439fad3101b81df0c, type: 3}
-  description: "Industry Dominance measures a national economy\u2019s diversity.
-    Influence of a country\u2019s dominant industries in the political economy is
-    assessed by Indicators measuring, for instance, the relative export volumes,
-    revenues, or profits of leading industries as percentage of GDP. The Pillar also
-    includes Indicators like the Economic Complexity Index (ECI, ii.4) measuring
-    the \u201Camount of productive knowledge\u201D2 implied in a country\u2019s export
-    structures."
+  description: "Measures a national economy\u2019s diversity and the dominance and
+    influence of the largest industries, interest groups and coalitions."

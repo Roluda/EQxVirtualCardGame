@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: EQxVar_ProducerRent
   m_EditorClassIdentifier: 
   type: 17
-  variableName: Producer Rent
+  variableName: Producer Value
   level: 3
   color: {r: 0.37254903, g: 0.74509805, b: 0.7137255, a: 1}
   iconTransparent: {fileID: 21300000, guid: cb974a5e876875a48872d914439acc7d, type: 3}
   iconWhite: {fileID: 21300000, guid: ca68a6c1719b0ce498d69f332a578900, type: 3}
   iconBlack: {fileID: 21300000, guid: 33d66aae29166a54cb0205216d0db512, type: 3}
-  description: "Producer Rent identifies rents extracted by producers and suppliers
-    in the market for goods and services. Rents are extracted, for example, through
-    barriers as implied in Trade Freedom (TRF, iv.10), Barriers to entry (BTE, iv.10)
-    or Foreign direct investment as % of GDP (FDI, iv.10). Protectionist measures
-    against entry enable Value transferring business models to be established, usually
-    to the benefit of domestic producers and investors, inducing welfare losses well-documented
-    in economics.\u200B"
+  description: Identifies Value Creation as well as rents extracted by producers
+    and suppliers in the market for goods and services. For example, through protectionist
+    measures that prevent the entry of valuable business models.

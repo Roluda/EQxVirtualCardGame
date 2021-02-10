@@ -19,5 +19,5 @@ MonoBehaviour:
   iconTransparent: {fileID: 0}
   iconWhite: {fileID: 0}
   iconBlack: {fileID: 0}
-  description: Default Description please change this in the future. You look good
-    today.
+  description: 'Measures the capture of the three kinds of rules that make up institutions:
+    the rules of the state, business regulation, and the rules of human labor.'
