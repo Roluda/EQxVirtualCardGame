@@ -122,13 +122,16 @@ namespace EQx.Game.Investing {
 
         [PunRPC]
         void EconomyGrowthRPC() {
+            Debug.Log(name + ".EconomyGrowthRPC");
             float currentPrize = prize;
             int newPrize = (int)(currentPrize * economicGrowth);
             onEconomyGrowth?.Invoke(newPrize - prize);
             prize = newPrize;
         }
 
-        public void WinPrize() {
+        [PunRPC]
+        void WinPrizeRPC() {
+            Debug.Log(name + "WinPrizeRPC");
             var winners = RoundManager.instance.winners;
             if (winners.Count > 0) {
                 int share = prize / winners.Count;
@@ -136,6 +139,13 @@ namespace EQx.Game.Investing {
                     winner.ReceiveCoins(share);
                 }
                 prize -= share * winners.Count;
+            }
+        }
+
+        public void WinPrize() {
+            Debug.Log(name + "WinPrize");
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("WinPrizeRPC", RpcTarget.AllBuffered);
             }
         }
 
