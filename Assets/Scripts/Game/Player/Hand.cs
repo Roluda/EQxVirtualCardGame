@@ -82,6 +82,7 @@ namespace EQx.Game.Player {
             Debug.Log(name + "PlaceCardListener");
             var removedCard = cardInventory.Where(card => card.id == id).First();
             cardInventory.Remove(removedCard);
+            removedCard.affordable = false;
             removedCard.SetTargetPosition(despawnLocation.position);
             removedCard.SetTargetRotation(despawnLocation.rotation.eulerAngles);
             removedCard.PlayCard();
@@ -135,6 +136,11 @@ namespace EQx.Game.Player {
                 card.SetTargetPosition(CalculateFanPosition(fan.IndexOf(card), fan.Count));
                 card.SetTargetRotation(CalculateFanRotation(fan.IndexOf(card), fan.Count));
                 card.layer = sortingOrderStart + fan.IndexOf(card);
+                if(RoundManager.instance.roundState == RoundManager.RoundState.placing && CardPlayer.localPlayer.onTurn) {
+                    card.affordable = true;
+                } else {
+                    card.affordable = false;
+                }
             }
         }
 

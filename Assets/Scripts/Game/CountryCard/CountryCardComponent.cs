@@ -27,10 +27,14 @@ namespace EQx.Game.CountryCards {
             observedCard.onNewCardData += NewCardDataListener;
             observedCard.onCardSelected += CardSelectedListener;
             observedCard.onCardUnselected += CardUnselectedListener;
+            observedCard.onCardAffordable += CardAffordableListener;
+            observedCard.onCardUnaffordable += CardUnaffordableListener;
             observedCard.onCardPlayed += CardPlayedListener;
             observedCard.onVariableHighlighted += VariableHighlightedListener;
             Enable();
         }
+
+
 
         private void OnDisable() {
             observedCard.onTargetPositionSet -= TargetPositionSetListener;
@@ -52,6 +56,8 @@ namespace EQx.Game.CountryCards {
         protected virtual void TargetPositionSetListener(Vector3 target) { }
         protected virtual void CardSelectedListener(CountryCard card) { }
         protected virtual void CardUnselectedListener(CountryCard card) { }
+        protected virtual void CardUnaffordableListener(CountryCard card) { }
+        protected virtual void CardAffordableListener(CountryCard card) { }
         protected virtual void VariableHighlightedListener(EQxVariableType variable) { }
 
         protected virtual void Validate() { }

@@ -19,11 +19,6 @@ MonoBehaviour:
   iconTransparent: {fileID: 21300000, guid: 3da71b6add5e4b24e958a94df0abff25, type: 3}
   iconWhite: {fileID: 21300000, guid: bdc9a6cecb449d140a5bc96cd10360ad, type: 3}
   iconBlack: {fileID: 21300000, guid: e38fe0893a5cf1240b4490e9d9b5dff8, type: 3}
-  description: "Unearned Income mainly focuses on the exploitation or Value Extraction
-    of natural and various resources, including the future. For instance, environmental
-    footprints are conceptualized as wealth provided by nature \u2013 i.e. wealth
-    that is not earned in full. In addition, low Environmental Performance Index
-    (EPI, iii.9) represents intergenerational wealth transfers, as does Government
-    debt as % of GDP (DBT, iii.9). State ownership, control and involvement in business
-    (SOE, iii.9) is another Indicator here \u2013 the license to operate is self
-    \u2013 issued rather than earned."
+  description: Mainly focuses on the exploitation or Value Extraction of natural
+    and other resources that have not been earned in full. That includes transfers
+    to the present generation from future generations.

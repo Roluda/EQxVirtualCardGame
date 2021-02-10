@@ -19,9 +19,5 @@ MonoBehaviour:
   iconTransparent: {fileID: 21300000, guid: ae8ec199e69bdba44ba0d367fa0a6d63, type: 3}
   iconWhite: {fileID: 21300000, guid: 4eef32326cc17ab45b9d63b0360908c9, type: 3}
   iconBlack: {fileID: 21300000, guid: 43d5aaf5a9db3f44aa0a49880225f92e, type: 3}
-  description: "Firm Dominance measures the degree of power concentration in the
-    hands of a nation\u2019s leading firms. To that effect, the Pillar examines,
-    for instance, the Top 10 firms market capitalization as % of GDP (FKG, ii.5),
-    as well as the number of Small and medium \u2013 sized enterprises per 1,000
-    people (SME, ii.5). Indicators further considered will be measurements of policies
-    designed to maintain healthy levels of competition and limits to Economic Power."
+  description: "Measures the degree of power concentration in the hands of a nation\u2019s
+    leading firms."

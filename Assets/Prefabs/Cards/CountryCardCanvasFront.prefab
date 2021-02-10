@@ -3551,7 +3551,7 @@ PrefabInstance:
     - target: {fileID: 5085854844256811719, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_Name
-      value: Capital RentPillar
+      value: Capital ValuePillar
       objectReference: {fileID: 0}
     - target: {fileID: 5085854844334791337, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
@@ -3566,7 +3566,7 @@ PrefabInstance:
     - target: {fileID: 5085854844600151178, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_text
-      value: Capital Rent
+      value: Capital Value
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18188bc8362ffdf44a81ed3b52f8f50a, type: 3}
@@ -4487,7 +4487,7 @@ PrefabInstance:
     - target: {fileID: 5085854844256811719, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_Name
-      value: Industry DominancePillar
+      value: Coalition DominancePillar
       objectReference: {fileID: 0}
     - target: {fileID: 5085854844334791336, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
@@ -4517,7 +4517,7 @@ PrefabInstance:
     - target: {fileID: 5085854844600151178, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_text
-      value: Industry Dominance
+      value: Coalition Dominance
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18188bc8362ffdf44a81ed3b52f8f50a, type: 3}
@@ -4658,7 +4658,7 @@ PrefabInstance:
     - target: {fileID: 5085854844256811719, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_Name
-      value: Producer RentPillar
+      value: Producer ValuePillar
       objectReference: {fileID: 0}
     - target: {fileID: 5085854844334791337, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
@@ -4673,7 +4673,7 @@ PrefabInstance:
     - target: {fileID: 5085854844600151178, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_text
-      value: Producer Rent
+      value: Producer Value
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18188bc8362ffdf44a81ed3b52f8f50a, type: 3}
@@ -5190,7 +5190,7 @@ PrefabInstance:
     - target: {fileID: 5085854844256811719, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_Name
-      value: Labor RentPillar
+      value: Labor ValuePillar
       objectReference: {fileID: 0}
     - target: {fileID: 5085854844334791337, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
@@ -5201,6 +5201,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 280
+      objectReference: {fileID: 0}
+    - target: {fileID: 5085854844600151178, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
+        type: 3}
+      propertyPath: m_text
+      value: Labor Value
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18188bc8362ffdf44a81ed3b52f8f50a, type: 3}

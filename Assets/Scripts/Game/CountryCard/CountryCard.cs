@@ -12,6 +12,8 @@ namespace EQx.Game.CountryCards {
         public UnityAction<Vector3> onTargetRotationSet;
         public UnityAction<CountryCard> onCardSelected;
         public UnityAction<CountryCard> onCardUnselected;
+        public UnityAction<CountryCard> onCardAffordable;
+        public UnityAction<CountryCard> onCardUnaffordable;
         public UnityAction<EQxVariableType> onVariableHighlighted;
 
         [SerializeField]
@@ -67,6 +69,22 @@ namespace EQx.Game.CountryCards {
 
         public void SetTargetRotation(Vector3 target) {
             onTargetRotationSet?.Invoke(target);
+        }
+
+        bool affordableCache = false;
+        public bool affordable {
+            get => affordableCache;
+            set {
+                if (value == affordableCache) {
+                    return;
+                }
+                affordableCache = value;
+                if (value) {
+                    onCardAffordable?.Invoke(this);
+                } else {
+                    onCardUnaffordable?.Invoke(this);
+                }
+            }
         }
 
         bool selectedCache = false;
