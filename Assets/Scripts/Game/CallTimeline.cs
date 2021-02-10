@@ -54,10 +54,13 @@ namespace EQx {
             }
         }
 
+        float lastUpdateTime = 0;
+
         // Update is called once per frame
         void Update() {
+            float realDeltaTime = Time.realtimeSinceStartup - lastUpdateTime;
             if (playing) {
-                timer += Time.deltaTime;
+                timer += realDeltaTime;
                 foreach (var action in actions) {
                     if (timer >= action.start && !action.wasPlayed) {
                         action.action?.Invoke();
@@ -65,6 +68,7 @@ namespace EQx {
                     }
                 }
             }
+            lastUpdateTime = Time.realtimeSinceStartup;
         }
     }
 }
