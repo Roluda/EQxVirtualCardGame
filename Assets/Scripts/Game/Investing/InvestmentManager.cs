@@ -16,7 +16,7 @@ namespace EQx.Game.Investing {
         [SerializeField, Range(0, 100)]
         int initialCapital = 10;
         [SerializeField, Range(0, 10)]
-        int blind = 2;
+        public readonly int blind = 2;
         [SerializeField, Range(1,2)]
         public float economicGrowth = 1.1f;
         [SerializeField]

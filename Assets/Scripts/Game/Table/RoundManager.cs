@@ -207,7 +207,6 @@ namespace EQx.Game.Table {
         [PunRPC]
         void EndBettingRoundRPC() {
             Debug.Log(name + ".EndBettingRoundRPC");
-            onBettingEnded?.Invoke();
             winners = CurrentWinners().Keys.ToList();
             foreach (var player in registeredPlayers) {
                 var stats = new PlayerStats();
@@ -219,6 +218,7 @@ namespace EQx.Game.Table {
                 playerStats.Add(stats);
             }
             roundState = RoundState.post;
+            onBettingEnded?.Invoke();
         }
 
 
