@@ -2917,6 +2917,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 574843571681885144, guid: a3d0f2794bb5efd43bede29c1a57921c,
+        type: 3}
+      propertyPath: timeUntilWarning
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 574843571681885145, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: m_LocalPosition.x
