@@ -9,27 +9,17 @@ namespace EQx.Menu {
     public class TableBrowser : MonoBehaviourPunCallbacks {
 		[SerializeField]
 		string gameVersion = "Develop";
-		[SerializeField]
-		int maxPlayers = 6;
-
-
-		[SerializeField]
-		string hostGamePrefix = "Table of ";
-		[SerializeField]
-		string hostDefaultName = "Anonymous";
 
 		[SerializeField]
 		Transform content = null;
 		[SerializeField]
 		GameObject serverOption = null;
 
+		public Action onRoomNotUnique;
+
 		static string userID = "";
 
-		private void Start() {
-			ConnectToPhoton();
-		}
-
-        private void ConnectToPhoton() {
+        public void ConnectToPhoton() {
             if (!PhotonNetwork.IsConnected) {
 				if (!string.IsNullOrEmpty(userID)) {
 					PhotonNetwork.AuthValues.UserId = userID;
@@ -38,6 +28,10 @@ namespace EQx.Menu {
 				PhotonNetwork.AutomaticallySyncScene = true;
 				PhotonNetwork.GameVersion = gameVersion;
             }
+        }
+
+        private void Start() {
+			ConnectToPhoton();
         }
 
         public override void OnConnectedToMaster() {
@@ -50,21 +44,20 @@ namespace EQx.Menu {
 			Debug.Log("ConnectedToLobby");
         }
 
-        public void CreateServerOption(string name, UnityEngine.Events.UnityAction callback) {
+        public void CreateServerOption(string name, int currentPlayers, int maxPlayers, UnityEngine.Events.UnityAction callback) {
 			var option = Instantiate(serverOption);
 			option.transform.SetParent(content);
 			var browserItem = option.GetComponent<TableOption>();
 			if (browserItem != null)
-				browserItem.SetData(name, callback);
+				browserItem.SetData(name, currentPlayers, maxPlayers, callback);
 		}
 
-		public void Host() {
+		public void Host(string roomName, int maxPlayers) {
             if (!PhotonNetwork.IsConnected) {
 				Debug.LogWarning("Not Cennected to PhotonNetwork");
 				return;
             }
-			string roomName = hostGamePrefix + PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, hostDefaultName);
-			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0, PublishUserId = true};
+			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0, PublishUserId = true, };
 			PhotonNetwork.CreateRoom(roomName, roomOptions);
 		}
 
@@ -81,7 +74,7 @@ namespace EQx.Menu {
 				Destroy(content.GetChild(i).gameObject);
 
 			foreach (var room in roomList) {
-				CreateServerOption(room.Name, () => {
+				CreateServerOption(room.Name, room.PlayerCount, room.MaxPlayers, () => {
 					PhotonNetwork.JoinRoom(room.Name);
 				});
 			}
@@ -94,6 +87,9 @@ namespace EQx.Menu {
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message) {
+			if(returnCode == 32766) {
+				onRoomNotUnique?.Invoke();
+            }
 			Debug.LogWarning(message);
         }
 

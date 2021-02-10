@@ -4,10 +4,15 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TableOption : MonoBehaviour {
-    public TMP_Text nameText;
-    public Button connectutton;
+    [SerializeField]
+    TMP_Text nameText = default;
+    [SerializeField]
+    TMP_Text playersText = default;
+    [SerializeField]
+    Button connectutton;
 
-    public void SetData(string name, UnityAction callback) {
+    public void SetData(string name, int currentPlayers, int maxPlayers, UnityAction callback) {
+        playersText.text = $"{currentPlayers}/{maxPlayers}";
         nameText.text = name;
         connectutton.onClick.AddListener(callback);
     }
