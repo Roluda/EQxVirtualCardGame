@@ -54,13 +54,20 @@ namespace EQx.Game.Table {
                 }
                 onPlayerRegister?.Invoke(player);
                 onRegisterUpdate?.Invoke();
+                if (roundState == RoundState.placing) {
+                    player.cardPlaced = false;
+                    player.PayBlind();
+                    player.StartTurn();
+                }
                 if (PhotonNetwork.IsMasterClient) {
                     if (registeredPlayers.Count == 1) {
-                        StartRound();
+                        NewRound();
                     }
                 }
             } else {
                 preRegisteredPlayers.Add(player);
+                player.seatNumber = registeredPlayers.Count;
+                onRegisterUpdate?.Invoke();
             }
         }
 
@@ -93,12 +100,15 @@ namespace EQx.Game.Table {
             int maxIndex = registeredPlayers.Count - 1;
             switch (roundState) {
                 case RoundState.placing:
-                    if (index >= maxIndex) {
+                    if(registeredPlayers.All(cardPlayer => cardPlayer.cardPlaced)) {
                         EndPlacingRound();
+                    }
+                    if (index >= maxIndex) {
+                        //EndPlacingRound();
                     } else {
                         index++;
-                        registeredPlayers[index].PayBlind();
-                        registeredPlayers[index].StartTurn();
+                        //registeredPlayers[index].PayBlind();
+                        //registeredPlayers[index].StartTurn();
                     }
                     break;
                 case RoundState.betting:
@@ -117,9 +127,16 @@ namespace EQx.Game.Table {
 
 
         #region RoundBehaviour
+        public void NewRound() {
+            Debug.Log(name + ".NewRound");
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC("NewRoundRPC", RpcTarget.AllBuffered);
+            }
+        }
 
-
-        public void StartRound() {
+        [PunRPC]
+        void NewRoundRPC() {
+            Debug.Log(name + ".NewRoundRPC");
             roundState = RoundState.pre;
             foreach (var player in preRegisteredPlayers) {
                 Register(player);
@@ -154,17 +171,19 @@ namespace EQx.Game.Table {
         [PunRPC]
         void StartPlacingRoundRPC() {
             Debug.Log(name + ".StartPlacingRoundRPC");
+            roundState = RoundState.placing;
             foreach (var pair in placedCards) {
                 CardDealer.instance.DiscardCard(pair.Value);
             }
             foreach (var player in registeredPlayers) {
                 player.cardPlaced = false;
+                player.StartTurn();
+                player.PayBlind();
             }
-            roundState = RoundState.placing;
             placedCards.Clear();
             playerStats.Clear();
-            registeredPlayers[0].StartTurn();
-            registeredPlayers[0].PayBlind();
+            //registeredPlayers[0].StartTurn();
+            //registeredPlayers[0].PayBlind();
             onPlacingStarted?.Invoke();
         }
 

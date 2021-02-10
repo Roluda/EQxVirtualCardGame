@@ -120,49 +120,49 @@ namespace EQx.Game.Player {
         public void StartTurn() {
             Debug.Log(name + ".StartTurn");
             if (photonView.IsMine) {
-                photonView.RPC("StartTurnRPC", RpcTarget.AllBuffered);
+                photonView.RPC("StartTurnRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
         public void EndTurn() {
             Debug.Log(name + ".EndTurn");
             if (photonView.IsMine) {
-                photonView.RPC("EndTurnRPC", RpcTarget.AllBuffered);
+                photonView.RPC("EndTurnRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
         public void RequestCard() {
             Debug.Log(name + ".RequestCard");
             if (photonView.IsMine) {
-                photonView.RPC("RequestCardRPC", RpcTarget.AllBuffered);
+                photonView.RPC("RequestCardRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
         public void PlaceCard(int id) {
             Debug.Log(name + ".PlaceCard");
             if (photonView.IsMine && onTurn && !cardPlaced) {
-                photonView.RPC("PlaceCardRPC", RpcTarget.AllBuffered, id);
+                photonView.RPC("PlaceCardRPC", RpcTarget.AllBufferedViaServer, id);
             }
         }
 
         public void InvestCoins(int amount) {
             Debug.Log(name + ".InvestCoins" + amount);
             if (photonView.IsMine) {
-                photonView.RPC("InvestCoinsRPC", RpcTarget.AllBuffered, amount);
+                photonView.RPC("InvestCoinsRPC", RpcTarget.AllBufferedViaServer, amount);
             }
         }
 
         public void PayBlind() {
             Debug.Log(name + ".PayBlind");
             if (photonView.IsMine) {
-                photonView.RPC("PayBlindRPC", RpcTarget.AllBuffered);
+                photonView.RPC("PayBlindRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
         public void Commit() {
             Debug.Log(name + ".Commit");
             if (photonView.IsMine) {
-                photonView.RPC("CommitRPC", RpcTarget.AllBuffered);
+                photonView.RPC("CommitRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
@@ -197,7 +197,7 @@ namespace EQx.Game.Player {
                 localPlayer = this;
                 localPlayerReady?.Invoke(this);
                 photonView.RPC("SetNameRPC", RpcTarget.AllBuffered, PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, "Anonymous"));
-                photonView.RPC("RegisterRPC", RpcTarget.AllBuffered);
+                photonView.RPC("RegisterRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
