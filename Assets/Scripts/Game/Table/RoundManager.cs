@@ -112,11 +112,14 @@ namespace EQx.Game.Table {
                     }
                     break;
                 case RoundState.betting:
-                    if (index >= maxIndex) {
+                    if(registeredPlayers.All(cardPlayer => cardPlayer.invested)) {
                         EndBettingRound();
+                    }
+                    if (index >= maxIndex) {
+                        //EndBettingRound();
                     } else {
                         index++;
-                        registeredPlayers[index].StartTurn();
+                        //registeredPlayers[index].StartTurn();
                     }
                     break;
                 default:
@@ -177,6 +180,7 @@ namespace EQx.Game.Table {
             }
             foreach (var player in registeredPlayers) {
                 player.cardPlaced = false;
+                player.invested = false;
                 player.StartTurn();
                 player.PayBlind();
             }
@@ -212,7 +216,7 @@ namespace EQx.Game.Table {
         void StartBettingRoundRPC() {
             Debug.Log(name + ".StartBettingRoundRPC");
             roundState = RoundState.betting;
-            registeredPlayers[0].StartTurn();
+            registeredPlayers.ForEach(player => player.StartTurn());
             onBettingStarted?.Invoke();
         }
 

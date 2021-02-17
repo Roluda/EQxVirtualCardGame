@@ -49,6 +49,7 @@ MonoBehaviour:
   avatarID: 0
   onTurn: 0
   cardPlaced: 0
+  invested: 0
   lost: 0
   cardsInHand: 
 --- !u!114 &-8434983263080755558

@@ -67,7 +67,6 @@ namespace EQx.Game.Investing {
         }
 
         void CardPlacedListener(CardPlayer player, int id) {
-            ScreenOn();
             currentCountry = CountryCardDatabase.instance.GetCountry(id);
             SetHeader();
             UpdateSliderValues();
@@ -126,11 +125,15 @@ namespace EQx.Game.Investing {
             confirmButton.gameObject.SetActive(true);
             warning.StopBlink();
             timer = 0;
+            if(RoundManager.instance.roundState == RoundManager.RoundState.betting) {
+                ScreenOn();
+            }
         }
 
         private void EndedTurnListener(CardPlayer player) {
             Debug.Log(name + ".EndedTurnListener: "+player);
             confirmButton.gameObject.SetActive(false);
+            ScreenOff();
         }
 
         private void ScreenOn() {

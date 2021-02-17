@@ -29,6 +29,7 @@ namespace EQx.Game.Player {
         public int avatarID = 0;
         public bool onTurn = false;
         public bool cardPlaced = false;
+        public bool invested = false;
         public bool lost = false;
         public List<int> cardsInHand = new List<int>();
 
@@ -109,6 +110,7 @@ namespace EQx.Game.Player {
         [PunRPC]
         void InvestCoinsRPC(int amount) {
             Debug.Log(name + ".InvestCoinsRPC" + amount);
+            invested = true;
             onInvestedCoins?.Invoke(this, amount);
         }
 
