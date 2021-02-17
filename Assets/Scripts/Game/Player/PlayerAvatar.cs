@@ -22,9 +22,9 @@ namespace EQx.Game.Player {
         string cashTextPrefix = "EliteCoins: ";
         [SerializeField]
         float cashGainInterval = 1.3f;
-        [SerializeField]
+        [SerializeField, ColorUsage(true, true)]
         Color standardColor = default;
-        [SerializeField]
+        [SerializeField, ColorUsage(true, true)]
         Color turnColor = default;
 
         [SerializeField]
@@ -65,8 +65,14 @@ namespace EQx.Game.Player {
             InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
             nameText.text = player.playerName;
             shade.color = player.onTurn? turnColor : standardColor;
+            shade.sprite = LoadSprite(player.avatarID);
             playerPile = Instantiate(commitmentPilePrefab, transform);
             playerPile.Initialize(player);
+        }
+
+        private Sprite LoadSprite(int avatarID) {
+            var sprites = Resources.LoadAll<Sprite>("Sprites/Characters");
+            return sprites[avatarID];
         }
 
         private void CapitalUpdatedListener(CardPlayer player) {
@@ -95,11 +101,13 @@ namespace EQx.Game.Player {
         private void StartedTurnListener(CardPlayer player) {
             Debug.Log(name + "StartedTurnListener");
             shade.color = turnColor;
+            shade.material.SetFloat("_Effect", 0);
         }
 
         private void EndedTurnListener(CardPlayer player) {
             Debug.Log(name + "EndedTurnListener");
             shade.color = standardColor;
+            shade.material.SetFloat("_Effect", 1);
         }
 
         private void CardPlacedListener(CardPlayer player, int id) {

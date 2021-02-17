@@ -227,8 +227,8 @@ MonoBehaviour:
   cashText: {fileID: 1290781257139008898}
   cashTextPrefix: 'EliteCoins: '
   cashGainInterval: 0.14
-  standardColor: {r: 0.9, g: 0.9, b: 0.9, a: 0.9019608}
-  turnColor: {r: 0.40784317, g: 0.75294125, b: 0.50980395, a: 0.9019608}
+  standardColor: {r: 1, g: 1, b: 1, a: 1}
+  turnColor: {r: 2, g: 2, b: 2, a: 1}
   countryCardPrefab: {fileID: 5480481563703173222, guid: 48e37b2585bfc59448859a298e615337,
     type: 3}
   commitmentPilePrefab: {fileID: 519680903006523901, guid: 8140ce38a47fe3647a6e8de68738e76e,
@@ -457,7 +457,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bd677832d221beb439e7939786d60962, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -478,8 +478,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e9d80445b33c99f41848eb72e42fc4eb, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
+  m_Sprite: {fileID: 3112702236248781428, guid: 679721fbbcb006c4091716a9688c4a4d,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

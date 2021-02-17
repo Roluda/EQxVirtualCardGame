@@ -6,5 +6,6 @@ namespace EQx {
     public class PlayerPrefKeys : MonoBehaviour {
         public const string PLAYERNAME = "PLAYER_NAME";
         public const string PLAYERWINS = "PLAYER_WINS";
+        public const string PLAYER_AVATAR = "PLAYER_AVATAR";
     }
 }

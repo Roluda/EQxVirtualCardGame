@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: 
   seatNumber: 0
+  avatarID: 0
   onTurn: 0
   cardPlaced: 0
   lost: 0

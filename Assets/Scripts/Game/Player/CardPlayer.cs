@@ -19,12 +19,14 @@ namespace EQx.Game.Player {
         public UnityAction<CardPlayer> onCommited;
         public UnityAction<CardPlayer> onPayedBlind;
         public UnityAction<CardPlayer, string> onSetName;
+        public UnityAction<CardPlayer, int> onSetAvatar;
         public UnityAction<CardPlayer> onRequestedCard;
         public UnityAction<CardPlayer> onEndedTurn;
         public UnityAction<CardPlayer> onStartedTurn;
 
         public string playerName;
         public int seatNumber = -1;
+        public int avatarID = 0;
         public bool onTurn = false;
         public bool cardPlaced = false;
         public bool lost = false;
@@ -85,10 +87,17 @@ namespace EQx.Game.Player {
 
         [PunRPC]
         void SetNameRPC(string newName) {
-            Debug.Log(newName + ".SetNameRPC");
+            Debug.Log(name+".SetNameRPC");
             playerName = newName;
             name = newName;
             onSetName?.Invoke(this, newName);
+        }
+
+        [PunRPC]
+        void SetAvatarRPC(int id) {
+            Debug.Log(name + ".SetAvatarRPC");
+            avatarID = id;
+            onSetAvatar?.Invoke(this, avatarID);
         }
 
         [PunRPC]
@@ -197,6 +206,7 @@ namespace EQx.Game.Player {
                 localPlayer = this;
                 localPlayerReady?.Invoke(this);
                 photonView.RPC("SetNameRPC", RpcTarget.AllBuffered, PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME, "Anonymous"));
+                photonView.RPC("SetAvatarRPC", RpcTarget.AllBuffered, PlayerPrefs.GetInt(PlayerPrefKeys.PLAYER_AVATAR));
                 photonView.RPC("RegisterRPC", RpcTarget.AllBufferedViaServer);
             }
         }
