@@ -45,7 +45,7 @@ namespace EQx.Game.Investing {
 
         public List<Account> accounts = new List<Account>();
 
-        CardPlayer winner;
+        public CardPlayer prizeWinner;
 
         public void Register(CardPlayer player) {
             Debug.Log(name + ".Register: " + player);
@@ -113,7 +113,7 @@ namespace EQx.Game.Investing {
         }
 
         private void WinListener(CardPlayer player) {
-            winner = player;
+            prizeWinner = player;
         }
 
         public void CommitAll() {
@@ -141,7 +141,7 @@ namespace EQx.Game.Investing {
         [PunRPC]
         void WinPrizeRPC() {
             Debug.Log(name + "WinPrizeRPC");
-            winner.ReceiveCoins(prize);
+            prizeWinner.ReceiveCoins(prize);
             prize = 0;
         }
 
@@ -166,6 +166,10 @@ namespace EQx.Game.Investing {
 
         public int Commitment(CardPlayer player) {
             return accounts.Where(acc => acc.player == player).First().commitment;
+        }
+
+        public int LastCommitment(CardPlayer player) {
+            return accounts.Where(acc => acc.player == player).First().lastCommitment;
         }
 
         public int TakeCommitment(CardPlayer player) {

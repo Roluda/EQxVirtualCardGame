@@ -62,12 +62,6 @@ namespace EQx.Game.LocalPlayer {
             bool clicked = false;
             while (time < displayDuration) {
                 time += Time.deltaTime;
-                var color = background.color;
-                color.a = backgroundAlphaOverDuration.Evaluate(time/displayDuration);
-                background.color = color;
-                if (vignette) {
-                    vignette.intensity.value = vignetteOverDuration.Evaluate(time / displayDuration);
-                }
                 if (time >= textDelay && time <= displayDuration-textPrelay) {
                     if (!playedNotification) {
                         notification.Play();
@@ -82,6 +76,12 @@ namespace EQx.Game.LocalPlayer {
                     }
                 } else {
                     textObject.gameObject.SetActive(false);
+                }
+                var color = background.color;
+                color.a = backgroundAlphaOverDuration.Evaluate(time / displayDuration);
+                background.color = color;
+                if (vignette) {
+                    vignette.intensity.value = vignetteOverDuration.Evaluate(time / displayDuration);
                 }
                 yield return null;
             }
