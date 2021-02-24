@@ -11,6 +11,8 @@ namespace EQx.Game.Chat {
         [SerializeField]
         ChatMessage messagePrefab = default;
 
+        List<ChatMessage> messages = new List<ChatMessage>();
+
         public void SendChatMessage(string message) {
             if (message.Trim() != "") {
                 var sender = PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME);
@@ -22,6 +24,14 @@ namespace EQx.Game.Chat {
         void ReceiveChatMessage(string sender, string message) {
             var messageObject = Instantiate(messagePrefab, chatContext);
             messageObject.SetData(sender, message);
+            messages.Add(messageObject);
+            DisplayAll();
+        }
+
+        public void DisplayAll() {
+            foreach (var mes in messages) {
+                mes.ResetDuration();
+            }
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

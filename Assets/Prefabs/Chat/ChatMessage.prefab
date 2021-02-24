@@ -102,6 +102,42 @@ MonoBehaviour:
   senderText: {fileID: 9091501516913951474}
   messageText: {fileID: 323695718918201775}
   chatPopSound: {fileID: 11400000, guid: f40142925522ac44bad78f37878864c0, type: 2}
+  alphaOverDisplayTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.0073891906
+      outSlope: -0.0073891906
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.84583336
+      value: 0.99375
+      inSlope: -0.025423823
+      outSlope: -0.025423823
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33908048
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0041809
+      value: 0
+      inSlope: -6.275752
+      outSlope: -6.275752
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  displayDuration: 7
+  chatColor: {r: 1, g: 1, b: 1, a: 0}
+  selfDestructTime: 60
 --- !u!114 &1673424541111585462
 MonoBehaviour:
   m_ObjectHideFlags: 0
