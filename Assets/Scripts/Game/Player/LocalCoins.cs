@@ -17,6 +17,21 @@ namespace EQx.Game.Player {
         [SerializeField]
         CommitmentPile commitmentPile = default;
 
+        [SerializeField]
+        TMP_Text infoText = default;
+        [SerializeField]
+        string infoPrefix = "Your Elite Coins: ";
+        [SerializeField]
+        bool onlyTooltipWhenHighlighted = true;
+
+        // Update is called once per frame
+        void Update() {
+            infoText.text = $"{infoPrefix}{capital}";
+            if (onlyTooltipWhenHighlighted) {
+                infoText.gameObject.SetActive(capitalMountain.highlighted || debtMountain.highlighted);
+            }
+        }
+
         int capitalBackup;
 
         int capital {
@@ -45,6 +60,9 @@ namespace EQx.Game.Player {
         void Start() {
             InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
             laptop.onInvestmentChange += InvestmentChangedListener;
+            if (onlyTooltipWhenHighlighted) {
+                infoText.gameObject.SetActive(false);
+            }
         }
 
         private void InvestmentChangedListener(int investment) {

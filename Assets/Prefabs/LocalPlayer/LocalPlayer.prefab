@@ -200,6 +200,11 @@ PrefabInstance:
       propertyPath: rows
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8480766454509750540, guid: 1bb71ddbd2ab25d4692f9819c2d499ab,
+        type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9088853745122219117, guid: 1bb71ddbd2ab25d4692f9819c2d499ab,
         type: 3}
       propertyPath: laptop
