@@ -47,10 +47,10 @@ MonoBehaviour:
   playerName: 
   seatNumber: 0
   avatarID: 0
-  onTurn: 0
-  cardPlaced: 0
-  invested: 0
-  lost: 0
+  state: 0
+  placedCardID: 0
+  baseValue: 0
+  bonusValue: 0
   cardsInHand: 
 --- !u!114 &-8434983263080755558
 MonoBehaviour:

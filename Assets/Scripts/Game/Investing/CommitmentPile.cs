@@ -10,8 +10,8 @@ namespace EQx.Game.Investing {
         public void Initialize(CardPlayer player) {
             Debug.Log(name + "Initialize: " + player);
             observedPlayer = player;
-            observedPlayer.onStartedTurn += UpdateCommitment;
-            observedPlayer.onEndedTurn += UpdateCommitment;
+            observedPlayer.onStartedPlacing += UpdateCommitment;
+            observedPlayer.onEndedPlacing += UpdateCommitment;
         }
 
         public void UpdateCommitment(CardPlayer player) {

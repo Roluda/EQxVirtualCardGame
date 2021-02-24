@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f239cfcdffd0bbd45a7cc12133809268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenRounds: 2
-  initialCards: 3
   possibleDemands: 08000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000
+  maxRounds: 7
   registeredPlayers: []
   currentDemand: 0
+  currentRound: 0
 --- !u!114 &1133764640224539136
 MonoBehaviour:
   m_ObjectHideFlags: 0

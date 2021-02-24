@@ -45,12 +45,15 @@ namespace EQx.Game.Investing {
 
         public List<Account> accounts = new List<Account>();
 
+        CardPlayer winner;
+
         public void Register(CardPlayer player) {
             Debug.Log(name + ".Register: " + player);
             player.onReceivedCoins += ReceivedCoinsListener;
             player.onInvestedCoins += InvestedCoinsListener;
             player.onPayedBlind += PayedBlindListener;
             player.onCommited += CommitedListener;
+            player.onWin += WinListener;
 
             string userID = player.photonView.Owner.UserId;
             var account = accounts.Where(acc => acc.userID == userID).FirstOrDefault();
@@ -72,6 +75,7 @@ namespace EQx.Game.Investing {
             player.onInvestedCoins -= InvestedCoinsListener;
             player.onPayedBlind -= PayedBlindListener;
             player.onCommited -= CommitedListener;
+            player.onWin -= WinListener;
         }
 
         private void PayedBlindListener(CardPlayer player) {
@@ -89,6 +93,7 @@ namespace EQx.Game.Investing {
             var account = accounts.Where(acc => acc.player == player).First();
             account.capital -= amount;
             account.investment += amount;
+            player.bonusValue = investmentPayoff.Evaluate(amount);
             onInvested?.Invoke(player);
             onCapitalUpdated?.Invoke(player);
         }
@@ -105,6 +110,10 @@ namespace EQx.Game.Investing {
             Debug.Log(name + ".CommitedListener: "+ player);
             prize += TakeCommitment(player);
             onCommited?.Invoke(player);
+        }
+
+        private void WinListener(CardPlayer player) {
+            winner = player;
         }
 
         public void CommitAll() {
@@ -132,14 +141,8 @@ namespace EQx.Game.Investing {
         [PunRPC]
         void WinPrizeRPC() {
             Debug.Log(name + "WinPrizeRPC");
-            var winners = RoundManager.instance.winners;
-            if (winners.Count > 0) {
-                int share = prize / winners.Count;
-                foreach (var winner in winners) {
-                    winner.ReceiveCoins(share);
-                }
-                prize -= share * winners.Count;
-            }
+            winner.ReceiveCoins(prize);
+            prize = 0;
         }
 
         public void WinPrize() {

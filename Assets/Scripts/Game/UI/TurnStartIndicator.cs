@@ -42,20 +42,16 @@ namespace EQx.Game.LocalPlayer {
 
         private void Initialize(CardPlayer player) {
             CardPlayer.localPlayerReady -= Initialize;
-            player.onStartedTurn += StartedTurnListener;
+            player.onStartedPlacing += StartedPlacingListener;
+            player.onStartedBetting += StartedBettingListener;
         }
 
-        private void StartedTurnListener(CardPlayer player) {
-            switch (RoundManager.instance.roundState) {
-                case RoundManager.RoundState.placing:
-                    StartCoroutine(DisplayIndication(placingMessage));
-                    break;
-                case RoundManager.RoundState.betting:
-                    StartCoroutine(DisplayIndication(bettingMessage));
-                    break;
-                default:
-                    throw new NotImplementedException("this state should not have a start turn message");
-            }
+        private void StartedBettingListener(CardPlayer player) {
+            StartCoroutine(DisplayIndication(bettingMessage));
+        }
+
+        private void StartedPlacingListener(CardPlayer player) {
+            StartCoroutine(DisplayIndication(placingMessage));
         }
 
         IEnumerator DisplayIndication(string message) {
@@ -63,6 +59,7 @@ namespace EQx.Game.LocalPlayer {
             Vignette vignette;
             vignetteVolume.profile.TryGet(out vignette);
             bool playedNotification = false;
+            bool clicked = false;
             while (time < displayDuration) {
                 time += Time.deltaTime;
                 var color = background.color;
@@ -78,6 +75,11 @@ namespace EQx.Game.LocalPlayer {
                     }
                     textObject.text = message;
                     textObject.gameObject.SetActive(true);
+                    while (clicked == false) {
+                        time += Time.deltaTime;
+                        clicked = Input.GetMouseButtonDown(0);
+                        yield return null;
+                    }
                 } else {
                     textObject.gameObject.SetActive(false);
                 }

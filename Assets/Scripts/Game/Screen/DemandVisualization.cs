@@ -71,9 +71,11 @@ namespace EQx.Game.Table {
             Debug.Log("data" + data);
             head.text = "";
             body.text = "";
+            int round = RoundManager.instance.currentRound;
+            int max = RoundManager.instance.maxRounds;
             icon.sprite = data.iconWhite;
             background.color = data.color;
-            StartCoroutine(TypeText(head, data.variableName));
+            StartCoroutine(TypeText(head, $"Round {round}/{max} - {data.variableName}"));
             yield return new WaitForSeconds(waitAfterHead);
             StartCoroutine(TypeText(body, data.description));
         }

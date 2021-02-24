@@ -1,4 +1,5 @@
 ﻿using EQx.Game.Investing;
+using EQx.Game.Statistics;
 using EQx.Game.Table;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -6,10 +7,22 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace EQx.Game.Player {
+    public enum PlayerState {
+        Unregistered,
+        Placing,
+        Placed,
+        Betting,
+        Betted,
+        Won,
+        Lost
+    }
+
     public class CardPlayer : MonoBehaviourPunCallbacks , IPunObservable {
         public static CardPlayer localPlayer = null;
         public static UnityAction<CardPlayer> localPlayerReady;
 
+        public UnityAction<CardPlayer, string> onSetName;
+        public UnityAction<CardPlayer, int> onSetAvatar;
         public UnityAction<CardPlayer> onRegister;
         public UnityAction<CardPlayer> onUnregister;
         public UnityAction<CardPlayer, int> onPlacedCard;
@@ -18,19 +31,25 @@ namespace EQx.Game.Player {
         public UnityAction<CardPlayer, int> onInvestedCoins;
         public UnityAction<CardPlayer> onCommited;
         public UnityAction<CardPlayer> onPayedBlind;
-        public UnityAction<CardPlayer, string> onSetName;
-        public UnityAction<CardPlayer, int> onSetAvatar;
         public UnityAction<CardPlayer> onRequestedCard;
-        public UnityAction<CardPlayer> onEndedTurn;
-        public UnityAction<CardPlayer> onStartedTurn;
+        public UnityAction<CardPlayer> onStartedPlacing;
+        public UnityAction<CardPlayer> onEndedPlacing;
+        public UnityAction<CardPlayer> onStartedBetting;
+        public UnityAction<CardPlayer> onEndedBetting;
+        public UnityAction<CardPlayer> onWin;
+        public UnityAction<CardPlayer> onLost;
 
         public string playerName;
         public int seatNumber = -1;
         public int avatarID = 0;
-        public bool onTurn = false;
-        public bool cardPlaced = false;
-        public bool invested = false;
-        public bool lost = false;
+
+        public PlayerState state = PlayerState.Unregistered;
+
+        public int placedCardID;
+        public float baseValue;
+        public float bonusValue;
+        public float combinedValue => baseValue + bonusValue;
+
         public List<int> cardsInHand = new List<int>();
 
         [PunRPC]
@@ -38,6 +57,7 @@ namespace EQx.Game.Player {
             Debug.Log(name + ".RegisterRPC");
             CardDealer.instance.Register(this);
             InvestmentManager.instance.Register(this);
+            PlayerObserver.instance.Register(this);
             RoundManager.instance.Register(this);
             onRegister?.Invoke(this);
         }
@@ -45,24 +65,54 @@ namespace EQx.Game.Player {
         [PunRPC]
         void UnregisterRPC() {
             Debug.Log(name + ".UnregisterRPC");
+            state = PlayerState.Unregistered;
             CardDealer.instance.Unregister(this);
             InvestmentManager.instance.Unregister(this);
+            PlayerObserver.instance.Unregister(this);
             RoundManager.instance.Unregister(this);
             onUnregister?.Invoke(this);
         }
 
         [PunRPC]
-        void StartTurnRPC() {
-            Debug.Log(name + ".StartTurnRPC");
-            onTurn = true;
-            onStartedTurn?.Invoke(this);
+        void StartPlacingRPC() {
+            Debug.Log(name + ".StartPlacingRPC");
+            state = PlayerState.Placing;
+            onStartedPlacing?.Invoke(this);
         }
 
         [PunRPC]
-        void EndTurnRPC() {
-            Debug.Log(name + ".EndTurnRPC");
-            onTurn = false;
-            onEndedTurn?.Invoke(this);
+        void EndPlacingRPC() {
+            Debug.Log(name + ".EndPlacingRPC");
+            state = PlayerState.Placed;
+            onEndedPlacing?.Invoke(this);
+        }
+
+        [PunRPC]
+        void StartBettingRPC() {
+            Debug.Log(name + ".StartBettingRPC");
+            state = PlayerState.Betting;
+            onStartedBetting?.Invoke(this);
+        }
+
+        [PunRPC]
+        void EndBettingRPC() {
+            Debug.Log(name + ".EndBettingRPC");
+            state = PlayerState.Betted;
+            onEndedBetting?.Invoke(this);
+        }
+
+        [PunRPC]
+        void WinRPC() {
+            Debug.Log(name + ".WinRPC");
+            state = PlayerState.Won;
+            onWin?.Invoke(this);
+        }
+
+        [PunRPC]
+        void LoseRPC() {
+            Debug.Log(name + ".LoseRPC");
+            state = PlayerState.Lost;
+            onLost?.Invoke(this);
         }
 
         [PunRPC]
@@ -81,7 +131,7 @@ namespace EQx.Game.Player {
         [PunRPC]
         void PlaceCardRPC(int id) {
             Debug.Log(name + ".PlaceCardRPC");
-            cardPlaced = true;
+            placedCardID = id;
             cardsInHand.Remove(id);
             onPlacedCard?.Invoke(this, id);
         }
@@ -90,7 +140,6 @@ namespace EQx.Game.Player {
         void SetNameRPC(string newName) {
             Debug.Log(name+".SetNameRPC");
             playerName = newName;
-            name = newName;
             onSetName?.Invoke(this, newName);
         }
 
@@ -110,7 +159,6 @@ namespace EQx.Game.Player {
         [PunRPC]
         void InvestCoinsRPC(int amount) {
             Debug.Log(name + ".InvestCoinsRPC" + amount);
-            invested = true;
             onInvestedCoins?.Invoke(this, amount);
         }
 
@@ -128,17 +176,45 @@ namespace EQx.Game.Player {
 
 
         //Client Side RPCs
-        public void StartTurn() {
-            Debug.Log(name + ".StartTurn");
+        public void StartPlacing() {
+            Debug.Log(name + ".StartPlacing");
             if (photonView.IsMine) {
-                photonView.RPC("StartTurnRPC", RpcTarget.AllBufferedViaServer);
+                photonView.RPC("StartPlacingRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
-        public void EndTurn() {
-            Debug.Log(name + ".EndTurn");
+        public void EndPlacing() {
+            Debug.Log(name + ".EndPlacing");
             if (photonView.IsMine) {
-                photonView.RPC("EndTurnRPC", RpcTarget.AllBufferedViaServer);
+                photonView.RPC("EndPlacingRPC", RpcTarget.AllBufferedViaServer);
+            }
+        }
+
+        public void StartBetting() {
+            Debug.Log(name + ".StartBetting");
+            if (photonView.IsMine) {
+                photonView.RPC("StartBettingRPC", RpcTarget.AllBufferedViaServer);
+            }
+        }
+
+        public void EndBetting() {
+            Debug.Log(name + ".EndBetting");
+            if (photonView.IsMine) {
+                photonView.RPC("EndBettingRPC", RpcTarget.AllBufferedViaServer);
+            }
+        }
+
+        public void Win() {
+            Debug.Log(name + ".Win");
+            if (photonView.IsMine) {
+                photonView.RPC("WinRPC", RpcTarget.AllBufferedViaServer);
+            }
+        }
+
+        public void Lose() {
+            Debug.Log(name + ".Lose");
+            if (photonView.IsMine) {
+                photonView.RPC("LoseRPC", RpcTarget.AllBufferedViaServer);
             }
         }
 
@@ -151,14 +227,14 @@ namespace EQx.Game.Player {
 
         public void PlaceCard(int id) {
             Debug.Log(name + ".PlaceCard");
-            if (photonView.IsMine && onTurn && !cardPlaced) {
+            if (photonView.IsMine && state == PlayerState.Placing) {
                 photonView.RPC("PlaceCardRPC", RpcTarget.AllBufferedViaServer, id);
             }
         }
 
         public void InvestCoins(int amount) {
             Debug.Log(name + ".InvestCoins" + amount);
-            if (photonView.IsMine) {
+            if (photonView.IsMine && state == PlayerState.Betting) {
                 photonView.RPC("InvestCoinsRPC", RpcTarget.AllBufferedViaServer, amount);
             }
         }
@@ -204,6 +280,7 @@ namespace EQx.Game.Player {
 
         void Start() {
             Debug.Log(name + ".Start");
+            state = PlayerState.Unregistered;
             if (photonView.IsMine) {
                 localPlayer = this;
                 localPlayerReady?.Invoke(this);

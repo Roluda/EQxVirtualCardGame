@@ -26,11 +26,14 @@ namespace EQx.Game.Screen {
 
         public void SpawnBars() {
             float highestValue = 0;
-            foreach (var playerStat in RoundManager.instance.playerStats) {
+            foreach (var player in RoundManager.instance.registeredPlayers) {
+                if (player.state == PlayerState.Unregistered) {
+                    continue;
+                }
                 var candidate = Instantiate(winnerEntry, spawnContext);
-                candidate.Initialize(playerStat);
+                candidate.Initialize(player);
                 candidates.Add(candidate);
-                highestValue = playerStat.combinedValue > highestValue ? playerStat.combinedValue : highestValue;
+                highestValue = player.combinedValue > highestValue ? player.combinedValue : highestValue;
             }
             foreach(var candidate in candidates) {
                 candidate.presentSpeed = highestValue / baseValuePresentationTime;

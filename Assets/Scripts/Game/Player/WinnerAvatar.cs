@@ -10,8 +10,6 @@ using UnityEngine.UI;
 namespace EQx.Game.Player {
     public class WinnerAvatar : MonoBehaviour {
         [SerializeField]
-        Image icon = default;
-        [SerializeField]
         TMP_Text nameText;
         [SerializeField]
         CountryCard cardPrefab = default;

@@ -15,10 +15,10 @@ namespace EQx.Game.Player {
         }
 
         private void AddListeners(CardPlayer player) {
-            player.onEndedTurn += EndedTurnListener;
-            player.onStartedTurn += StartedTurnListener;
+            player.onEndedPlacing += EndedTurnListener;
+            player.onStartedPlacing += StartedTurnListener;
             button.gameObject.SetActive(false);
-            button.onClick.AddListener(delegate { player.EndTurn(); });
+            button.onClick.AddListener(delegate { player.EndPlacing(); });
             button.onClick.AddListener(delegate { button.gameObject.SetActive(false); });
         }
 

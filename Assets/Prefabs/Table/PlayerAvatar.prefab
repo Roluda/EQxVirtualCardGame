@@ -227,8 +227,6 @@ MonoBehaviour:
   cashText: {fileID: 1290781257139008898}
   cashTextPrefix: 'EliteCoins: '
   cashGainInterval: 0.14
-  standardColor: {r: 1, g: 1, b: 1, a: 1}
-  turnColor: {r: 2, g: 2, b: 2, a: 1}
   countryCardPrefab: {fileID: 5480481563703173222, guid: 48e37b2585bfc59448859a298e615337,
     type: 3}
   commitmentPilePrefab: {fileID: 519680903006523901, guid: 8140ce38a47fe3647a6e8de68738e76e,
@@ -477,7 +475,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -15
   m_Sprite: {fileID: 3112702236248781428, guid: 679721fbbcb006c4091716a9688c4a4d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

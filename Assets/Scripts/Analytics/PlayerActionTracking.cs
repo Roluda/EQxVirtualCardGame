@@ -29,7 +29,7 @@ namespace EQx.Analytics {
         }
 
         private void CoinsInvestedListener(CardPlayer player, int coins) {
-            int card = RoundManager.instance.placedCards[player];
+            int card = player.placedCardID;
             EQxCountryData country = CountryCardDatabase.instance.GetCountry(card);
             int playerCommitment = coins - InvestmentManager.instance.blind;
             EQxVariableType demand = RoundManager.instance.currentDemand;

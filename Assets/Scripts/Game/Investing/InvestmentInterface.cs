@@ -3,9 +3,6 @@ using EQx.Game.Player;
 using EQx.Game.Screen;
 using EQx.Game.Table;
 using EQx.Game.UI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -90,7 +87,7 @@ namespace EQx.Game.Investing {
                 addedValue.SetValue(cardValue + bonusValue);
                 actualValue.SetValueInstant(cardValue);
                 reducedValue.SetValueInstant(0);
-            } else if (bonusValue <0){
+            } else if (bonusValue < 0) {
                 addedValue.SetValueInstant(cardValue);
                 actualValue.SetValue(cardValue + bonusValue);
                 reducedValue.SetValueInstant(cardValue);
@@ -115,23 +112,21 @@ namespace EQx.Game.Investing {
             if (!commited) {
                 commited = true;
                 CardPlayer.localPlayer.InvestCoins(plannedInvestment);
-                CardPlayer.localPlayer.EndTurn();
+                CardPlayer.localPlayer.EndBetting();
             }
         }
 
-        private void StartedTurnListener(CardPlayer player) {
+        private void StartedBettingListener(CardPlayer player) {
             Debug.Log(name + ".StartedTurnListener: " + player);
             commited = false;
             confirmButton.gameObject.SetActive(true);
             warning.StopBlink();
             timer = 0;
-            if(RoundManager.instance.roundState == RoundManager.RoundState.betting) {
-                ScreenOn();
-            }
+            ScreenOn();
         }
 
-        private void EndedTurnListener(CardPlayer player) {
-            Debug.Log(name + ".EndedTurnListener: "+player);
+        private void EndedBettingListener(CardPlayer player) {
+            Debug.Log(name + ".EndedTurnListener: " + player);
             confirmButton.gameObject.SetActive(false);
             ScreenOff();
         }
@@ -152,13 +147,13 @@ namespace EQx.Game.Investing {
             Debug.Log(name + "Initialize");
             CardPlayer.localPlayerReady -= Initialize;
             player.onPlacedCard += CardPlacedListener;
-            player.onStartedTurn += StartedTurnListener;
-            player.onEndedTurn += EndedTurnListener;
+            player.onStartedBetting += StartedBettingListener;
+            player.onEndedBetting += EndedBettingListener;
         }
 
         private void Update() {
             timer += Time.deltaTime;
-            if(timer > timeUntilWarning) {
+            if (timer > timeUntilWarning) {
                 warning.StartBlink();
             }
         }
@@ -168,7 +163,6 @@ namespace EQx.Game.Investing {
         }
 
         void Start() {
-            RoundManager.instance.onBettingEnded += ScreenOff;
             RoundManager.instance.onNewDemand += NewDemandListener;
             confirmButton.onClick.AddListener(ConfirmCommitment);
             investmentSlider.onCommitmentUpdate += AdjustCommitment;

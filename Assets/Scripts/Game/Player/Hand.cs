@@ -40,36 +40,38 @@ namespace EQx.Game.Player {
             get => playerCache;
             set {
                 if (playerCache && value != playerCache) {
-                    playerCache.onEndedTurn -= EndedTurnListener;
+                    playerCache.onStartedPlacing -= StartedPlacingListener;
+                    playerCache.onEndedPlacing -= EndedPlacingListener;
+                    playerCache.onStartedBetting -= StartedBettingListener;
+                    playerCache.onEndedBetting -= EndedBettingListener;
                     playerCache.onPlacedCard -= PlacedCardListener;
                     playerCache.onReceivedCard -= ReceivedCardListener;
-                    playerCache.onStartedTurn -= StartedTurnListener;
                 }
                 if (value && value != playerCache) {
-                    value.onEndedTurn += EndedTurnListener;
+                    value.onStartedPlacing += StartedPlacingListener;
+                    value.onEndedPlacing += EndedPlacingListener;
+                    value.onStartedBetting += StartedBettingListener;
+                    value.onEndedBetting += EndedBettingListener;
                     value.onPlacedCard += PlacedCardListener;
                     value.onReceivedCard += ReceivedCardListener;
-                    value.onStartedTurn += StartedTurnListener;
                 }
                 playerCache = value;
             }
         }
 
-        void EndedTurnListener(CardPlayer player) {
+        void StartedPlacingListener(CardPlayer player) {
+            fanAnchor.position = placingLocation.position;
+        }
+
+        void EndedPlacingListener(CardPlayer player) {
+
+        }
+
+        private void StartedBettingListener(CardPlayer player) {
             fanAnchor.position = bettingLocation.position;
         }
 
-        void StartedTurnListener(CardPlayer player) {
-            switch (RoundManager.instance.roundState) {
-                case RoundManager.RoundState.placing:
-                    fanAnchor.position = placingLocation.position;
-                    break;
-                case RoundManager.RoundState.betting:
-                    fanAnchor.position = bettingLocation.position;
-                    break;
-                default:
-                    throw new NotImplementedException("Player should not start turn in this round state");
-            }
+        private void EndedBettingListener(CardPlayer player) {
         }
 
         public void RemovePlacedCard() {
@@ -136,7 +138,7 @@ namespace EQx.Game.Player {
                 card.SetTargetPosition(CalculateFanPosition(fan.IndexOf(card), fan.Count));
                 card.SetTargetRotation(CalculateFanRotation(fan.IndexOf(card), fan.Count));
                 card.layer = sortingOrderStart + fan.IndexOf(card);
-                if(RoundManager.instance.roundState == RoundManager.RoundState.placing && CardPlayer.localPlayer.onTurn) {
+                if(playerCache.state == PlayerState.Placing) {
                     card.affordable = true;
                 } else {
                     card.affordable = false;

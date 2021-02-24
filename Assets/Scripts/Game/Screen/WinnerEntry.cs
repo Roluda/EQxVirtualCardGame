@@ -50,14 +50,14 @@ namespace EQx.Game.Screen {
         bool presentingBaseValue = false;
         bool presentingCombinedValue = false;
 
-        public void Initialize(PlayerStats stats) {
-            player = stats.player;
-            playedCard = CountryCardDatabase.instance.GetCountry(stats.placedCard);
-            bonusValue = stats.bonusValue;
-            baseValue = stats.baseValue;
-            winner = stats.won;
+        public void Initialize(CardPlayer player) {
+            this.player = player;
+            playedCard = CountryCardDatabase.instance.GetCountry(player.placedCardID);
+            bonusValue = player.bonusValue;
+            baseValue = player.baseValue;
+            winner = player.state == PlayerState.Won ? true : false;
             label.text = player.playerName + nameConnector + playedCard.countryName;
-            flagIcon.sprite = Resources.Load<Sprite>(flagPath + "/" + this.playedCard.isoCountryCode.ToLower());
+            flagIcon.sprite = Resources.Load<Sprite>(flagPath + "/" + playedCard.isoCountryCode.ToLower());
             SetSliderAppearance();
             UpdateSliderValuesInstant();
         }

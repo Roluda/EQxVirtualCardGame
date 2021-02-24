@@ -55,8 +55,9 @@ namespace EQx.Game.Player {
             Debug.Log(name + "Initialize");
             observedPlayer = player;
             observedPlayer.onPlacedCard += CardPlacedListener;
-            observedPlayer.onEndedTurn += EndedTurnListener;
-            observedPlayer.onStartedTurn += StartedTurnListener;
+            observedPlayer.onEndedPlacing += EndedPlacingListener;
+            observedPlayer.onStartedPlacing += StartedPlacingListener;
+            observedPlayer.onEndedBetting += EndedBettingListener;
             observedPlayer.onSetName += SetNameListener;
             InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
             nameText.text = player.playerName;
@@ -93,14 +94,17 @@ namespace EQx.Game.Player {
             nameText.text = name;
         }
 
-        private void StartedTurnListener(CardPlayer player) {
+        private void StartedPlacingListener(CardPlayer player) {
             Debug.Log(name + "StartedTurnListener");
-            shade.material.SetFloat("_Effect", 0);
+            shade.material.SetFloat("_Effect", 1);
         }
 
-        private void EndedTurnListener(CardPlayer player) {
-            Debug.Log(name + "EndedTurnListener");
-            shade.material.SetFloat("_Effect", 1);
+        private void EndedPlacingListener(CardPlayer player) {
+        }
+
+        private void EndedBettingListener(CardPlayer arg0) {
+            Debug.Log(name + "EndedBettingListener");
+            shade.material.SetFloat("_Effect", 0);
         }
 
         private void CardPlacedListener(CardPlayer player, int id) {
@@ -118,8 +122,8 @@ namespace EQx.Game.Player {
         private void OnDisable() {
             if (observedPlayer) {
                 observedPlayer.onPlacedCard -= CardPlacedListener;
-                observedPlayer.onEndedTurn -= EndedTurnListener;
-                observedPlayer.onStartedTurn -= StartedTurnListener;
+                observedPlayer.onEndedPlacing -= EndedPlacingListener;
+                observedPlayer.onStartedPlacing -= StartedPlacingListener;
             }
         }
     }

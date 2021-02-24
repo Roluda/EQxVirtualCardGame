@@ -30,15 +30,15 @@ namespace EQx.Analytics {
         }
 
         private void BettingEndedListener() {
-            foreach(var stat in RoundManager.instance.playerStats) {
-                if (stat.won) {
-                    int cardID = stat.placedCard;
+            foreach(var stat in RoundManager.instance.registeredPlayers) {
+                if (stat.state == Game.Player.PlayerState.Won) {
+                    int cardID = stat.placedCardID;
                     EQxCountryData country = CountryCardDatabase.instance.GetCountry(cardID);
                     EQxVariableType demand = RoundManager.instance.currentDemand;
                     float baseValue = stat.baseValue;
                     float bonusValue = stat.bonusValue;
                     float combinedValue = stat.combinedValue;
-                    int competition = RoundManager.instance.playerStats.Count;
+                    int competition = RoundManager.instance.registeredPlayers.Count;
                     AnalyticsEvent.Custom(winnerEvent, new Dictionary<string, object> {
                         {"country_name", country.countryName},
                         {"demand", demand.ToString()},
