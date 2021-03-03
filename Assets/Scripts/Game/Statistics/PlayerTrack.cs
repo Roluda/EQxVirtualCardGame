@@ -11,10 +11,12 @@ namespace EQx.Game.Statistics {
         }
         public CardPlayer player;
         public string userID;
-        public Dictionary<int, int> commitments;
-        public Dictionary<int, int> capital;
-        public Dictionary<int, bool> won;
-        public Dictionary<int, int> cardPlaced;
+        public Dictionary<int, int> winnings = new Dictionary<int, int>();
+        public Dictionary<int, int> commitments = new Dictionary<int, int>();
+        public Dictionary<int, int> investments = new Dictionary<int, int>();
+        public Dictionary<int, int> capital = new Dictionary<int, int>();
+        public Dictionary<int, bool> won = new Dictionary<int, bool>();
+        public Dictionary<int, int> cardPlaced = new Dictionary<int, int>();
 
     }
 }

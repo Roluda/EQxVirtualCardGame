@@ -37,6 +37,7 @@ namespace EQx.Game.Investing {
 
         public UnityAction onPrizeUpdated;
         public UnityAction<int> onEconomyGrowth;
+        public UnityAction<CardPlayer, int> onWinPrize;
         public UnityAction<CardPlayer> onCapitalUpdated;
         public UnityAction<CardPlayer> onReceivedCoins;
         public UnityAction<CardPlayer> onPayedBlind;
@@ -142,6 +143,7 @@ namespace EQx.Game.Investing {
         void WinPrizeRPC() {
             Debug.Log(name + "WinPrizeRPC");
             prizeWinner.ReceiveCoins(prize);
+            onWinPrize?.Invoke(prizeWinner, prize);
             prize = 0;
         }
 

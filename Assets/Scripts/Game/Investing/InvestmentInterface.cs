@@ -112,6 +112,7 @@ namespace EQx.Game.Investing {
             if (!commited) {
                 commited = true;
                 CardPlayer.localPlayer.InvestCoins(plannedInvestment);
+                CardPlayer.localPlayer.Commit();
                 CardPlayer.localPlayer.EndBetting();
             }
         }

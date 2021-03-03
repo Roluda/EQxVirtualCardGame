@@ -1,5 +1,6 @@
 ﻿using EQx.Game.Investing;
 using EQx.Game.Player;
+using EQx.Game.Statistics;
 using EQx.Game.Table;
 using System;
 using System.Collections;
@@ -32,31 +33,23 @@ namespace EQx.Game.Screen {
                 entries[player] = Instantiate(entryPrefab, spawnContext);
                 entries[player].SetName(player.playerName);
                 entries[player].SetIcon(sprites[player.avatarID]);
-                entries[player].SetValueInstant(InvestmentManager.instance.Capital(player) + InvestmentManager.instance.LastCommitment(player));
-                capitals[player] = InvestmentManager.instance.Capital(player) + InvestmentManager.instance.LastCommitment(player);
+                entries[player].SetValueInstant(PlayerObserver.instance.GetCapital(player));
+                capitals[player] = PlayerObserver.instance.GetCapital(player);
             }
             SetRanks();
         }
 
         public void ShowGains() {
             foreach(var entry in entries) {
-                int commitment = InvestmentManager.instance.LastCommitment(entry.Key);
-                if (entry.Key == InvestmentManager.instance.prizeWinner) {
-                    int prize = InvestmentManager.instance.prize;
-                    entry.Value.SetGain(prize - commitment);
-                    entry.Value.SetValueLerp(InvestmentManager.instance.Capital(entry.Key) + prize);
-                } else {
-                    entry.Value.SetGain(-commitment);
-                    entry.Value.SetValueLerp(InvestmentManager.instance.Capital(entry.Key));
-                }
+                entry.Value.SetValueLerp(PlayerObserver.instance.GetCapital(entry.Key) + PlayerObserver.instance.GetWinnings(entry.Key));
+                entry.Value.SetGain(PlayerObserver.instance.GetWinnings(entry.Key));
             }
         }
 
         public void UpdateRankings() {
             capitals.Clear();
             foreach(var player in RoundManager.instance.registeredPlayers) {
-                int prize = InvestmentManager.instance.prizeWinner == player ? InvestmentManager.instance.prize : 0;
-                capitals[player] = InvestmentManager.instance.Capital(player) + prize;
+                capitals[player] = PlayerObserver.instance.GetCapital(player) + PlayerObserver.instance.GetWinnings(player);
                 entries[player].SetGain(0);
             }
             SetRanks();
