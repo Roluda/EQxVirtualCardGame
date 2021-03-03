@@ -48,6 +48,11 @@ namespace EQx.Game.Statistics {
 
         private void InvestedCoinsListener(CardPlayer player, int amount) {
             AddInvestment(player, amount);
+            var investments = GetTrack(player).investments.Values.ToList();
+            float extraction = Mathf.Abs(investments.Where(inv => inv <= 0).Count());
+            float creation = investments.Where(inv => inv > 0).Count();
+            float vcp = creation / (extraction + creation);
+            AddVCP(player, vcp);
         }
 
         private void CommitedListener(CardPlayer player) {
@@ -116,6 +121,14 @@ namespace EQx.Game.Statistics {
             return GetTrack(player).cardPlaced[round];
         }
 
+        public float GetVCP(CardPlayer player) {
+            return GetVCP(player, currentRound);
+        }
+
+        public float GetVCP(CardPlayer player, int round) {
+            return GetTrack(player).valueCreationPercentile[round];
+        }
+
         public PlayerTrack GetTrack(CardPlayer player) {
             return playerTracks.Where(track => track.player == player).FirstOrDefault();
         }
@@ -144,6 +157,10 @@ namespace EQx.Game.Statistics {
             GetTrack(player).cardPlaced[currentRound] = data;
         }
 
+        void AddVCP(CardPlayer player, float data) {
+            GetTrack(player).valueCreationPercentile[currentRound] = data;
+        }
+
         #endregion
 
 
@@ -159,10 +176,18 @@ namespace EQx.Game.Statistics {
 
         void Start() {
             RoundManager.instance.onNewRound += NewRoundListener;
+            RoundManager.instance.onGameEnd += GameOverListener;
             InvestmentManager.instance.onCommited += CommitedListener;
         }
 
+        private void GameOverListener() {
+            Debug.Log(name + ".GameOverListener");
+            currentRound = RoundManager.instance.currentRound;
+            foreach(var player in RoundManager.instance.registeredPlayers) {
+                AddCapital(player, InvestmentManager.instance.Capital(player));
+            }
 
+        }
 
         private void NewRoundListener() {
             currentRound = RoundManager.instance.currentRound;

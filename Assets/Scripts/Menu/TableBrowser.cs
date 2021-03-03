@@ -52,12 +52,14 @@ namespace EQx.Menu {
 				browserItem.SetData(name, currentPlayers, maxPlayers, callback);
 		}
 
-		public void Host(string roomName, int maxPlayers) {
+		public void Host(string roomName, int maxPlayers, int maxRounds) {
             if (!PhotonNetwork.IsConnected) {
 				Debug.LogWarning("Not Cennected to PhotonNetwork");
 				return;
             }
-			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0, PublishUserId = true, };
+			var customProps = new ExitGames.Client.Photon.Hashtable();
+			customProps["r"] = maxRounds;
+			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0, PublishUserId = true, CustomRoomProperties = customProps};
 			PhotonNetwork.CreateRoom(roomName, roomOptions);
 		}
 

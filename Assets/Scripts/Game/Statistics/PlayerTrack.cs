@@ -17,6 +17,7 @@ namespace EQx.Game.Statistics {
         public Dictionary<int, int> capital = new Dictionary<int, int>();
         public Dictionary<int, bool> won = new Dictionary<int, bool>();
         public Dictionary<int, int> cardPlaced = new Dictionary<int, int>();
+        public Dictionary<int, float> valueCreationPercentile = new Dictionary<int, float>();
 
     }
 }

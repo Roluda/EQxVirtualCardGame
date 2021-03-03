@@ -44,13 +44,18 @@ namespace EQx.Game.UI {
         [SerializeField]
         ColorScheme colorScheme = default;
         [SerializeField]
-        int xScaleSegments = 2;
+        public int xScaleSegments = 2;
         [SerializeField]
-        int yScaleSegments = 2;
+        public int yScaleSegments = 2;
         [SerializeField]
         int xScaleDecimals = 1;
         [SerializeField]
         int yScaleDecimals = 1;
+
+        [SerializeField]
+        float minMargin = 0.9f;
+        [SerializeField]
+        float maxMargin = 1.1f;
 
         public string labelX { get => xLabel.text; set => xLabel.text = value; }
         public string labelY { get => yLabel.text; set => yLabel.text = value; }
@@ -58,8 +63,8 @@ namespace EQx.Game.UI {
 
         float xMin => lineData.Min(data => data.xMin);
         float xMax => lineData.Max(data => data.xMax);
-        float yMin => lineData.Min(data => data.yMin);
-        float yMax => lineData.Max(data => data.yMax);
+        float yMin => lineData.Min(data => data.yMin) * minMargin;
+        float yMax => lineData.Max(data => data.yMax) * maxMargin;
 
         List<Line> lineData = new List<Line>();
 

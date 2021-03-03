@@ -1,5 +1,6 @@
 ﻿using EQx.Game.Investing;
 using EQx.Game.Player;
+using EQx.Game.Statistics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,14 +31,13 @@ namespace EQx.Game.Screen {
         public CardPlayer observedPlayer;
         public int rank;
 
-
-        private void OnEnable() {
-            InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
+        private void CommitedListener(CardPlayer player) {
+            Debug.Log(name + ".CommitedListener");
+            if (player == observedPlayer) {
+                vcpText.text = $"{vcpPrefix}{Math.Round(PlayerObserver.instance.GetVCP(player) * 100, 0)}%";
+            }
         }
 
-        private void OnDisable() {
-            InvestmentManager.instance.onCapitalUpdated -= CapitalUpdatedListener;
-        }
 
         private void CapitalUpdatedListener(CardPlayer player) {
             rank = InvestmentManager.instance.GetRank(observedPlayer);
@@ -54,6 +54,16 @@ namespace EQx.Game.Screen {
             nameText.text = player.playerName;
             var sprites = Resources.LoadAll<Sprite>("Sprites/Characters");
             icon.sprite = sprites[player.avatarID];
+        }
+
+        private void Start() {
+            InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
+            InvestmentManager.instance.onCommited += CommitedListener;
+        }
+
+        private void OnDestroy() {
+            InvestmentManager.instance.onCapitalUpdated -= CapitalUpdatedListener;
+            InvestmentManager.instance.onCommited -= CommitedListener;
         }
     }
 }

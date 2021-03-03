@@ -50,7 +50,9 @@ namespace EQx.Game.Screen {
             capitals.Clear();
             foreach(var player in RoundManager.instance.registeredPlayers) {
                 capitals[player] = PlayerObserver.instance.GetCapital(player) + PlayerObserver.instance.GetWinnings(player);
-                entries[player].SetGain(0);
+                if (entries.ContainsKey(player)) {
+                    entries[player].SetGain(0);
+                }
             }
             SetRanks();
         }

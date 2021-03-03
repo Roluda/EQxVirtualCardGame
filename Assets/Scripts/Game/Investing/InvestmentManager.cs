@@ -142,9 +142,11 @@ namespace EQx.Game.Investing {
         [PunRPC]
         void WinPrizeRPC() {
             Debug.Log(name + "WinPrizeRPC");
-            prizeWinner.ReceiveCoins(prize);
-            onWinPrize?.Invoke(prizeWinner, prize);
-            prize = 0;
+            if (prizeWinner) {
+                prizeWinner.ReceiveCoins(prize);
+                onWinPrize?.Invoke(prizeWinner, prize);
+                prize = 0;
+            }
         }
 
         public void WinPrize() {

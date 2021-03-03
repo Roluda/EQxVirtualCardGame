@@ -25,6 +25,13 @@ namespace EQx.Menu {
         [SerializeField]
         string nameEmptyMessage = "Name can't be empty!";
 
+        [SerializeField]
+        Slider maxRooms = default;
+        [SerializeField]
+        TMP_Text maxRoundsText = default;
+        [SerializeField]
+        string maxRoundsPrefix = "Rounds to play: ";
+
         private void Start() {
             browser.onRoomNotUnique += ShowNonUniqueMessage;
         }
@@ -39,12 +46,16 @@ namespace EQx.Menu {
                 nameErrorMessage.gameObject.SetActive(true);
                 nameErrorMessage.text = nameEmptyMessage;
             } else {
-                browser.Host(input.text, (int)slider.value);
+                browser.Host(input.text, (int)slider.value, (int)maxRooms.value);
             }
         }
 
         public void SliderUpdate(float amount) {
             playersText.text = playerTextPrefix + (int)amount;
+        }
+
+        public void RoundSliderUpdate(float amount) {
+            maxRoundsText.text = maxRoundsPrefix + (int)amount;
         }
     }
 }

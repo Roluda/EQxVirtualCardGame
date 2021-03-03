@@ -34,7 +34,7 @@ namespace EQx.Game.Table {
         public EQxVariableType currentDemand;
 
         public int currentRound = 0;
-        bool canJoinRound = false;
+        bool inRound = false;
 
         public void Register(CardPlayer player) {
             Debug.Log(name + ".Register by" + player.name);
@@ -50,7 +50,7 @@ namespace EQx.Game.Table {
             }
             onPlayerRegister?.Invoke(player);
             onRegisterUpdate?.Invoke();
-            if (canJoinRound) {
+            if (inRound) {
                 player.PayBlind();
                 player.StartPlacing();
             }
@@ -94,21 +94,20 @@ namespace EQx.Game.Table {
         #region RoundBehaviour
         public void NewRound() {
             Debug.Log(name + ".NewRound");
-            if (PhotonNetwork.IsMasterClient) {
-                currentRound++;
+            if (PhotonNetwork.IsMasterClient && !inRound) {
                 if (currentRound >= maxRounds) {
                     photonView.RPC("EndGameRPC", RpcTarget.AllBuffered);
                 } else {
-                    photonView.RPC("NewRoundRPC", RpcTarget.AllBuffered, currentRound);
+                    photonView.RPC("NewRoundRPC", RpcTarget.AllBuffered);
                 }
             }
         }
 
         [PunRPC]
-        void NewRoundRPC(int current) {
+        void NewRoundRPC() {
             Debug.Log(name + ".NewRoundRPC");
-            currentRound = current;
-            canJoinRound = true;
+            currentRound++;
+            inRound = true;
             onNewRound?.Invoke();
             SetDemand();
             StartPlacingRound();
@@ -161,7 +160,7 @@ namespace EQx.Game.Table {
         [PunRPC]
         void EndBettingRoundRPC() {
             Debug.Log(name + ".EndBettingRoundRPC");
-            canJoinRound = false;
+            inRound = false;
             var winner = registeredPlayers.Aggregate((x, y) => x.combinedValue > y.combinedValue ? x : y);
             foreach(var player in registeredPlayers) {
                 if(player == winner) {
@@ -183,7 +182,9 @@ namespace EQx.Game.Table {
         [PunRPC]
         void EndGameRPC() {
             Debug.Log(name + ".EndGameRPC");
+            currentRound++;
             onGameEnd?.Invoke();
+            PhotonNetwork.CurrentRoom.IsOpen = false;
         }
         #endregion
 
@@ -201,6 +202,10 @@ namespace EQx.Game.Table {
         private void OnDestroy() {
             if (instance == this)
                 instance = null;
+        }
+
+        void Start() {
+            maxRounds = (int)PhotonNetwork.CurrentRoom.CustomProperties["r"];
         }
 
         #endregion
