@@ -28,6 +28,7 @@ namespace EQx.Game.Screen {
         string vcpPrefix = default;
 
         public CardPlayer observedPlayer;
+        public int rank;
 
 
         private void OnEnable() {
@@ -39,11 +40,12 @@ namespace EQx.Game.Screen {
         }
 
         private void CapitalUpdatedListener(CardPlayer player) {
+            rank = InvestmentManager.instance.GetRank(observedPlayer);
+            transform.SetSiblingIndex(rank-1);
+            rankText.text = $"{rankPrefix}{rank}";
             if (player == observedPlayer) {
                 int capital = InvestmentManager.instance.Capital(player);
-                int rank = InvestmentManager.instance.GetRank(player);
                 coinsText.text = $"{coinsPrefix}{capital}";
-                rankText.text = $"{rankPrefix}{rank}";
             }
         }
 

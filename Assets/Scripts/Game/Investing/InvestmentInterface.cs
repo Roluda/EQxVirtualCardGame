@@ -129,7 +129,6 @@ namespace EQx.Game.Investing {
         private void EndedBettingListener(CardPlayer player) {
             Debug.Log(name + ".EndedTurnListener: " + player);
             confirmButton.gameObject.SetActive(false);
-            ScreenOff();
         }
 
         private void ScreenOn() {
@@ -137,11 +136,6 @@ namespace EQx.Game.Investing {
             screen.gameObject.SetActive(true);
             investmentSlider.Reset();
             warning.StopBlink();
-        }
-
-        private void ScreenOff() {
-            Debug.Log(name + ".ScreenOff");
-            screen.gameObject.SetActive(false);
         }
 
         public void Initialize(CardPlayer player) {
@@ -167,7 +161,6 @@ namespace EQx.Game.Investing {
             RoundManager.instance.onNewDemand += NewDemandListener;
             confirmButton.onClick.AddListener(ConfirmCommitment);
             investmentSlider.onCommitmentUpdate += AdjustCommitment;
-            ScreenOff();
         }
 
     }
