@@ -180,11 +180,6 @@ namespace EQx.Game.Investing {
             return accounts.Where(acc => acc.player == player).First().TakeCommitment();
         }
 
-        public int GetRank(CardPlayer player) {
-            var account = accounts.Where(acc => acc.player == player).First();
-            return accounts.OrderByDescending(acc => acc.capital).ToList().IndexOf(account) + 1;
-        }
-
         public float BonusValue(int investment) {
             return investmentPayoff.Evaluate(investment);
         }

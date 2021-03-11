@@ -28,6 +28,14 @@ namespace EQx.Game.Screen {
             entries.Add(entry);
         }
 
+        public void OrderByCapital() {
+            entries.ForEach(entry => entry.OrderByCapital());
+        }
+
+        public void OrderByVCP() {
+            entries.ForEach(entry => entry.OrderByVCP());
+        }
+
         // Start is called before the first frame update
         void Start() {
             RoundManager.instance.onPlayerRegister += AddEntry;

@@ -1,6 +1,7 @@
 ﻿using EQx.Game.Investing;
 using EQx.Game.Player;
 using EQx.Game.Statistics;
+using EQx.Game.Table;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,22 +31,38 @@ namespace EQx.Game.Screen {
 
         public CardPlayer observedPlayer;
         public int rank;
+        TrackStat sortingMethod = TrackStat.Capital;
 
-        private void CommitedListener(CardPlayer player) {
-            Debug.Log(name + ".CommitedListener");
-            if (player == observedPlayer) {
-                vcpText.text = $"{vcpPrefix}{Math.Round(PlayerObserver.instance.GetVCP(player) * 100, 0)}%";
-            }
+        public void OrderByVCP() {
+            sortingMethod = TrackStat.VCP;
+            rank = PlayerObserver.instance.GetRank(observedPlayer, TrackStat.VCP, RoundManager.instance.currentRound-1);
+            UpdateRanking();
         }
 
+        public void OrderByCapital() {
+            sortingMethod = TrackStat.Capital;
+            rank = PlayerObserver.instance.GetRank(observedPlayer, TrackStat.Capital, RoundManager.instance.currentRound);
+            UpdateRanking();
+        }
 
-        private void CapitalUpdatedListener(CardPlayer player) {
-            rank = InvestmentManager.instance.GetRank(observedPlayer);
-            transform.SetSiblingIndex(rank-1);
-            rankText.text = $"{rankPrefix}{rank}";
-            if (player == observedPlayer) {
-                int capital = InvestmentManager.instance.Capital(player);
-                coinsText.text = $"{coinsPrefix}{capital}";
+        void UpdateRanking() {
+            transform.SetSiblingIndex(rank);
+            rankText.text = $"{rankPrefix}{rank+1}";
+        }
+
+        private void UpdateValues() {
+            int capital = InvestmentManager.instance.Capital(observedPlayer);
+            coinsText.text = $"{capital}";
+            vcpText.text = $"{Math.Round(PlayerObserver.instance.GetVCP(observedPlayer) * 100, 0)}%";
+            switch (sortingMethod) {
+                case TrackStat.Capital:
+                    OrderByCapital();
+                    break;
+                case TrackStat.VCP:
+                    OrderByVCP();
+                    break;
+                default:
+                    throw new NotImplementedException("cant sort by this method");
             }
         }
 
@@ -54,16 +71,15 @@ namespace EQx.Game.Screen {
             nameText.text = player.playerName;
             var sprites = Resources.LoadAll<Sprite>("Sprites/Characters");
             icon.sprite = sprites[player.avatarID];
+            UpdateValues();
         }
 
         private void Start() {
-            InvestmentManager.instance.onCapitalUpdated += CapitalUpdatedListener;
-            InvestmentManager.instance.onCommited += CommitedListener;
+            RoundManager.instance.onNewRound += UpdateValues;
         }
 
         private void OnDestroy() {
-            InvestmentManager.instance.onCapitalUpdated -= CapitalUpdatedListener;
-            InvestmentManager.instance.onCommited -= CommitedListener;
+            RoundManager.instance.onNewRound -= UpdateValues;
         }
     }
 }

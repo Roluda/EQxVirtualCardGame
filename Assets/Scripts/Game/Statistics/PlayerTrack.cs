@@ -9,6 +9,7 @@ namespace EQx.Game.Statistics {
             userID = player.photonView.Owner.UserId;
             this.player = player;
         }
+        public bool active = true;
         public CardPlayer player;
         public string userID;
         public Dictionary<int, int> winnings = new Dictionary<int, int>();

@@ -8,6 +8,17 @@ using System.Linq;
 using UnityEngine;
 
 namespace EQx.Game.Statistics {
+
+    public enum TrackStat {
+        Winnings,
+        Win,
+        Capital,
+        Commitment,
+        Investment,
+        CardPlaced,
+        VCP
+    }
+
     public class PlayerObserver : MonoBehaviour {
 
         public static PlayerObserver instance;
@@ -30,6 +41,7 @@ namespace EQx.Game.Statistics {
                 playerTracks.Add(new PlayerTrack(player));
             } else {
                 playerTrack.player = player;
+                playerTrack.active = true;
             }
         }
 
@@ -39,6 +51,7 @@ namespace EQx.Game.Statistics {
             player.onWin -= WinListener;
             player.onPlacedCard -= CardPlacedListener;
             player.onStartedPlacing -= StartPlacingListener;
+            playerTracks.Where(track => track.player == player).First().active = false;
         }
 
         private void WinListener(CardPlayer player) {
@@ -159,6 +172,34 @@ namespace EQx.Game.Statistics {
 
         void AddVCP(CardPlayer player, float data) {
             GetTrack(player).valueCreationPercentile[currentRound] = data;
+        }
+
+        public List<CardPlayer> GetRanking(TrackStat stat, int round) {
+            switch (stat) {
+                case TrackStat.Capital:
+                    return playerTracks
+                        .Where(track => track.active && track.capital.ContainsKey(round))
+                        .OrderByDescending(track => track.capital[currentRound])
+                        .Select(track => track.player)
+                        .ToList();
+                case TrackStat.VCP:
+                    return playerTracks
+                        .Where(track => track.active && track.valueCreationPercentile.ContainsKey(round))
+                        .OrderByDescending(track => track.valueCreationPercentile[currentRound])
+                        .Select(track => track.player)
+                        .ToList();
+                default:
+                    throw new NotImplementedException("This Track can not generate a ranking");
+            }
+        }
+
+        public int GetRank(CardPlayer player, TrackStat stat, int round) {
+            var ranking = GetRanking(stat, round);
+            if (ranking.Contains(player)){
+                return ranking.IndexOf(player);
+            } else {
+                return 0;
+            }
         }
 
         #endregion
