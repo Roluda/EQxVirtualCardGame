@@ -12,94 +12,90 @@ namespace EQx.Game.Table {
         float typeInterval = 0.01f;
         [SerializeField]
         float waitAfterHead = 1;
+        [SerializeField]
+        float waitAfterStructure = 1;
 
         [SerializeField]
-        Image icon = default;
+        Transform context = default;
         [SerializeField]
-        Image background = default;
+        Image icon = default;
         [SerializeField]
         TMP_Text head = default;
         [SerializeField]
         TMP_Text body = default;
 
         [SerializeField]
-        RectTransform context;
+        VerticalLayoutGroup structureGroup = default;
         [SerializeField]
-        Vector3 winScreenTranslation = new Vector3(0, 350, 0);
+        Image pillarImage = default;
+
         [SerializeField]
-        Vector3 winSceenScale = new Vector3(0.7f, 0.7f, 0.7f);
-        [SerializeField, Range(0,10)]
-        float translationDuration = 1;
+        float closedImageHeight = 250;
+        [SerializeField]
+        float openImageHeight = 500;
+        [SerializeField]
+        float closedSpacing = -700;
+        [SerializeField]
+        float openSpacing = -200;
 
-
-        public Vector3 originalPosition;
-        public Vector3 originalScale;
-        Vector3 winScreenPosition;
+        [SerializeField]
+        float structureAnimationTime = 1;
 
         private void Start() {
-            originalPosition = context.anchoredPosition3D;
-            originalScale = context.localScale;
-            winScreenPosition = originalPosition + winScreenTranslation;
         }
 
         public void ShowDemand() {
             EQxVariableData demand = EQxVariableDatabase.instance.GetVariable(RoundManager.instance.currentDemand);
-            StartCoroutine(ChangeDemand(demand));
+            StopAllCoroutines();
+            StartCoroutine(PresentDemand(demand));
         }
 
-        public void SetWinScreenScale() {
-            StartCoroutine(TranslateScale(winSceenScale));
+        public void HideDemand() {
+            StopAllCoroutines();
+            StartCoroutine(RemoveDemand());
         }
 
-        public void SetWinScreenPosition() {
-            StartCoroutine(TranslatePosition(winScreenPosition));
-        }
-
-        public void SetNormalScreenScale() {
-            StartCoroutine(TranslateScale(originalScale));
-        }
-        public void SetNormalScreenPosition() {
-            StartCoroutine(TranslatePosition(originalPosition));
-        }
-
-        void NewDemandListener(EQxVariableType demand) {
-            Debug.Log("NewDemandListener");
-            StartCoroutine(ChangeDemand(EQxVariableDatabase.instance.GetVariable(demand)));
-        }
-
-        IEnumerator ChangeDemand(EQxVariableData data) {
-            Debug.Log("data" + data);
+        IEnumerator PresentDemand(EQxVariableData data) {
+            context.gameObject.SetActive(true);
+            structureGroup.spacing = closedSpacing;
+            pillarImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, closedImageHeight);
+            pillarImage.sprite = data.structureHihlighted;
             head.text = "";
             body.text = "";
-            int round = RoundManager.instance.currentRound;
-            int max = RoundManager.instance.maxRounds;
+            icon.enabled = false;
+            StartCoroutine(ShowStructure());
+            yield return new WaitForSeconds(waitAfterStructure);
+            icon.enabled = true;
             icon.sprite = data.iconWhite;
-            background.color = data.color;
-            StartCoroutine(TypeText(head, $"Round {round}/{max} - {data.variableName}"));
+            StartCoroutine(TypeText(head, $"{data.variableName}"));
             yield return new WaitForSeconds(waitAfterHead);
             StartCoroutine(TypeText(body, data.description));
         }
 
-        IEnumerator TranslatePosition(Vector3 targetPosition) {
-            float timer = 0;
-            float moveSpeed = (context.anchoredPosition3D - targetPosition).magnitude / translationDuration;
-            while (timer < translationDuration) {
-                timer += Time.deltaTime;
-                context.anchoredPosition3D = Vector3.MoveTowards(context.anchoredPosition3D, targetPosition, moveSpeed*Time.deltaTime);
-                yield return null;
-            }
-            context.anchoredPosition3D = targetPosition;
+        IEnumerator RemoveDemand() {
+            StartCoroutine(HideStructure());
+            yield return new WaitForSeconds(structureAnimationTime*1.3f);
+            context.gameObject.SetActive(false);
         }
 
-        IEnumerator TranslateScale(Vector3 targetScale) {
-            float timer = 0;
-            float growSpeed = (context.localScale - targetScale).magnitude / translationDuration;
-            while (timer < translationDuration) {
-                timer += Time.deltaTime;
-                context.localScale = Vector3.MoveTowards(context.localScale, targetScale, growSpeed * Time.deltaTime);
+        IEnumerator ShowStructure() {
+            float t = 0;
+            while (t < structureAnimationTime) {
+                t += Time.deltaTime;
+                structureGroup.spacing = Mathf.Lerp(closedSpacing, openSpacing, t / structureAnimationTime);
+                pillarImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Lerp(closedImageHeight, openImageHeight, t / structureAnimationTime));
                 yield return null;
             }
-            context.localScale = targetScale;
+        }
+
+        IEnumerator HideStructure() {
+            float t = 0;
+            while (t < structureAnimationTime) {
+                t += Time.deltaTime;
+                structureGroup.spacing = Mathf.Lerp(openSpacing, closedSpacing, t / structureAnimationTime);
+                pillarImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Mathf.Lerp(openImageHeight, closedImageHeight, t / structureAnimationTime));
+                yield return null;
+            }
         }
 
         IEnumerator TypeText(TMP_Text text, string content) {

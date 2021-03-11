@@ -22,3 +22,5 @@ MonoBehaviour:
   description: "Estimates the pressures for renewal and disruption in an economy.
     Borrowing Schumpeter\u2019s concept, one focus is entrepreneurs whose role is
     to challenge incumbents and so drive economic growth."
+  structureHihlighted: {fileID: 6737542821326423542, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}

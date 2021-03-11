@@ -21,3 +21,5 @@ MonoBehaviour:
   iconBlack: {fileID: 21300000, guid: 43d5aaf5a9db3f44aa0a49880225f92e, type: 3}
   description: "Measures the degree of power concentration in the hands of a nation\u2019s
     leading firms."
+  structureHihlighted: {fileID: 2653114930327326492, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}

@@ -22,3 +22,5 @@ MonoBehaviour:
   description: 'Focuses on Value Creation as well as on rents extracted though direct
     or indirect financial market participation. Looks at unemployed capital, unnatural
     interest rates and the activities of the financial sector. '
+  structureHihlighted: {fileID: -4682350931553925582, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}

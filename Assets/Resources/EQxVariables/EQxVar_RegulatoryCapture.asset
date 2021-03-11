@@ -21,3 +21,5 @@ MonoBehaviour:
   iconBlack: {fileID: 21300000, guid: 0ed28b0e369b49f46b19254f216b5eba, type: 3}
   description: Measures the extent to which rules and regulation, or the making thereof,
     have been captured by special interests.
+  structureHihlighted: {fileID: -7268756335852453729, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}

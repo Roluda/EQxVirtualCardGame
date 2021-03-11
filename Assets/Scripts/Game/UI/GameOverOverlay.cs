@@ -53,10 +53,13 @@ namespace EQx.Game.UI {
             switch (current) {
                 case TrackType.Capital:
                     diagram.ClearData();
+                    diagram.maxMargin = 1.1f;
+                    diagram.minMargin = .9f;
+                    diagram.yScaleDecimals = 0;
                     foreach (var player in RoundManager.instance.registeredPlayers) {
                         diagram.AddLineData(PlayerObserver.instance.GetTrack(player).capital, player.playerName);
                     }
-                    diagram.xScaleSegments = RoundManager.instance.maxRounds + 1;
+                    diagram.xScaleSegments = RoundManager.instance.maxRounds +1;
                     diagram.labelX = "Round";
                     diagram.labelY = "Coins";
                     diagram.header = "Coins over Game";
@@ -65,13 +68,16 @@ namespace EQx.Game.UI {
                     break;
                 case TrackType.VCP:
                     diagram.ClearData();
+                    diagram.maxMargin = 1;
+                    diagram.minMargin = .9f;
                     foreach (var player in RoundManager.instance.registeredPlayers) {
                         diagram.AddLineData(PlayerObserver.instance.GetTrack(player).valueCreationPercentile, player.playerName);
                     }
-                    diagram.xScaleSegments = RoundManager.instance.maxRounds + 1;
+                    diagram.xScaleSegments = RoundManager.instance.maxRounds;
                     diagram.labelX = "Round";
-                    diagram.labelY = "VCP";
+                    diagram.labelY = "Value Creation %";
                     diagram.header = "Value Creation Percentile over Game";
+                    diagram.yScaleDecimals = 2;
                     diagram.Redraw();
                     break;
             }

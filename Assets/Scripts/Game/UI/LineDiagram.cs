@@ -48,14 +48,14 @@ namespace EQx.Game.UI {
         [SerializeField]
         public int yScaleSegments = 2;
         [SerializeField]
-        int xScaleDecimals = 1;
+        public int xScaleDecimals = 1;
         [SerializeField]
-        int yScaleDecimals = 1;
+        public int yScaleDecimals = 1;
 
         [SerializeField]
-        float minMargin = 0.9f;
+        public float minMargin = 0.9f;
         [SerializeField]
-        float maxMargin = 1.1f;
+        public float maxMargin = 1.1f;
 
         public string labelX { get => xLabel.text; set => xLabel.text = value; }
         public string labelY { get => yLabel.text; set => yLabel.text = value; }

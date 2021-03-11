@@ -91,7 +91,11 @@ namespace EQx.Game.Statistics {
         }
 
         public int GetWinnings(CardPlayer player, int round) {
-            return GetTrack(player).winnings[round];
+            if (GetTrack(player).winnings.ContainsKey(round)) {
+                return GetTrack(player).winnings[round];
+            } else {
+                return 0;
+            }
         }
 
         public bool GetWin(CardPlayer player) {
@@ -99,7 +103,11 @@ namespace EQx.Game.Statistics {
         }
 
         public bool GetWin(CardPlayer player, int round) {
-            return GetTrack(player).won[round];
+            if (GetTrack(player).won.ContainsKey(round)) {
+                return GetTrack(player).won[round];
+            } else {
+                return false;
+            }
         }
 
         public int GetCapital(CardPlayer player) {
@@ -107,7 +115,11 @@ namespace EQx.Game.Statistics {
         }
 
         public int GetCapital(CardPlayer player, int round) {
-            return GetTrack(player).capital[round];
+            if (GetTrack(player).capital.ContainsKey(round)) {
+                return GetTrack(player).capital[round];
+            } else {
+                return 0;
+            }
         }
 
         public int GetCommitment(CardPlayer player) {
@@ -115,7 +127,11 @@ namespace EQx.Game.Statistics {
         }
 
         public int GetCommitment(CardPlayer player, int round) {
-            return GetTrack(player).commitments[round];
+            if (GetTrack(player).commitments.ContainsKey(round)){
+                return GetTrack(player).commitments[round];
+            } else {
+                return 0;
+            }
         }
 
         public int GetInvestment(CardPlayer player) {
@@ -123,7 +139,11 @@ namespace EQx.Game.Statistics {
         }
 
         public int GetInvestment(CardPlayer player, int round) {
-            return GetTrack(player).investments[round];
+            if (GetTrack(player).investments.ContainsKey(round)) {
+                return GetTrack(player).investments[round];
+            } else {
+                return 0;
+            }
         }
 
         public int GetCardPlaced(CardPlayer player) {
@@ -131,7 +151,12 @@ namespace EQx.Game.Statistics {
         }
 
         public int GetCardPlaced(CardPlayer player, int round) {
-            return GetTrack(player).cardPlaced[round];
+            if (GetTrack(player).cardPlaced.ContainsKey(round)) {
+                return GetTrack(player).cardPlaced[round];
+            }
+            else{
+                return 0;
+            }
         }
 
         public float GetVCP(CardPlayer player) {
@@ -139,7 +164,11 @@ namespace EQx.Game.Statistics {
         }
 
         public float GetVCP(CardPlayer player, int round) {
-            return GetTrack(player).valueCreationPercentile[round];
+            if (GetTrack(player).valueCreationPercentile.ContainsKey(round)) {
+                return GetTrack(player).valueCreationPercentile[round];
+            } else {
+                return 0;
+            }
         }
 
         public PlayerTrack GetTrack(CardPlayer player) {
@@ -179,13 +208,13 @@ namespace EQx.Game.Statistics {
                 case TrackStat.Capital:
                     return playerTracks
                         .Where(track => track.active && track.capital.ContainsKey(round))
-                        .OrderByDescending(track => track.capital[currentRound])
+                        .OrderByDescending(track => track.capital[round])
                         .Select(track => track.player)
                         .ToList();
                 case TrackStat.VCP:
                     return playerTracks
                         .Where(track => track.active && track.valueCreationPercentile.ContainsKey(round))
-                        .OrderByDescending(track => track.valueCreationPercentile[currentRound])
+                        .OrderByDescending(track => track.valueCreationPercentile[round])
                         .Select(track => track.player)
                         .ToList();
                 default:

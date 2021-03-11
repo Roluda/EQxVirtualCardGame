@@ -21,5 +21,7 @@ namespace EQx.Game {
         public Sprite iconBlack = default;
         [SerializeField]
         public string description = default;
+        [SerializeField]
+        public Sprite structureHihlighted = default;
     }
 }

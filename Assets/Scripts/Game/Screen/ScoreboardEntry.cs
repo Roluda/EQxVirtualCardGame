@@ -53,7 +53,7 @@ namespace EQx.Game.Screen {
         private void UpdateValues() {
             int capital = InvestmentManager.instance.Capital(observedPlayer);
             coinsText.text = $"{capital}";
-            vcpText.text = $"{Math.Round(PlayerObserver.instance.GetVCP(observedPlayer) * 100, 0)}%";
+            vcpText.text = $"{Math.Round(PlayerObserver.instance.GetVCP(observedPlayer, RoundManager.instance.currentRound-1) * 100, 0)}%";
             switch (sortingMethod) {
                 case TrackStat.Capital:
                     OrderByCapital();
@@ -71,10 +71,6 @@ namespace EQx.Game.Screen {
             nameText.text = player.playerName;
             var sprites = Resources.LoadAll<Sprite>("Sprites/Characters");
             icon.sprite = sprites[player.avatarID];
-            UpdateValues();
-        }
-
-        private void Start() {
             RoundManager.instance.onNewRound += UpdateValues;
         }
 

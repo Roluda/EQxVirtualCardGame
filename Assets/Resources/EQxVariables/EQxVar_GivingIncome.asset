@@ -22,3 +22,5 @@ MonoBehaviour:
   description: Focuses on how the government uses and manages public finances. Many
     of these processes divert resources away from most efficient uses. However, some
     measures - like education or healthcare - are conducive for Value Creation.
+  structureHihlighted: {fileID: 7461052282624026596, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}

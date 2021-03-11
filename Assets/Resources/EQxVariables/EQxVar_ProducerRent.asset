@@ -22,3 +22,5 @@ MonoBehaviour:
   description: Identifies Value Creation as well as rents extracted by producers
     and suppliers in the market for goods and services. For example, through protectionist
     measures that prevent the entry of valuable business models.
+  structureHihlighted: {fileID: -7569388783404164141, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}

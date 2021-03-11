@@ -22,3 +22,5 @@ MonoBehaviour:
   description: Mainly focuses on the exploitation or Value Extraction of natural
     and other resources that have not been earned in full. That includes transfers
     to the present generation from future generations.
+  structureHihlighted: {fileID: 6379096399575915441, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}

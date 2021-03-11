@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   investmentInterface: {fileID: 574843571408958836}
-  scoreboardInterface: {fileID: 0}
+  scoreboardInterface: {fileID: 690267333048879597}
 --- !u!114 &7777043829490532360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2900,15 +2900,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1f50c7c6d39269489f130a6b69e85bd, type: 3}
---- !u!224 &7364891270469831725 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8615412151744783027, guid: f1f50c7c6d39269489f130a6b69e85bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1271508379146006174}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8962584748106019459 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7909501228040543261, guid: f1f50c7c6d39269489f130a6b69e85bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1271508379146006174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &690267333048879597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1743205699908888435, guid: f1f50c7c6d39269489f130a6b69e85bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1271508379146006174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &7364891270469831725 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8615412151744783027, guid: f1f50c7c6d39269489f130a6b69e85bd,
     type: 3}
   m_PrefabInstance: {fileID: 1271508379146006174}
   m_PrefabAsset: {fileID: 0}

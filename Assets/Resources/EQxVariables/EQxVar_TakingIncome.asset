@@ -22,3 +22,5 @@ MonoBehaviour:
   description: Measures rent extraction and redistribution occurring as the state
     collects income from productive citizens and value generators, fails to protect
     these, or facilitate wealth transfers carried out by dominant coalitions.
+  structureHihlighted: {fileID: -7843255482394314030, guid: 8332a331ec0502d4a84d2ea3188acdb8,
+    type: 3}
