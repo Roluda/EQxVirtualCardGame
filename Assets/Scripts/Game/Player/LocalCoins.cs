@@ -67,7 +67,7 @@ namespace EQx.Game.Player {
 
         private void InvestmentChangedListener(int investment) {
             Debug.Log("backup: " + commitmentPile.backup + " investment: " + investment);
-            commitmentPile.SetAmount(commitmentPile.backup + investment);
+            commitmentPile.SetAmountUnsaved(commitmentPile.backup + investment);
             capital = capitalBackup - investment;
         }
 

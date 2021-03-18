@@ -8,10 +8,17 @@ namespace EQx.Game.Investing {
     public class PrizeMountain : MonoBehaviour{
 
         [SerializeField]
-        PileMountain mountain;
+        PileMountain prizeMountain;
+        [SerializeField]
+        PileMountain debtMountain;
 
         [SerializeField]
         TMP_Text growthInfo = default;
+
+        [SerializeField]
+        TMP_Text infoText = default;
+        [SerializeField]
+        string infoPrefix = "Prize: ";
 
         [SerializeField]
         float growthInfoDuration = 2;
@@ -23,6 +30,10 @@ namespace EQx.Game.Investing {
             InvestmentManager.instance.onPrizeUpdated += CalculateMountain;
             InvestmentManager.instance.onEconomyGrowth += EconomyGrowthListener;
             growthInfo.gameObject.SetActive(false);
+        }
+        void Update() {
+            infoText.text = $"{infoPrefix}{InvestmentManager.instance.prize}";
+            infoText.gameObject.SetActive(prizeMountain.highlighted || debtMountain.highlighted);
         }
 
         private void EconomyGrowthListener(int growth) {
@@ -41,7 +52,14 @@ namespace EQx.Game.Investing {
 
         void CalculateMountain() {
             Debug.Log(name + ".CalculateMountain");
-            mountain.capital = InvestmentManager.instance.prize;
+            int prize = InvestmentManager.instance.prize;
+            if (prize > 0) {
+                prizeMountain.capital = prize;
+                debtMountain.capital = 0;
+            } else {
+                prizeMountain.capital = 0;
+                debtMountain.capital = -prize;
+            }
         }
     }
 }

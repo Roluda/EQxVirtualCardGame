@@ -38,7 +38,7 @@ namespace EQx.Game.Investing {
                 } else if (value < capital) {
                     int diff = value - capital;
                     while (diff < 0) {
-                        diff = coinPiles.Where(pile => pile.amount > 0).First().AddCoins(diff);
+                        diff = coinPiles.Where(pile => pile.amount > 0).Last().AddCoins(diff);
                     }
                 }
             }

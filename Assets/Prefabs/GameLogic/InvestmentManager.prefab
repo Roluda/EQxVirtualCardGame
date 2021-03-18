@@ -45,18 +45,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialCapital: 10
-  blind: 2
+  blind: 0
+  economicGrowth: 1.1
   investmentPayoff:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -1
-      value: -3
-      inSlope: 3
+      time: -3
+      value: -12
+      inSlope: 4.8428984
       outSlope: 3
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: -2
+      value: -9
+      inSlope: 7.312092
+      outSlope: 3
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: -1
+      value: -6
+      inSlope: 4.5
+      outSlope: 4.5
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0
@@ -98,6 +117,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   prizePool: 0
+  prizeWinner: {fileID: 0}
 --- !u!114 &2432157241655377017
 MonoBehaviour:
   m_ObjectHideFlags: 0

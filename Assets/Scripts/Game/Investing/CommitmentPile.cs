@@ -1,8 +1,18 @@
 ﻿using EQx.Game.Player;
+using TMPro;
 using UnityEngine;
 
 namespace EQx.Game.Investing {
-    public class CommitmentPile : CoinPile {
+    public class CommitmentPile : MonoBehaviour {
+
+        [SerializeField]
+        CoinPile creationPile = default;
+        [SerializeField]
+        CoinPile extractionPile = default;
+        [SerializeField]
+        TMP_Text infoText = default;
+        [SerializeField]
+        string infoPrefix = "Commitment: ";
 
         CardPlayer observedPlayer;
         public int backup = 0;
@@ -15,8 +25,25 @@ namespace EQx.Game.Investing {
         }
 
         public void UpdateCommitment(CardPlayer player) {
-            SetAmount(InvestmentManager.instance.Commitment(player));
+            int amount = InvestmentManager.instance.Commitment(player);
+            if(amount > 0) {
+                extractionPile.SetAmount(0);
+                creationPile.SetAmount(amount);
+            } else {
+                extractionPile.SetAmount(-amount);
+                creationPile.SetAmount(0);
+            }
             backup = amount;
+        }
+
+        public void SetAmountUnsaved(int amount) {
+            if (amount > 0) {
+                extractionPile.SetAmount(0);
+                creationPile.SetAmount(amount);
+            } else {
+                extractionPile.SetAmount(-amount);
+                creationPile.SetAmount(0);
+            }
         }
 
         private void Start() {
@@ -25,10 +52,22 @@ namespace EQx.Game.Investing {
             InvestmentManager.instance.onCommited += CommitedListener;
         }
 
+        private void Update() {
+            infoText.text = $"{infoPrefix}{creationPile.amount - extractionPile.amount}";
+            infoText.gameObject.SetActive(creationPile.highlighted || extractionPile.highlighted);
+        }
+
         private void PayedBlindListener(CardPlayer player) {
             Debug.Log(name + "PayedBlindListener: " + player);
             if (player == observedPlayer) {
-                AddCoins(InvestmentManager.instance.PayedBlind(player));
+                int amount = InvestmentManager.instance.PayedBlind(player);
+                if (amount > 0) {
+                    extractionPile.SetAmount(0);
+                    creationPile.SetAmount(amount);
+                } else {
+                    extractionPile.SetAmount(-amount);
+                    creationPile.SetAmount(0);
+                }
                 backup = amount;
             }
         }
@@ -36,16 +75,24 @@ namespace EQx.Game.Investing {
         private void InvestedCoinsListener(CardPlayer player) {
             Debug.Log(name + "InvestedCoinsListener");
             if (player == observedPlayer) {
-                AddCoins(InvestmentManager.instance.Investment(player));
-                backup = amount;
+                int amount = InvestmentManager.instance.Investment(player);
+                if (amount > 0) {
+                    int excess = extractionPile.AddCoins(-amount);
+                    creationPile.AddCoins(-excess);
+                } else {
+                    int excess = creationPile.AddCoins(amount);
+                    extractionPile.AddCoins(-excess);
+                }
+                backup += amount;
             }
         }
 
         private void CommitedListener(CardPlayer player) {
             Debug.Log(name + "CommitedListener");
             if (player == observedPlayer) {
-                SetAmount(0);
-                backup = amount;
+                creationPile.SetAmount(0);
+                extractionPile.SetAmount(0);
+                backup = 0;
             }
         }
 
