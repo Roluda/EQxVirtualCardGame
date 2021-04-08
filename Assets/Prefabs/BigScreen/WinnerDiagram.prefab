@@ -116,7 +116,10 @@ MonoBehaviour:
   spawnContext: {fileID: 6024274636990531642}
   winnerEntry: {fileID: 4676794264965322538, guid: 6fb0035f552dbb340b19ca7107633f87,
     type: 3}
-  baseValuePresentationTime: 0
-  winApplause: {fileID: 0}
-  winDang: {fileID: 0}
-  drumRoll: {fileID: 0}
+  presentationTime: 5
+  extractRoundStartValue: 100
+  creationRoundStartValue: 0
+  winApplause: {fileID: 11400000, guid: b44e36fc991ad3e4d951f387107c92f7, type: 2}
+  loseGlory: {fileID: 11400000, guid: 9fef96a6ec5fbf24a8d503c12c0fbd71, type: 2}
+  winDang: {fileID: 11400000, guid: 6b14b06324e6e374fa0961c1381c0862, type: 2}
+  drumRoll: {fileID: 11400000, guid: ff7d6713bea17c546bc8dd0e65dff527, type: 2}

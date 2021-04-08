@@ -40,21 +40,22 @@ namespace EQx.Game.Screen {
         public CardPlayer player { get; private set; }
         EQxCountryData playedCard;
 
-        float bonusValue = 0;
-        float baseValue = 0;
         bool winner = false;
 
-        public float combinedValue => baseValue + bonusValue;
+        public float combinedValue => player.combinedValue;
 
         float currentValue = 0;
-        bool presentingBaseValue = false;
-        bool presentingCombinedValue = false;
+        float targetValue = 0;
+        float startValue;
+        bool presentingValues = false;
 
-        public void Initialize(CardPlayer player) {
+        public void Initialize(CardPlayer player, float startValue, float targetValue, float presentTime) {
             this.player = player;
+            currentValue = startValue;
+            this.startValue = startValue;
+            this.targetValue = targetValue;
+            presentSpeed = (targetValue - startValue) / presentTime;
             playedCard = CountryCardDatabase.instance.GetCountry(player.placedCardID);
-            bonusValue = player.bonusValue;
-            baseValue = player.baseValue;
             winner = player.state == PlayerState.Won ? true : false;
             label.text = player.playerName + nameConnector + playedCard.countryName;
             flagIcon.sprite = Resources.Load<Sprite>(flagPath + "/" + playedCard.isoCountryCode.ToLower());
@@ -62,27 +63,8 @@ namespace EQx.Game.Screen {
             UpdateSliderValuesInstant();
         }
 
-        public void PresentCombinedValues() {
-            presentingCombinedValue = true;
-        }
-
-        public void PresentBaseValues() {
-            presentingBaseValue = true;
-        }
-
-        public void PresentBonusValues() {
-            presentingBaseValue = false;
-            if (bonusValue > 0) {
-                addedValue.SetValue(baseValue + bonusValue);
-            } else {
-                reducedValue.SetValue(baseValue + bonusValue);
-            }
-        }
-
-        public void ApplyBonusValues() {
-            addedValue.SetValue(baseValue + bonusValue);
-            actualValue.SetValue(baseValue + bonusValue);
-            reducedValue.SetValue(baseValue + bonusValue);
+        public void PresentValue() {
+            presentingValues = true;
         }
 
         public void Win() {
@@ -111,18 +93,16 @@ namespace EQx.Game.Screen {
 
         // Update is called once per frame
         void Update() {
-            if (presentingBaseValue) {
-                if (currentValue < baseValue) {
-                    currentValue += Time.deltaTime * presentSpeed;
-                }
+            if (presentingValues && !ReachedTarget()) {
+                currentValue += Time.deltaTime * presentSpeed;
                 UpdateSliderValuesInstant();
             }
-            if (presentingCombinedValue) {
-                if (currentValue < combinedValue) {
-                    currentValue += Time.deltaTime * presentSpeed;
-                }
-                UpdateSliderValuesInstant();
-            }
+        }
+
+        bool ReachedTarget() {
+            return startValue > targetValue
+                ? currentValue <= targetValue
+                : currentValue >= targetValue;
         }
 
         void SetSliderAppearance() {

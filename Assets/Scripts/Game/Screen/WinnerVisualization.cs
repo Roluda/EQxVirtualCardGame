@@ -14,9 +14,15 @@ namespace EQx.Game.Screen {
         [SerializeField]
         WinnerEntry winnerEntry = default;
         [SerializeField]
-        float baseValuePresentationTime;
+        float presentationTime = 5;
+        [SerializeField]
+        float extractRoundStartValue = 100;
+        [SerializeField]
+        float creationRoundStartValue = 0;
         [SerializeField]
         RandomSFX winApplause = default;
+        [SerializeField]
+        RandomSFX loseGlory = default;
         [SerializeField]
         RandomSFX winDang = default;
         [SerializeField]
@@ -25,44 +31,22 @@ namespace EQx.Game.Screen {
         List<WinnerEntry> candidates = new List<WinnerEntry>();
 
         public void SpawnBars() {
-            float highestValue = 0;
+            float targetValue = RoundManager.instance.winner.combinedValue;
+            float startValue = RoundManager.instance.extractionRound ? extractRoundStartValue : creationRoundStartValue;
             foreach (var player in RoundManager.instance.registeredPlayers) {
                 if (player.state == PlayerState.Unregistered) {
                     continue;
                 }
                 var candidate = Instantiate(winnerEntry, spawnContext);
-                candidate.Initialize(player);
+                candidate.Initialize(player, startValue, targetValue, presentationTime);
                 candidates.Add(candidate);
-                highestValue = player.combinedValue > highestValue ? player.combinedValue : highestValue;
-            }
-            foreach(var candidate in candidates) {
-                candidate.presentSpeed = highestValue / baseValuePresentationTime;
             }
         }
 
-        public void PresentBaseValues() {
+        public void PresentValues() {
             drumRoll.Play();
             foreach (var candidate in candidates) {
-                candidate.PresentBaseValues();
-            }
-        }
-
-        public void PresentCombinedValues() {
-            drumRoll.Play();
-            foreach (var candidate in candidates) {
-                candidate.PresentCombinedValues();
-            }
-        }
-
-        public void PresentBonusValues() {
-            foreach (var candidate in candidates) {
-                candidate.PresentBonusValues();
-            }
-        }
-
-        public void ApplyBonusValues() {
-            foreach (var candidate in candidates) {
-                candidate.ApplyBonusValues();
+                candidate.PresentValue();
             }
         }
 
@@ -70,7 +54,11 @@ namespace EQx.Game.Screen {
             foreach (var candidate in candidates) {
                 candidate.Win();
             }
-            winApplause.Play();
+            if (RoundManager.instance.extractionRound) {
+                loseGlory.Play();
+            } else {
+                winApplause.Play();
+            }
             winDang.Play();
         }
 

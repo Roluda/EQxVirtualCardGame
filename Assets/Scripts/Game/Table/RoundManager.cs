@@ -30,11 +30,13 @@ namespace EQx.Game.Table {
         public UnityAction onGameEnd;
 
         public List<CardPlayer> registeredPlayers = new List<CardPlayer>();
+        public CardPlayer winner = default;
 
         public EQxVariableType currentDemand;
 
         public int currentRound = 0;
         bool inRound = false;
+        public bool extractionRound = false;
 
         public void Register(CardPlayer player) {
             Debug.Log(name + ".Register by" + player.name);
@@ -161,7 +163,10 @@ namespace EQx.Game.Table {
         void EndBettingRoundRPC() {
             Debug.Log(name + ".EndBettingRoundRPC");
             inRound = false;
-            var winner = registeredPlayers.Aggregate((x, y) => x.combinedValue > y.combinedValue ? x : y);
+            extractionRound = InvestmentManager.instance.prize < 0;
+            winner = extractionRound
+                ? registeredPlayers.Aggregate((x, y) => x.combinedValue < y.combinedValue ? x : y)
+                : registeredPlayers.Aggregate((x, y) => x.combinedValue > y.combinedValue ? x : y);
             foreach(var player in registeredPlayers) {
                 if(player == winner) {
                     player.Win();
