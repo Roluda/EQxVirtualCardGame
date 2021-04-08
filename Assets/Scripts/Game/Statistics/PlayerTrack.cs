@@ -8,7 +8,10 @@ namespace EQx.Game.Statistics {
         public PlayerTrack(CardPlayer player) {
             userID = player.photonView.Owner.UserId;
             this.player = player;
+
+            playerName = player.playerName;
         }
+        public string playerName;
         public bool active = true;
         public CardPlayer player;
         public string userID;

@@ -20,6 +20,10 @@ namespace EQx.Game.Investing {
         [SerializeField, Range(1,2)]
         public float economicGrowth = 1.1f;
         [SerializeField]
+        public int maxCreation = 3;
+        [SerializeField]
+        public int maxExtraction = 3;
+        [SerializeField]
         AnimationCurve investmentPayoff = default;
 
         [SerializeField]

@@ -42,8 +42,6 @@ namespace EQx.Game.Screen {
 
         bool winner = false;
 
-        public float combinedValue => player.combinedValue;
-
         float currentValue = 0;
         float targetValue = 0;
         float startValue;
@@ -53,7 +51,7 @@ namespace EQx.Game.Screen {
             this.player = player;
             currentValue = startValue;
             this.startValue = startValue;
-            this.targetValue = targetValue;
+            this.targetValue = player.combinedValue;
             presentSpeed = (targetValue - startValue) / presentTime;
             playedCard = CountryCardDatabase.instance.GetCountry(player.placedCardID);
             winner = player.state == PlayerState.Won ? true : false;

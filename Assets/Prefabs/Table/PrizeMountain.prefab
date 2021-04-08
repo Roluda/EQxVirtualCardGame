@@ -401,7 +401,7 @@ MonoBehaviour:
   debtMountain: {fileID: 3779879906013810156}
   growthInfo: {fileID: 2515068519477402879}
   infoText: {fileID: 7214107364454394219}
-  infoPrefix: 'Prize: '
+  infoPrefix: 'Jackpot: '
   growthInfoDuration: 2
   grwothPrefix: 'Economic Value Created:'
 --- !u!114 &5261173779367163859

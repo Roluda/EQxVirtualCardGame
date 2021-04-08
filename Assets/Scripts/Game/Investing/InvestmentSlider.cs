@@ -11,16 +11,14 @@ namespace EQx.Game.Investing {
         [SerializeField]
         Slider slider = default;
         [SerializeField]
-        int maxExtraction;
-        [SerializeField]
-        int maxInvestment;
-        [SerializeField]
         Image fill = default;
         [SerializeField]
         Color extractionColor = Color.yellow;
         [SerializeField]
         Color investmentColor = Color.blue;
 
+        int maxExtraction => InvestmentManager.instance.maxExtraction;
+        int maxInvestment => InvestmentManager.instance.maxCreation;
         float segment;
 
         private void OnValidate() {

@@ -13,8 +13,5 @@ MonoBehaviour:
   m_Name: RSFX_Buh
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 7ecf006b4b9a2254c9e7387dbf836952, type: 3}
-  - {fileID: 8300000, guid: 44fe033db61165247b801d97774fa9ee, type: 3}
-  - {fileID: 8300000, guid: 977708562b592dd47a4be15269540bed, type: 3}
-  - {fileID: 8300000, guid: 9e9a4affbcf0b9b438271801a5b8eb4b, type: 3}
+  - {fileID: 8300000, guid: af9e6bbd07d1bb646b5b95feb98b45a8, type: 3}
   volume: 0.4

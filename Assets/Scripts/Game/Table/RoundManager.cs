@@ -36,6 +36,7 @@ namespace EQx.Game.Table {
 
         public int currentRound = 0;
         bool inRound = false;
+        bool gameOver = false;
         public bool extractionRound = false;
 
         public void Register(CardPlayer player) {
@@ -187,9 +188,12 @@ namespace EQx.Game.Table {
         [PunRPC]
         void EndGameRPC() {
             Debug.Log(name + ".EndGameRPC");
-            currentRound++;
-            onGameEnd?.Invoke();
-            PhotonNetwork.CurrentRoom.IsOpen = false;
+            if (!gameOver) {
+                gameOver = true;
+                currentRound++;
+                onGameEnd?.Invoke();
+                PhotonNetwork.CurrentRoom.IsOpen = false;
+            }
         }
         #endregion
 

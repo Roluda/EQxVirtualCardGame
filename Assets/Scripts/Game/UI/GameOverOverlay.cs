@@ -18,7 +18,11 @@ namespace EQx.Game.UI {
         [SerializeField]
         TMP_Text winnerText = default;
         [SerializeField]
-        string winnerAffix = " is the most valuable Elite.";
+        TMP_Text qualityText = default;
+        [SerializeField]
+        string winnerAffix = " wins the elite wealth prize!";
+        [SerializeField]
+        string qualityAffix = " wins the elite quality prize!";
         [SerializeField]
         LineDiagram diagram = default;
 
@@ -34,7 +38,9 @@ namespace EQx.Game.UI {
             RoundManager.instance.onGameEnd -= StartGameOver;
             overlay.SetActive(true);
             var winner = InvestmentManager.instance.accounts.OrderByDescending(account => account.capital).First().player.playerName;
+            var quality = PlayerObserver.instance.playerTracks.OrderByDescending(track => track.valueCreationPercentile[RoundManager.instance.currentRound - 1]).First().playerName;
             winnerText.text = $"{winner}{winnerAffix}";
+            qualityText.text = $"{quality}{qualityAffix}";
             StartCoroutine(ShowDiagram());
         }
 
@@ -56,8 +62,8 @@ namespace EQx.Game.UI {
                     diagram.maxMargin = 1.1f;
                     diagram.minMargin = .9f;
                     diagram.yScaleDecimals = 0;
-                    foreach (var player in RoundManager.instance.registeredPlayers) {
-                        diagram.AddLineData(PlayerObserver.instance.GetTrack(player).capital, player.playerName);
+                    foreach (var track in PlayerObserver.instance.playerTracks.OrderByDescending(trk => trk.capital[RoundManager.instance.currentRound])) {
+                        diagram.AddLineData(track.capital, track.playerName);
                     }
                     diagram.xScaleSegments = RoundManager.instance.maxRounds +1;
                     diagram.labelX = "Round";
@@ -70,8 +76,9 @@ namespace EQx.Game.UI {
                     diagram.ClearData();
                     diagram.maxMargin = 1;
                     diagram.minMargin = .9f;
-                    foreach (var player in RoundManager.instance.registeredPlayers) {
-                        diagram.AddLineData(PlayerObserver.instance.GetTrack(player).valueCreationPercentile, player.playerName);
+                    Debug.Log($"Getting VCP for Round {RoundManager.instance.currentRound - 1}");
+                    foreach (var track in PlayerObserver.instance.playerTracks.OrderByDescending(trk => trk.valueCreationPercentile[RoundManager.instance.currentRound-1])) {
+                        diagram.AddLineData(track.valueCreationPercentile, track.playerName);
                     }
                     diagram.xScaleSegments = RoundManager.instance.maxRounds;
                     diagram.labelX = "Round";

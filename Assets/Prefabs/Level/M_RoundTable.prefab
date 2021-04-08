@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1181512636468518655}
   - component: {fileID: 2867184303645151578}
   - component: {fileID: 13158573148775824}
-  - component: {fileID: 1943362037680741305}
+  - component: {fileID: 5173176431710127902}
   m_Layer: 0
   m_Name: M_RoundTable
   m_TagString: Untagged
@@ -175,8 +175,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &1943362037680741305
-MeshCollider:
+--- !u!65 &5173176431710127902
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -185,10 +185,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 4200f919a8a254d47a2a1e410e0fb4d8, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 12, y: 1.3161547, z: 12}
+  m_Center: {x: 0, y: 0.17192256, z: 0}
 --- !u!1 &8780797012413876841
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,6 +26,7 @@ namespace EQx.Game.Screen {
             var entry = Instantiate(entryPrefab, context);
             entry.Init(player);
             entries.Add(entry);
+            OrderByCapital();
         }
 
         public void OrderByCapital() {
