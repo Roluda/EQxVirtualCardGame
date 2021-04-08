@@ -23,7 +23,7 @@ namespace EQx.Game.Statistics {
 
         public static PlayerObserver instance;
 
-        List<PlayerTrack> playerTracks = new List<PlayerTrack>();
+        public List<PlayerTrack> playerTracks = new List<PlayerTrack>();
 
         int currentRound = 0;
 
@@ -56,15 +56,16 @@ namespace EQx.Game.Statistics {
 
         private void WinListener(CardPlayer player) {
             AddWin(player, true);
-            AddWinnings(player, InvestmentManager.instance.prize - InvestmentManager.instance.LastCommitment(player));
+            AddWinnings(player, InvestmentManager.instance.prize);
         }
 
         private void InvestedCoinsListener(CardPlayer player, int amount) {
             AddInvestment(player, amount);
-            var investments = GetTrack(player).investments.Values.ToList();
-            float extraction = Mathf.Abs(investments.Where(inv => inv <= 0).Count());
-            float creation = investments.Where(inv => inv > 0).Count();
-            float vcp = creation / (extraction + creation);
+            float investment = GetTrack(player).investments.Values.Sum();
+            float maxExtraction = InvestmentManager.instance.maxExtraction * currentRound;
+            float maxCreation = InvestmentManager.instance.maxCreation * currentRound;
+
+            float vcp = (maxExtraction + investment) / (maxCreation + maxExtraction);
             AddVCP(player, vcp);
         }
 
@@ -78,7 +79,7 @@ namespace EQx.Game.Statistics {
 
         private void LoseListener(CardPlayer player) {
             AddWin(player, false);
-            AddWinnings(player, -InvestmentManager.instance.LastCommitment(player));
+            AddWinnings(player, 0);
         }
 
         private void StartPlacingListener(CardPlayer player) {

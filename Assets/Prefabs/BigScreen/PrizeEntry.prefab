@@ -362,8 +362,10 @@ MonoBehaviour:
   gainText: {fileID: 8632303362769179420}
   valueTextPrefix: 'Coins:   '
   avatarIcon: {fileID: 3074543612632329932}
-  positiveColor: {r: 0, g: 1, b: 0, a: 1}
+  positiveColor: {r: 0, g: 0.78823537, b: 0.77647066, a: 1}
   negativeColor: {r: 1, g: 0, b: 0, a: 1}
+  creationColor: {r: 0.07450981, g: 0.62352943, b: 0.98823535, a: 1}
+  extractionColor: {r: 0.97647065, g: 0.909804, b: 0.23137257, a: 1}
   valueGainInterval: 0.1
   rank: 0
 --- !u!1 &4015518916226224703

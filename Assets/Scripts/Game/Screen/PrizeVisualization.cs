@@ -16,11 +16,19 @@ namespace EQx.Game.Screen {
         Transform spawnContext = default;
 
         [SerializeField]
-        PrizeEntry entryPrefab;
+        PrizeEntry entryPrefab = default;
+        [SerializeField]
+        TMP_Text infoText = default;
+        [SerializeField]
+        string commitmentText = "Elite Commitment";
+        [SerializeField]
+        string prizeText = "Jackpot";
 
         Dictionary<CardPlayer, PrizeEntry> entries = new Dictionary<CardPlayer, PrizeEntry>();
 
         Dictionary<CardPlayer, int> capitals = new Dictionary<CardPlayer, int>();
+
+
 
         public void SpawnEntries() {
             CleanUp();
@@ -39,9 +47,18 @@ namespace EQx.Game.Screen {
             SetRanks();
         }
 
+        public void ShowCommitment() {
+            infoText.text = commitmentText;
+            foreach (var entry in entries) {
+                entry.Value.SetValueLerp(PlayerObserver.instance.GetCapital(entry.Key) - PlayerObserver.instance.GetCommitment(entry.Key));
+                entry.Value.SetCommitment(-PlayerObserver.instance.GetCommitment(entry.Key));
+            }
+        }
+
         public void ShowGains() {
-            foreach(var entry in entries) {
-                entry.Value.SetValueLerp(PlayerObserver.instance.GetCapital(entry.Key) + PlayerObserver.instance.GetWinnings(entry.Key));
+            infoText.text = prizeText;
+            foreach (var entry in entries) {
+                entry.Value.SetValueLerp(PlayerObserver.instance.GetCapital(entry.Key) - PlayerObserver.instance.GetCommitment(entry.Key) + PlayerObserver.instance.GetWinnings(entry.Key));
                 entry.Value.SetGain(PlayerObserver.instance.GetWinnings(entry.Key));
             }
         }
@@ -49,7 +66,7 @@ namespace EQx.Game.Screen {
         public void UpdateRankings() {
             capitals.Clear();
             foreach(var player in RoundManager.instance.registeredPlayers) {
-                capitals[player] = PlayerObserver.instance.GetCapital(player) + PlayerObserver.instance.GetWinnings(player);
+                capitals[player] = PlayerObserver.instance.GetCapital(player) - PlayerObserver.instance.GetCommitment(player) + PlayerObserver.instance.GetWinnings(player);
                 if (entries.ContainsKey(player)) {
                     entries[player].SetGain(0);
                 }
@@ -58,6 +75,7 @@ namespace EQx.Game.Screen {
         }
 
         public void Hide() {
+            infoText.text= "";
             foreach(var entry in entries) {
                 entry.Value.gameObject.SetActive(false);
             }
@@ -83,7 +101,8 @@ namespace EQx.Game.Screen {
         }
 
         public void CleanUp() {
-            foreach(var entry in entries) {
+            infoText.text = "";
+            foreach (var entry in entries) {
                 Destroy(entry.Value.gameObject);
             }
             entries.Clear();

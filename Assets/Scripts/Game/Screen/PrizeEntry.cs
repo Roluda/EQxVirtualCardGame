@@ -25,7 +25,10 @@ namespace EQx.Game.Screen {
         Color positiveColor = Color.green;
         [SerializeField]
         Color negativeColor = Color.red;
-
+        [SerializeField]
+        Color creationColor = Color.blue;
+        [SerializeField]
+        Color extractionColor = Color.yellow;
         [SerializeField]
         float valueGainInterval = 0.1f;
 
@@ -51,6 +54,18 @@ namespace EQx.Game.Screen {
 
         public void SetValueLerp(int value) {
             StartCoroutine(SetValueAnimated(value));
+        }
+
+        public void SetCommitment(int value) {
+            if (value > 0) {
+                gainText.text = $"+{value}";
+                gainText.color = extractionColor;
+            } else if (value < 0) {
+                gainText.text = $"{value}";
+                gainText.color = creationColor;
+            } else {
+                gainText.text = "";
+            }
         }
 
         public void SetGain(int value) {

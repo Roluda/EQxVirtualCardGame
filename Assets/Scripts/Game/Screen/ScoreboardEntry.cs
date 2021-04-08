@@ -75,7 +75,9 @@ namespace EQx.Game.Screen {
         }
 
         private void OnDestroy() {
-            RoundManager.instance.onNewRound -= UpdateValues;
+            if (RoundManager.instance) {
+                RoundManager.instance.onNewRound -= UpdateValues;
+            }
         }
     }
 }
