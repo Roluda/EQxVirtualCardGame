@@ -101,6 +101,7 @@ namespace EQx.Game.Screen {
         }
 
         public void CleanUp() {
+            capitals.Clear();
             infoText.text = "";
             foreach (var entry in entries) {
                 Destroy(entry.Value.gameObject);

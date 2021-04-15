@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 60}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6813090193604168022
 CanvasRenderer:
@@ -360,7 +360,7 @@ MonoBehaviour:
   nameText: {fileID: 8801386485409806429}
   valueText: {fileID: 313063978453734675}
   gainText: {fileID: 8632303362769179420}
-  valueTextPrefix: 'Coins:   '
+  valueTextPrefix: 
   avatarIcon: {fileID: 3074543612632329932}
   positiveColor: {r: 0, g: 0.78823537, b: 0.77647066, a: 1}
   negativeColor: {r: 1, g: 0, b: 0, a: 1}
@@ -640,7 +640,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Coins: 22'
+  m_text: 22
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f1143169b2d2554492afa8fbb517995, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 95a3a69e1d20012428a8d0b4f9e6ea20, type: 2}
@@ -674,7 +674,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

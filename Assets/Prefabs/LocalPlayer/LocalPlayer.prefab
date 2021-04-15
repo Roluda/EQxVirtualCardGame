@@ -315,6 +315,21 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 1859070709565440682, guid: c32abddb2ee2a654e954ab4e38a4641b,
+        type: 3}
+      propertyPath: spaceBetweenCards.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859070709565440682, guid: c32abddb2ee2a654e954ab4e38a4641b,
+        type: 3}
+      propertyPath: spaceBetweenCards.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859070709565440682, guid: c32abddb2ee2a654e954ab4e38a4641b,
+        type: 3}
+      propertyPath: playOutDistance
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1859070709565440683, guid: c32abddb2ee2a654e954ab4e38a4641b,
         type: 3}
       propertyPath: m_Name

@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 5480481563703173222, guid: 48e37b2585bfc59448859a298e615337,
     type: 3}
-  playOutDistance: 0.7
+  playOutDistance: 1.4
   sortingOrderStart: 1
   spaceBetweenCards: {x: 0.3, y: 0.01, z: 0}
   degreeBetweenCards: -7

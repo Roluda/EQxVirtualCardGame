@@ -32,7 +32,7 @@ namespace EQx.Game.Investing {
             growthInfo.gameObject.SetActive(false);
         }
         void Update() {
-            infoText.text = $"{infoPrefix}{InvestmentManager.instance.prize}";
+            infoText.text = $"{infoPrefix}{Mathf.Abs(InvestmentManager.instance.prize)}";
             infoText.gameObject.SetActive(prizeMountain.highlighted || debtMountain.highlighted);
         }
 

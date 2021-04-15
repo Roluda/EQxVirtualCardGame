@@ -65,7 +65,6 @@ namespace EQx.Game.UI {
                     foreach (var track in PlayerObserver.instance.playerTracks.OrderByDescending(trk => trk.capital[RoundManager.instance.currentRound])) {
                         diagram.AddLineData(track.capital, track.playerName);
                     }
-                    diagram.xScaleSegments = RoundManager.instance.maxRounds +1;
                     diagram.labelX = "Round";
                     diagram.labelY = "Coins";
                     diagram.header = "Coins over Game";
@@ -80,7 +79,6 @@ namespace EQx.Game.UI {
                     foreach (var track in PlayerObserver.instance.playerTracks.OrderByDescending(trk => trk.valueCreationPercentile[RoundManager.instance.currentRound-1])) {
                         diagram.AddLineData(track.valueCreationPercentile, track.playerName);
                     }
-                    diagram.xScaleSegments = RoundManager.instance.maxRounds;
                     diagram.labelX = "Round";
                     diagram.labelY = "Value Creation %";
                     diagram.header = "Value Creation Percentile over Game";

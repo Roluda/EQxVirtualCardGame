@@ -21,12 +21,6 @@ namespace EQx.Game.Investing {
         int maxInvestment => InvestmentManager.instance.maxCreation;
         float segment;
 
-        private void OnValidate() {
-            slider.wholeNumbers = true;
-            slider.minValue = -maxExtraction;
-            slider.maxValue = maxInvestment;
-        }
-
         public void Reset() {
             slider.value = 0;
         }
@@ -48,6 +42,9 @@ namespace EQx.Game.Investing {
 
         // Start is called before the first frame update
         void Start() {
+            slider.wholeNumbers = true;
+            slider.minValue = -maxExtraction;
+            slider.maxValue = maxInvestment;
             slider.onValueChanged.AddListener(UpdateSlider);
             segment = slider.GetComponent<RectTransform>().rect.width / (maxExtraction + maxInvestment);
         }

@@ -9432,6 +9432,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 93110781303535098, guid: 8a3503011a4631c428cbd97c210f0da8,
+        type: 3}
+      propertyPath: infoPrefix
+      value: 'Jackpot: +/-'
+      objectReference: {fileID: 0}
     - target: {fileID: 2515068519477402879, guid: 8a3503011a4631c428cbd97c210f0da8,
         type: 3}
       propertyPath: m_text

@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pileBase: {fileID: 7102655764144915837}
-  pilePrefab: {fileID: 2722671675099169090, guid: 920be844c1e1fe84ea29da8404f05dea,
+  pilePrefab: {fileID: 1450041932496136600, guid: abc4477953ca59f4dadb4e15634dde23,
     type: 3}
   columns: 3
   rows: 2
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pileBase: {fileID: 7102655764144915837}
-  pilePrefab: {fileID: 1450041932496136600, guid: c572eb3c6d4821e4d91c614deb2a45f2,
+  pilePrefab: {fileID: 1450041932496136600, guid: abc4477953ca59f4dadb4e15634dde23,
     type: 3}
   columns: 3
   rows: 2
