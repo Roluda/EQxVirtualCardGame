@@ -11,7 +11,7 @@ PrefabInstance:
         type: 3}
       propertyPath: coinPrefab
       value: 
-      objectReference: {fileID: 2490500345313037874, guid: 365ddb8828561fd4684f80211b4fa4b7,
+      objectReference: {fileID: 8531463987284154873, guid: 0fe86f97dc1eb01498d4a752781104b8,
         type: 3}
     - target: {fileID: 2722671675099169090, guid: 920be844c1e1fe84ea29da8404f05dea,
         type: 3}

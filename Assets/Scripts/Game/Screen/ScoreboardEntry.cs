@@ -72,6 +72,7 @@ namespace EQx.Game.Screen {
             var sprites = Resources.LoadAll<Sprite>("Sprites/Characters");
             icon.sprite = sprites[player.avatarID];
             RoundManager.instance.onNewRound += UpdateValues;
+            UpdateValues();
         }
 
         private void OnDestroy() {

@@ -9614,6 +9614,7 @@ MonoBehaviour:
     producerRent: 0
     capitalRent: 0
     laborRent: 0
+  orderCache: 0
   layerCache: 0
 --- !u!114 &5480481563703173220
 MonoBehaviour:
@@ -9660,7 +9661,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observedCard: {fileID: 5480481563703173222}
-  sortingOrder: 10
+  attachedCollider: {fileID: 3372512215888634547}
+  sortingOrder: 20
+  targetLayer: 8
   normal: {x: 0, y: -0.2, z: 1}
 --- !u!114 &6185163255559335501
 MonoBehaviour:

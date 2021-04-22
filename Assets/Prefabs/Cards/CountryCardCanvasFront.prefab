@@ -4834,7 +4834,7 @@ PrefabInstance:
     - target: {fileID: 5085854844256811719, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_Name
-      value: Unearned IncomePillar
+      value: Unearned  IncomePillar
       objectReference: {fileID: 0}
     - target: {fileID: 5085854844334791336, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
@@ -4864,7 +4864,7 @@ PrefabInstance:
     - target: {fileID: 5085854844600151178, guid: 18188bc8362ffdf44a81ed3b52f8f50a,
         type: 3}
       propertyPath: m_text
-      value: Unearned Income
+      value: Unearned  Income
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18188bc8362ffdf44a81ed3b52f8f50a, type: 3}

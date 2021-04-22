@@ -37,12 +37,23 @@ namespace EQx.Game.CountryCards {
         public int id { get => CountryCardDatabase.instance.GetIndex(data); }
 
         [SerializeField]
+        int orderCache;
+        public int order {
+            get => orderCache;
+            set {
+                frontCanvas.sortingOrder = value;
+                backCanvas.sortingOrder = value;
+                orderCache = value;
+            }
+        }
+
+        [SerializeField]
         int layerCache;
         public int layer {
             get => layerCache;
             set {
-                frontCanvas.sortingOrder = value;
-                backCanvas.sortingOrder = value;
+                frontCanvas.gameObject.layer = value;
+                backCanvas.gameObject.layer = value;
                 layerCache = value;
             }
         }

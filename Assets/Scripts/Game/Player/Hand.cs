@@ -9,10 +9,10 @@ using EQx.Game.Table;
 namespace EQx.Game.Player {
     public class Hand : MonoBehaviour {
         [SerializeField]
-        CountryCard cardPrefab;
+        DropZone dropZone = default;
 
         [SerializeField]
-        float playOutDistance = 5;
+        CountryCard cardPrefab;
 
         [SerializeField]
         int sortingOrderStart = 1;
@@ -88,7 +88,7 @@ namespace EQx.Game.Player {
             removedCard.SetTargetPosition(despawnLocation.position);
             removedCard.SetTargetRotation(despawnLocation.rotation.eulerAngles);
             removedCard.PlayCard();
-            removedCard.layer = sortingOrderStart - 2;
+            removedCard.order = sortingOrderStart - 3;
             placedCard = removedCard;
         }
 
@@ -98,16 +98,24 @@ namespace EQx.Game.Player {
             newCard.data = CountryCardDatabase.instance.GetCountry(id);
             cardInventory.Add(newCard);
             newCard.onCardUnselected += CheckPlayDistance;
+            newCard.onCardSelected += ShowDropZone;
             newCard.transform.position = spawnLocation.transform.position;
             newCard.transform.rotation = spawnLocation.transform.rotation;
             newCard.DrawCard();
         }
 
+        void ShowDropZone(CountryCard card) {
+            if (localPlayer.state == PlayerState.Placing) {
+                dropZone.Show();
+            }
+        }
+
         void CheckPlayDistance(CountryCard card) {
             Debug.Log(name + "CheckPlayDistance");
-            if ((card.transform.position - fanAnchor.transform.position).magnitude > playOutDistance) { 
+            if (dropZone.hovered) { 
                 PlaceCard(card);
             }
+            dropZone.Hide();
         }
 
         void PlaceCard(CountryCard card) {
@@ -137,7 +145,7 @@ namespace EQx.Game.Player {
             foreach (var card in fan) {
                 card.SetTargetPosition(CalculateFanPosition(fan.IndexOf(card), fan.Count));
                 card.SetTargetRotation(CalculateFanRotation(fan.IndexOf(card), fan.Count));
-                card.layer = sortingOrderStart + fan.IndexOf(card);
+                card.order = sortingOrderStart + fan.IndexOf(card);
                 if(playerCache.state == PlayerState.Placing) {
                     card.affordable = true;
                 } else {

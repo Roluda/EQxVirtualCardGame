@@ -16,8 +16,8 @@ namespace EQx.Game.CountryCards {
         private void OnMouseEnter() {
             if (!scaled) {
                 scaled = true;
-                oldLayer = observedCard.layer;
-                observedCard.layer = layer;
+                oldLayer = observedCard.order;
+                observedCard.order = layer;
                 observedCard.transform.localScale *= scaleFactor;
             }
 
@@ -26,7 +26,7 @@ namespace EQx.Game.CountryCards {
         private void OnMouseExit() {
             if (scaled) {
                 scaled = false;
-                observedCard.layer = oldLayer;
+                observedCard.order = oldLayer;
                 observedCard.transform.localScale /= scaleFactor;
             }
 
@@ -35,8 +35,8 @@ namespace EQx.Game.CountryCards {
         private void OnMouseDown() {
             if (!scaled) {
                 scaled = true;
-                oldLayer = observedCard.layer;
-                observedCard.layer = layer;
+                oldLayer = observedCard.order;
+                observedCard.order = layer;
                 observedCard.transform.localScale *= scaleFactor;
             }
         }
@@ -44,7 +44,7 @@ namespace EQx.Game.CountryCards {
         private void OnMouseUp() {
             if (!scaled) {
                 scaled = false;
-                observedCard.layer = oldLayer;
+                observedCard.order = oldLayer;
                 observedCard.transform.localScale /= scaleFactor;
             }
         }

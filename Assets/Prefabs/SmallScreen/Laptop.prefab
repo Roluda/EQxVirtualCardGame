@@ -527,8 +527,8 @@ RectTransform:
   m_Father: {fileID: 574843570880205205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 130, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -741,7 +741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -392.5}
+  m_AnchoredPosition: {x: 960, y: -385}
   m_SizeDelta: {x: 1500, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &574843571290074986
@@ -986,7 +986,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -705}
+  m_AnchoredPosition: {x: 960, y: -690}
   m_SizeDelta: {x: 1500, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &574843571444043429
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   investmentSlider: {fileID: 574843572288358934}
   confirmButton: {fileID: 574843572401186812}
   warning: {fileID: 5165459942588057969}
-  timeUntilWarning: 8
+  timeUntilWarning: 0
   plannedInvestment: 0
 --- !u!114 &4796397849760671367
 MonoBehaviour:
@@ -2037,8 +2037,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 574843572288358933}
-  maxExtraction: 3
-  maxInvestment: 3
   fill: {fileID: 574843571551031890}
   extractionColor: {r: 0.97647065, g: 0.91372555, b: 0.227451, a: 1}
   investmentColor: {r: 0.07450981, g: 0.62352943, b: 0.98823535, a: 1}
@@ -2129,8 +2127,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -952.5}
-  m_SizeDelta: {x: 1000, y: 120}
+  m_AnchoredPosition: {x: 960, y: -945}
+  m_SizeDelta: {x: 1500, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &574843572401186814
 CanvasRenderer:
