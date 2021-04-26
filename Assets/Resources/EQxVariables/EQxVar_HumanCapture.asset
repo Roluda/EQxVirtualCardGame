@@ -23,3 +23,9 @@ MonoBehaviour:
     coalitions, and of elites dealing in labor, in the political system.
   structureHihlighted: {fileID: 9142359700800950432, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Unionization rate
+  - Public sector employees as % of total employment
+  - Collective Bargaining Coverage
+  - Global Slavery Index
+  - Women - Business and the Law

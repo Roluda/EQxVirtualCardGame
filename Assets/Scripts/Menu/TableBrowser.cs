@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using TMPro;
 
 namespace EQx.Menu {
     public class TableBrowser : MonoBehaviourPunCallbacks {
@@ -14,6 +15,11 @@ namespace EQx.Menu {
 		Transform content = null;
 		[SerializeField]
 		GameObject serverOption = null;
+		[SerializeField]
+		TMP_Text log = default;
+
+		[SerializeField]
+		float reconnectInterval = 10;
 
 		public Action onRoomNotUnique;
 
@@ -21,6 +27,7 @@ namespace EQx.Menu {
 
         public void ConnectToPhoton() {
             if (!PhotonNetwork.IsConnected) {
+				log.text = "Connecting to Master Server...";
 				if (!string.IsNullOrEmpty(userID)) {
 					PhotonNetwork.AuthValues.UserId = userID;
 				}
@@ -34,13 +41,28 @@ namespace EQx.Menu {
 			ConnectToPhoton();
         }
 
+        public override void OnErrorInfo(ErrorInfo errorInfo) {
+			log.text= "Network error: " + errorInfo.Info;
+        }
+
+
+        float timer = 0;
+        private void Update() {
+			timer += Time.deltaTime;
+            if (timer > reconnectInterval) {
+				ConnectToPhoton();
+			}
+        }
+
         public override void OnConnectedToMaster() {
 			userID = PhotonNetwork.LocalPlayer.UserId;
+			log.text = "Connected to Master Server";
 			Debug.Log("ConnectedToMaster");
 			PhotonNetwork.JoinLobby();
         }
 
         public override void OnJoinedLobby() {
+			log.text = "Connected to Multiplayer Lobby";
 			Debug.Log("ConnectedToLobby");
         }
 
@@ -60,6 +82,7 @@ namespace EQx.Menu {
 			var customProps = new ExitGames.Client.Photon.Hashtable();
 			customProps["r"] = maxRounds;
 			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0, PublishUserId = true, CustomRoomProperties = customProps};
+			log.text = "Creating Room...";
 			PhotonNetwork.CreateRoom(roomName, roomOptions);
 		}
 
@@ -92,10 +115,12 @@ namespace EQx.Menu {
 			if(returnCode == 32766) {
 				onRoomNotUnique?.Invoke();
             }
+			log.text = message;
 			Debug.LogWarning(message);
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message) {
+			log.text = message;
 			Debug.LogWarning(message);
         }
 

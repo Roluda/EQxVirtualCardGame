@@ -24,3 +24,11 @@ MonoBehaviour:
     to gender parity at the state\u2019s top echelons."
   structureHihlighted: {fileID: 2964391751304838348, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Political corruption
+  - Social Mobility
+  - Political decentralization
+  - Administrative decentralization
+  - Political globalization
+  - Women Power Index
+  - Government's responsiveness to change

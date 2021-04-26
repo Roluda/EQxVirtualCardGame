@@ -24,3 +24,10 @@ MonoBehaviour:
     measures that prevent the entry of valuable business models.
   structureHihlighted: {fileID: -7569388783404164141, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Barriers to entry
+  - FDI net Inflows as % of GDP
+  - Barriers to FDI
+  - Economic globalization
+  - Health Care as % of GDP (dev. fm optimum)
+  - Open for Business

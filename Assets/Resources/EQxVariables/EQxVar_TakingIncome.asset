@@ -24,3 +24,11 @@ MonoBehaviour:
     these, or facilitate wealth transfers carried out by dominant coalitions.
   structureHihlighted: {fileID: -7843255482394314030, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Corporate tax rate (dev. fm optimum)
+  - Delta capital gains tax vs income tax
+  - Homicide rate
+  - Top 10% share of pre-tax national income
+  - Fiscal descentralization
+  - Tax revenue as % of GDP (dev. fm optimum)
+  - Battle-related deaths per 100

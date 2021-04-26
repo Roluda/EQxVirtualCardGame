@@ -24,3 +24,11 @@ MonoBehaviour:
     to challenge incumbents and so drive economic growth."
   structureHihlighted: {fileID: 6737542821326423542, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Listed firms turnover
+  - Entrepreneurship
+  - VC finance
+  - R&D % GDP
+  - Barriers to start-ups
+  - Firm entry ratio
+  - Firm exit ratio

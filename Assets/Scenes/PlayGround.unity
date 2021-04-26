@@ -2056,10 +2056,32 @@ MonoBehaviour:
       m_Calls: []
   m_OnSelect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1717746770}
+        m_MethodName: set_text
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1717746770}
+        m_MethodName: set_text
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Chat...
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTextSelection:
     m_PersistentCalls:
       m_Calls: []
@@ -4739,6 +4761,60 @@ MonoBehaviour:
     action:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 220456354}
+          m_MethodName: CleanUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 220456352}
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    wasPlayed: 0
+  - start: 26.5
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2489463719169177977}
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 2489463719169177976}
+          m_MethodName: ShowIndicator
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    wasPlayed: 0
+  - start: 37
+    action:
+      m_PersistentCalls:
+        m_Calls:
         - m_Target: {fileID: 8479518845594329016}
           m_MethodName: GoToDefaultSpot
           m_Mode: 1
@@ -4773,34 +4849,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     wasPlayed: 0
-  - start: 29
-    action:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 220456354}
-          m_MethodName: CleanUp
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 220456352}
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    wasPlayed: 0
-  - start: 31
+  - start: 41
     action:
       m_PersistentCalls:
         m_Calls:
@@ -4816,7 +4865,34 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     wasPlayed: 0
-  - start: 33
+  - start: 42
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2489463719169177976}
+          m_MethodName: CleanUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2489463719169177977}
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    wasPlayed: 0
+  - start: 43
     action:
       m_PersistentCalls:
         m_Calls:
@@ -4832,7 +4908,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     wasPlayed: 0
-  - start: 34
+  - start: 44
     action:
       m_PersistentCalls:
         m_Calls:
@@ -4848,28 +4924,12 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     wasPlayed: 0
-  - start: 35
+  - start: 45
     action:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 661336324}
           m_MethodName: NewRound
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    wasPlayed: 0
-  - start: 40
-    action:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: SetWinScreenScale
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -7586,32 +7646,32 @@ PrefabInstance:
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: firstColor.r
-      value: 0.37254903
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: firstColor.g
-      value: 0.73333335
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: firstColor.b
-      value: 0.5137255
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: secondColor.r
-      value: 0.2627451
+      value: 0.8962264
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: secondColor.g
-      value: 0.5686275
+      value: 0.2325116
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: secondColor.b
-      value: 0.7960785
+      value: 0.3376893
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
@@ -8964,6 +9024,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 469844341133904828, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469844341133904828, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469844341133904828, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469844341133904828, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 469844341358478841, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469844341358478845, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1147207716122409053, guid: 8f038c702b421fc41afdbd8983d2b2c7,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -9289,6 +9379,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -230.0375
       objectReference: {fileID: 0}
+    - target: {fileID: 3693055039429465742, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4336756637481358464, guid: 8f038c702b421fc41afdbd8983d2b2c7,
         type: 3}
       propertyPath: timeUntilReveal
@@ -9565,6 +9660,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569ac5cab764459449606d9892cd05f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2489463719169177976 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1710389128482208867, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2489463719169177973}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2489463719169177977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394f88301a09861409ff049f00b65e70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2489463719169177977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3693055039429465742, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2489463719169177973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2822212770897456126
 PrefabInstance:
   m_ObjectHideFlags: 0

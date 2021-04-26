@@ -24,3 +24,10 @@ MonoBehaviour:
     measures - like education or healthcare - are conducive for Value Creation.
   structureHihlighted: {fileID: 7461052282624026596, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Subsidies and transfers as % of expenses
+  - Regional redistribution as % of government budget
+  - School life expectancy
+  - Expenditure on general public services as % of GDP (dev. fm optimum)
+  - Global Health Security
+  - Covid-19 safety

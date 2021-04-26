@@ -23,3 +23,9 @@ MonoBehaviour:
     have been captured by special interests.
   structureHihlighted: {fileID: -7268756335852453729, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Institutional quality
+  - Crony-capitalism
+  - Expropriation risk
+  - Protecting Minority Investors
+  - Ease to Challenge Regulations

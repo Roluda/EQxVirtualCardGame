@@ -23,3 +23,12 @@ MonoBehaviour:
     leading firms."
   structureHihlighted: {fileID: 2653114930327326492, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  indicators:
+  - Top 10 firms profitability
+  - SMEs per 1
+  - Antitrust exemptions
+  - Billionaires' wealth as % of GDP
+  - Top 10 firms market cap as % of GDP
+  - Top 3 firms revenues as % of GDP
+  - Top 30 firms revenues as % of GDP
+  - Lerner Index banking sector
