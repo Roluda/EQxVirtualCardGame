@@ -21,9 +21,10 @@ MonoBehaviour:
   iconWhite: {fileID: -9083194033606346662, guid: 4b86ed6a6593c2c479deba218ed17bb0,
     type: 3}
   iconBlack: {fileID: 0}
-  description: "Measures Value Creation \u2013 and Value Extraction - at the political
-    dimension: as the state\u2019s unearned income, at the state \u2018taking\u2019
-    income, and as the state \u2018giving\u2019 income. "
+  description: 'Measures Value Creation and Value Extraction at the political dimension.
+    The EQx Political Power Sub-Index (iii) takes the perspective of the state and
+    is composed by the Pillars: (iii.7) Giving Income; (iii.8) Taking Income; (iii.9)
+    Unearned income. '
   structureHihlighted: {fileID: 0}
   subVariables:
   - {fileID: 11400000, guid: 5398702761fc23d42a3ee6fd6541a5e1, type: 2}

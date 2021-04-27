@@ -15,15 +15,15 @@ MonoBehaviour:
   type: 2
   variableName: Power
   level: 2
-  color: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
+  color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   iconTransparent: {fileID: 798639556992445162, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
     type: 3}
   iconWhite: {fileID: 798639556992445162, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
     type: 3}
   iconBlack: {fileID: 0}
   description: Power is the precondition to operate value extractive business models.
-    Therefore, power is conceptualized as future value extraction potential. Power
-    can be either political or economic.
+    Therefore, in EQx the Power Sub-Index II is conceptualized as future value extraction
+    potential. Power can be either political or economic.
   structureHihlighted: {fileID: 0}
   subVariables:
   - {fileID: 11400000, guid: 3473393ea79e64e4481ccdaa15ee3792, type: 2}

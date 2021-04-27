@@ -26,7 +26,7 @@ MonoBehaviour:
   subVariables: []
   indicators:
   - Top 10 firms profitability
-  - SMEs per 1
+  - SMEs per 1000
   - Antitrust exemptions
   - Billionaires' wealth as % of GDP
   - Top 10 firms market cap as % of GDP

@@ -44,7 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f239cfcdffd0bbd45a7cc12133809268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleDemands: 08000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000040000000500000006000000070000000200000003000000
+  defaultRound: {fileID: 11400000, guid: dcc82fc291e27e44d9938e63ea977783, type: 2}
+  scriptedRounds:
+  - {fileID: 11400000, guid: 0d78d610d64aeb349aa897a00f50ab50, type: 2}
+  - {fileID: 11400000, guid: 98b8cf9711b1b204fb9ea97cf7c29ef9, type: 2}
+  - {fileID: 11400000, guid: a0e640e4c2592cc4db330e01a19c86b5, type: 2}
+  - {fileID: 11400000, guid: 10775a49af87d5c4c92e9c6aaa7ab896, type: 2}
+  - {fileID: 11400000, guid: 73bd667152545a54d909a0bc4d95172a, type: 2}
+  - {fileID: 11400000, guid: 63e52c7475ffc344a9188f514660ff80, type: 2}
+  - {fileID: 11400000, guid: 63e52c7475ffc344a9188f514660ff80, type: 2}
+  - {fileID: 11400000, guid: 63e52c7475ffc344a9188f514660ff80, type: 2}
   maxRounds: 7
   registeredPlayers: []
   winner: {fileID: 0}

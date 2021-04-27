@@ -12,15 +12,22 @@ namespace EQx.Game.Screen {
         [SerializeField]
         BreakdownEntry entryPrefab = default;
         [SerializeField]
-        Transform context = default;
+        GridLayoutGroup context = default;
         [SerializeField]
         Image icon = default;
         [SerializeField]
         TMP_Text head = default;
         [SerializeField]
-        string headAffix = " is indicated by;";
-        [SerializeField]
         float displayInterval;
+
+        [SerializeField]
+        Vector2 subIndexCellSize = default;
+        [SerializeField]
+        Vector2 indexAreaCellSize = default;
+        [SerializeField]
+        Vector2 pillarCellSize = default;
+        [SerializeField]
+        Vector2 indicatorCellSize = default;
 
         List<GameObject> instances = new List<GameObject>();
 
@@ -33,10 +40,11 @@ namespace EQx.Game.Screen {
             var variableData = EQxVariableDatabase.instance.GetVariable(variable);
             icon.sprite = variableData.iconWhite;
             head.text = FindHeader(variableData);
+            context.cellSize = DetermineCellSize(variableData);
             if (variableData.level == EQxLevel.Pillar) {
                 foreach (var indicator in variableData.indicators) {
                     yield return new WaitForSeconds(displayInterval);
-                    var newEntry = Instantiate(entryPrefab, context);
+                    var newEntry = Instantiate(entryPrefab, context.transform);
                     newEntry.color = variableData.color;
                     newEntry.indicatorName = indicator;
                     newEntry.iconEnabled = false;
@@ -45,7 +53,7 @@ namespace EQx.Game.Screen {
             } else {
                 foreach(var subVariable in variableData.subVariables) {
                     yield return new WaitForSeconds(displayInterval);
-                    var newEntry = Instantiate(entryPrefab, context);
+                    var newEntry = Instantiate(entryPrefab, context.transform);
                     newEntry.color = subVariable.color;
                     newEntry.indicatorName = subVariable.variableName;
                     newEntry.icon = subVariable.iconWhite;
@@ -54,16 +62,31 @@ namespace EQx.Game.Screen {
             }
         }
 
+        private Vector2 DetermineCellSize(EQxVariableData data) {
+            switch (data.level) {
+                case EQxLevel.Index:
+                    return subIndexCellSize;
+                case EQxLevel.SubIndex:
+                    return indexAreaCellSize;
+                case EQxLevel.IndexArea:
+                    return pillarCellSize;
+                case EQxLevel.Pillar:
+                    return indicatorCellSize;
+                default:
+                    throw new NotImplementedException("This EQx Level has not children cell size");
+            }
+        }
+
         string FindHeader(EQxVariableData demand) {
             switch (demand.level) {
                 case EQxLevel.Index:
-                    return "The sub indeces of the EQx are:";
+                    return "The Sub-Indices of the EQx are:";
                 case EQxLevel.SubIndex:
-                    return $"The index areas for {demand.variableName} are:";
+                    return $"The Index Areas for {demand.variableName} are:";
                 case EQxLevel.IndexArea:
-                    return $"The pillars of {demand.variableName} are:";
+                    return $"The Pillars of {demand.variableName} are:";
                 case EQxLevel.Pillar:
-                    return $"The indicators for {demand.variableName} are:";
+                    return $"The Indicators for {demand.variableName} are:";
                 default:
                     throw new NotImplementedException("this level has no head");
             }

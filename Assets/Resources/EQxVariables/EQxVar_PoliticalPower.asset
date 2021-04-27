@@ -21,8 +21,9 @@ MonoBehaviour:
   iconWhite: {fileID: -3625875415839402449, guid: 4b86ed6a6593c2c479deba218ed17bb0,
     type: 3}
   iconBlack: {fileID: 0}
-  description: 'Measures the capture of the three kinds of rules that make up institutions:
-    the rules of the state, business regulation, and the rules of human labor.'
+  description: 'Measures the capture by elites of the three kinds of rules that make
+    up institutions. The EQx Political Power Sub-Index (i) is composed by the Pillars:
+    (i.1) State Capture; (i.2) Regulatory Capture; (i.3) Human Capture.'
   structureHihlighted: {fileID: 0}
   subVariables:
   - {fileID: 11400000, guid: 5773fc0606355a34c8070db8701b0746, type: 2}

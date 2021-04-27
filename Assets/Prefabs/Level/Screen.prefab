@@ -1142,6 +1142,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IndicatorBreakdown
       objectReference: {fileID: 0}
+    - target: {fileID: 1268908939948620284, guid: 671b0ca6ee24bc249860ab08752bd576,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671b0ca6ee24bc249860ab08752bd576, type: 3}
 --- !u!224 &3448444202795095527 stripped

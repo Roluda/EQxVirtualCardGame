@@ -13,8 +13,11 @@ using UnityEngine.Events;
 namespace EQx.Game.Table {
     public class RoundManager : MonoBehaviourPunCallbacks , IPunObservable {
         public static RoundManager instance = null;
+
         [SerializeField]
-        List<EQxVariableType> possibleDemands = default;
+        RoundData defaultRound = default;
+        [SerializeField]
+        RoundData[] scriptedRounds = default;
         [SerializeField]
         public int maxRounds;
 
@@ -119,8 +122,10 @@ namespace EQx.Game.Table {
         void SetDemand() {
             Debug.Log(name + ".SetDemand");
             if (PhotonNetwork.IsMasterClient) {
-                int newDemand = (int)possibleDemands[UnityEngine.Random.Range(0, possibleDemands.Count)];
-                photonView.RPC("SetDemandRPC", RpcTarget.AllBuffered, newDemand);
+                var newDemand = currentRound <= scriptedRounds.Length
+                    ? scriptedRounds[currentRound - 1].randomDemand
+                    : defaultRound.randomDemand;
+                photonView.RPC("SetDemandRPC", RpcTarget.AllBuffered, (int)newDemand);
             }
         }
 

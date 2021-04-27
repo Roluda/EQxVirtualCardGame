@@ -15,9 +15,17 @@ namespace EQx.Game.UI {
 
         [SerializeField]
         Color secondColor = Color.yellow;
+        [SerializeField]
+        float secondScale = 0.9f;
 
         Color defaultColor = Color.white;
         bool active = false;
+        [SerializeField]
+        RectTransform imageRect;
+
+        private void OnValidate() {
+            imageRect = image.rectTransform;
+        }
 
         public void StartBlink() {
             if (!active) {
@@ -36,7 +44,9 @@ namespace EQx.Game.UI {
         // Update is called once per frame
         void Update() {
             if (active) {
-                image.color = Color.Lerp(firstColor, secondColor, (Mathf.Sin(Time.time * Mathf.PI * 2 * frequency) + 1) / 2);
+                float value = (Mathf.Sin(Time.time * Mathf.PI * 2 * frequency) + 1) / 2;
+                image.color = Color.Lerp(firstColor, secondColor, value);
+                imageRect.localScale = Vector3.Lerp(Vector3.one, Vector3.one * secondScale, value);
             }
         }
     }

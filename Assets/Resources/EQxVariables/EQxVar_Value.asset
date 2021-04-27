@@ -21,9 +21,9 @@ MonoBehaviour:
   iconWhite: {fileID: 7777260938313500058, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
     type: 3}
   iconBlack: {fileID: 0}
-  description: The outcome of productive activities such as exchange, production
-    or innovation. Value Creation increases the overall economic pie. It can be either
-    political or economic.
+  description: Value is the outcome of productive activities such as exchange, production
+    or innovation. The EQx Value Sub-Index II measures Value Creation which increases
+    the overall economic pie. Value can be either political or economic.
   structureHihlighted: {fileID: 0}
   subVariables:
   - {fileID: 11400000, guid: a3bfa6e0586cfcc47935ca318a666626, type: 2}

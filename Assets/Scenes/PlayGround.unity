@@ -2786,6 +2786,7 @@ GameObject:
   - component: {fileID: 1105582454}
   - component: {fileID: 1105582453}
   - component: {fileID: 1105582455}
+  - component: {fileID: 1105582456}
   m_Layer: 5
   m_Name: DropOff
   m_TagString: Untagged
@@ -2864,6 +2865,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMouseOver: 0
+--- !u!114 &1105582456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105582451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096700c3a40a5c247a9c903386f916f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textToDisable: {fileID: 1322077525}
+  detector: {fileID: 1105582455}
+  lineRenderer: {fileID: 2031136788}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 0.40784317, g: 0.75294125, b: 0.5137255, a: 1}
 --- !u!1 &1113002662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3477,7 +3495,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: xxx is the most valuable Elite.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f1143169b2d2554492afa8fbb517995, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 95a3a69e1d20012428a8d0b4f9e6ea20, type: 2}
@@ -3744,7 +3762,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: xxx wins the elite quality prize!
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f1143169b2d2554492afa8fbb517995, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 95a3a69e1d20012428a8d0b4f9e6ea20, type: 2}
@@ -7661,22 +7679,27 @@ PrefabInstance:
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: secondColor.r
-      value: 0.8962264
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: secondColor.g
-      value: 0.2325116
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: secondColor.b
-      value: 0.3376893
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}
       propertyPath: frequency
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165459942588057969, guid: a3d0f2794bb5efd43bede29c1a57921c,
+        type: 3}
+      propertyPath: secondScale
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 5266534903237422485, guid: a3d0f2794bb5efd43bede29c1a57921c,
         type: 3}

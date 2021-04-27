@@ -21,8 +21,10 @@ MonoBehaviour:
   iconWhite: {fileID: -5518309957515829739, guid: 4b86ed6a6593c2c479deba218ed17bb0,
     type: 3}
   iconBlack: {fileID: 0}
-  description: "Measures Value Creation \u2013 and Value Extraction - from the economy\u2019s
-    three markets: products and services, capital markets, and labor markets."
+  description: "Measures Value Creation and Value Extraction from the economy\u2019s
+    three markets (products and services, capital and labor). The EQx Economic Power
+    Sub-Index (iv) is composed by the Pillars: (iv.10) Producer Value; (iv.11) Capital
+    Value; (iv.12) Labor Value."
   structureHihlighted: {fileID: 0}
   subVariables:
   - {fileID: 11400000, guid: 1961a73400608bb4eb795929542f8412, type: 2}

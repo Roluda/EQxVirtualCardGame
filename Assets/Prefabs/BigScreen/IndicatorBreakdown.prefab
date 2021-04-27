@@ -91,11 +91,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryPrefab: {fileID: 1784926135531020546, guid: 257b0de60d498b246a554b7521582224,
     type: 3}
-  context: {fileID: 7893334211459501086}
+  context: {fileID: 1559535704856277563}
   icon: {fileID: 2314204914540979922}
   head: {fileID: 4118495947135506346}
   headAffix: ' is indicated by;'
-  displayInterval: 1
+  displayInterval: 1.3
+  subIndexCellSize: {x: 790, y: 100}
+  indexAreaCellSize: {x: 790, y: 100}
+  pillarCellSize: {x: 791, y: 100}
+  indicatorCellSize: {x: 790, y: 100}
 --- !u!1 &5603395719689272482
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +364,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 790, y: 100}
+  m_CellSize: {x: 791, y: 100}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2

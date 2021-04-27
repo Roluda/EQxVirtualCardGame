@@ -21,8 +21,9 @@ MonoBehaviour:
   iconWhite: {fileID: 716416685937441136, guid: 4b86ed6a6593c2c479deba218ed17bb0,
     type: 3}
   iconBlack: {fileID: 0}
-  description: "Measures elite dominance in the economy: at the firm level, the elite
-    coalition level and in terms of \u2018creative destruction\u2019."
+  description: 'Measures the business elite dominance in the economy. The EQx Economic
+    Power Sub-Index (ii) is composed by the Pillars: (ii.4) Coalition Dominance;
+    (ii.5) Firm Dominance; (ii.6) Creative Destruction.'
   structureHihlighted: {fileID: 0}
   subVariables:
   - {fileID: 11400000, guid: ad10285c367031647931807041458e84, type: 2}
