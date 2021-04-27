@@ -15,10 +15,17 @@ MonoBehaviour:
   type: 3
   variableName: Value
   level: 2
-  color: {r: 1, g: 1, b: 1, a: 1}
-  iconTransparent: {fileID: 21300000, guid: 535543337e65f7343b0eb02b7bc94460, type: 3}
-  iconWhite: {fileID: 0}
+  color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
+  iconTransparent: {fileID: 7777260938313500058, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
+    type: 3}
+  iconWhite: {fileID: 7777260938313500058, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
+    type: 3}
   iconBlack: {fileID: 0}
   description: The outcome of productive activities such as exchange, production
     or innovation. Value Creation increases the overall economic pie. It can be either
     political or economic.
+  structureHihlighted: {fileID: 0}
+  subVariables:
+  - {fileID: 11400000, guid: a3bfa6e0586cfcc47935ca318a666626, type: 2}
+  - {fileID: 11400000, guid: eb92d3c23018957489c0f157f2527439, type: 2}
+  indicators: []

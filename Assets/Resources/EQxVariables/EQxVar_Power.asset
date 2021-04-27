@@ -15,10 +15,17 @@ MonoBehaviour:
   type: 2
   variableName: Power
   level: 2
-  color: {r: 1, g: 1, b: 1, a: 1}
-  iconTransparent: {fileID: 21300000, guid: 3dc3d407a0c1ee8439ae8a7b9452297d, type: 3}
-  iconWhite: {fileID: 0}
+  color: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
+  iconTransparent: {fileID: 798639556992445162, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
+    type: 3}
+  iconWhite: {fileID: 798639556992445162, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
+    type: 3}
   iconBlack: {fileID: 0}
   description: Power is the precondition to operate value extractive business models.
     Therefore, power is conceptualized as future value extraction potential. Power
     can be either political or economic.
+  structureHihlighted: {fileID: 0}
+  subVariables:
+  - {fileID: 11400000, guid: 3473393ea79e64e4481ccdaa15ee3792, type: 2}
+  - {fileID: 11400000, guid: 3f5c64b8f3e5457408896558f7d4400c, type: 2}
+  indicators: []

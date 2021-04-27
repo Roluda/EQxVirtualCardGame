@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 9
   variableName: Regulatory Capture
-  level: 3
+  level: 4
   color: {r: 0.81568635, g: 0.7294118, b: 0.16862746, a: 1}
   iconTransparent: {fileID: 21300000, guid: daea4117d3ed48d47bd7ee256d76d72d, type: 3}
   iconWhite: {fileID: 21300000, guid: ee20b22f70b077f43b0da522836f0b86, type: 3}
@@ -23,6 +23,7 @@ MonoBehaviour:
     have been captured by special interests.
   structureHihlighted: {fileID: -7268756335852453729, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Institutional quality
   - Crony-capitalism

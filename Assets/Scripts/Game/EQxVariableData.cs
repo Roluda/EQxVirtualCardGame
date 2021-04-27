@@ -24,6 +24,8 @@ namespace EQx.Game {
         [SerializeField]
         public Sprite structureHihlighted = default;
         [SerializeField]
+        public EQxVariableData[] subVariables = default;
+        [SerializeField]
         public string[] indicators = default;
     }
 }

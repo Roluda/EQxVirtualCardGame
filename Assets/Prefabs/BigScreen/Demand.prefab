@@ -710,6 +710,7 @@ MonoBehaviour:
   closedSpacing: -700
   openSpacing: -100
   structureAnimationTime: 0.5
+  defaultPillar: {fileID: 21300000, guid: a3858be19249c23489e174728f385cff, type: 3}
 --- !u!1 &5106437710770762421
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,8 @@ namespace EQx.Game {
     public enum EQxLevel {
         Index = 1,
         SubIndex = 2,
-        Pillar = 3
+        IndexArea = 3,
+        Pillar = 4,
+        Indicator = 5
     }
 }

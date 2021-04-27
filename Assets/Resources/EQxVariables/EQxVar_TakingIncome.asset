@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 15
   variableName: Taking Income
-  level: 3
+  level: 4
   color: {r: 0.3529412, g: 0.54509807, b: 0.67058825, a: 1}
   iconTransparent: {fileID: 21300000, guid: 832daf95f40c5394796135aa71ace023, type: 3}
   iconWhite: {fileID: 21300000, guid: d3f1eded46bcac64497d93a4ff83d7ec, type: 3}
@@ -24,6 +24,7 @@ MonoBehaviour:
     these, or facilitate wealth transfers carried out by dominant coalitions.
   structureHihlighted: {fileID: -7843255482394314030, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Corporate tax rate (dev. fm optimum)
   - Delta capital gains tax vs income tax

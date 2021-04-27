@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 8
   variableName: State Capture
-  level: 3
+  level: 4
   color: {r: 0.81568635, g: 0.7294118, b: 0.16862746, a: 1}
   iconTransparent: {fileID: 21300000, guid: fee7b644ba1fb814c923530f5a198fea, type: 3}
   iconWhite: {fileID: 21300000, guid: b4521e857ba7b8842be56be371fceb5c, type: 3}
@@ -24,6 +24,7 @@ MonoBehaviour:
     to gender parity at the state\u2019s top echelons."
   structureHihlighted: {fileID: 2964391751304838348, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Political corruption
   - Social Mobility

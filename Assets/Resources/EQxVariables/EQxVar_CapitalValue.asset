@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
-  m_Name: EQxVar_CapitalRent
+  m_Name: EQxVar_CapitalValue
   m_EditorClassIdentifier: 
   type: 18
   variableName: Capital Value
-  level: 3
+  level: 4
   color: {r: 0.37254903, g: 0.74509805, b: 0.7137255, a: 1}
   iconTransparent: {fileID: 21300000, guid: fa19a0250bd91e04ca5a21d764130579, type: 3}
   iconWhite: {fileID: 21300000, guid: 1e35b3cfb215235479d3c19bd79d0ede, type: 3}
@@ -24,6 +24,7 @@ MonoBehaviour:
     interest rates and the activities of the financial sector. '
   structureHihlighted: {fileID: -4682350931553925582, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Neutral interest rate (dev. fm optimum)
   - Inflation (dev. fm optimum)

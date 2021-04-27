@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
-  m_Name: EQxVar_LaborRent
+  m_Name: EQxVar_LaborValue
   m_EditorClassIdentifier: 
   type: 19
   variableName: Labor Value
-  level: 3
+  level: 4
   color: {r: 0.37254903, g: 0.74509805, b: 0.7137255, a: 1}
   iconTransparent: {fileID: 21300000, guid: c73f83c178dc72e49a14ceaa66fb411e, type: 3}
   iconWhite: {fileID: 21300000, guid: af383a7d43f078f4ba0ceaaf9f6a01e0, type: 3}
@@ -24,6 +24,7 @@ MonoBehaviour:
     and demand side.
   structureHihlighted: {fileID: -8354580489716788125, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Unemployment rate
   - Labor force participation rate

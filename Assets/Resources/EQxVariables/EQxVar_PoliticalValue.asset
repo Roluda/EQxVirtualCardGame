@@ -14,11 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   variableName: Political Value
-  level: 2
+  level: 3
   color: {r: 0.3529412, g: 0.54509807, b: 0.67058825, a: 1}
-  iconTransparent: {fileID: 0}
-  iconWhite: {fileID: 0}
+  iconTransparent: {fileID: 8762624319446969335, guid: 9bca50c7ac0b3d14392c9df450e8e6ea,
+    type: 3}
+  iconWhite: {fileID: -9083194033606346662, guid: 4b86ed6a6593c2c479deba218ed17bb0,
+    type: 3}
   iconBlack: {fileID: 0}
   description: "Measures Value Creation \u2013 and Value Extraction - at the political
     dimension: as the state\u2019s unearned income, at the state \u2018taking\u2019
     income, and as the state \u2018giving\u2019 income. "
+  structureHihlighted: {fileID: 0}
+  subVariables:
+  - {fileID: 11400000, guid: 5398702761fc23d42a3ee6fd6541a5e1, type: 2}
+  - {fileID: 11400000, guid: 8d80c6e800b62594d98e64bf70f3410d, type: 2}
+  - {fileID: 11400000, guid: b40a73dffa51bef418ddc1761d32c21b, type: 2}
+  indicators: []

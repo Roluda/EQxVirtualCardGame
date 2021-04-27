@@ -23,6 +23,13 @@ namespace EQx.Game.CountryCards {
             }
         }
 
+        public int GetRank(EQxCountryData competitor, EQxVariableType variable) {
+            if (!data.eqxCountryData.Contains(competitor)){
+                throw new Exception("This Country Data is alien from this data set");
+            }
+            return data.eqxCountryData.OrderByDescending(country => country.GetValue(variable)).ToList().IndexOf(competitor) + 1;
+        }
+
         public int GetIndex(EQxCountryData countryData) {
             return Array.IndexOf(data.eqxCountryData, countryData);
         }

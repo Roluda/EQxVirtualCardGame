@@ -230,6 +230,8 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 9de3a63e5e7425e46a7cfcd7f332a99f, type: 2}
   value: {fileID: 8714298149809673111}
   icon: {fileID: 8714298150898293430}
+  rank: {fileID: 8714298150933118581}
+  rankPrefix: 'Rank: '
 --- !u!1 &8714298148969772162
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +639,8 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 9168e3518f703d645a0f73e56403e7f8, type: 2}
   value: {fileID: 8714298148929753574}
   icon: {fileID: 8714298150197462566}
+  rank: {fileID: 8714298149696638902}
+  rankPrefix: 'Rank: '
 --- !u!1 &8714298149176360847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,7 +2031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3dc3d407a0c1ee8439ae8a7b9452297d, type: 3}
+  m_Sprite: {fileID: 798639556992445162, guid: aba6d9804c1a9e44fa16e51f45fad5fc, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3043,7 +3047,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 535543337e65f7343b0eb02b7bc94460, type: 3}
+  m_Sprite: {fileID: 7777260938313500058, guid: aba6d9804c1a9e44fa16e51f45fad5fc,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

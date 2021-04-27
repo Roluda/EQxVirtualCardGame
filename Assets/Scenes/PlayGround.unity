@@ -9589,6 +9589,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8007134814934750160, guid: 8f038c702b421fc41afdbd8983d2b2c7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8221849054780452949, guid: 8f038c702b421fc41afdbd8983d2b2c7,
         type: 3}
       propertyPath: m_AnchorMin.y

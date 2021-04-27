@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07e211b8c857f504b8bc68a6ec35fc4b, type: 3}
-  m_Name: EQxVar_IndustryDominance
+  m_Name: EQxVar_CoalitionDominance
   m_EditorClassIdentifier: 
   type: 11
   variableName: Coalition Dominance
-  level: 3
+  level: 4
   color: {r: 0.77647066, g: 0.30588236, b: 0.35686275, a: 1}
   iconTransparent: {fileID: 21300000, guid: e146c764cdfd30f41a50223175cde9bd, type: 3}
   iconWhite: {fileID: 21300000, guid: c72bb37a0f95526499f9f0a85cbb74cb, type: 3}
@@ -23,6 +23,7 @@ MonoBehaviour:
     influence of the largest industries, interest groups and coalitions."
   structureHihlighted: {fileID: 1072891434893169930, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Top 3 industries exports as % of GDP
   - Top 3 industries as % of GDP

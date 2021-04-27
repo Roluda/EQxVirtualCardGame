@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 13
   variableName: Creative Destruction
-  level: 3
+  level: 4
   color: {r: 0.77647066, g: 0.30588236, b: 0.35686275, a: 1}
   iconTransparent: {fileID: 21300000, guid: 126baeef2f4699b40951141d0aaacedb, type: 3}
   iconWhite: {fileID: 21300000, guid: a9c0112afe38d424cae47bb8f72f0c37, type: 3}
@@ -24,6 +24,7 @@ MonoBehaviour:
     to challenge incumbents and so drive economic growth."
   structureHihlighted: {fileID: 6737542821326423542, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Listed firms turnover
   - Entrepreneurship

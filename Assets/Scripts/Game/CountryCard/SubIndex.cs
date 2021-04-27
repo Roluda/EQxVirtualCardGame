@@ -13,6 +13,11 @@ namespace EQx.Game.CountryCards {
         [SerializeField]
         Image icon = default;
 
+        [SerializeField]
+        TMP_Text rank = default;
+        [SerializeField]
+        string rankPrefix = "Rank: ";
+
 
         protected override void Validate() {
             icon.sprite = data.iconTransparent;
@@ -21,6 +26,7 @@ namespace EQx.Game.CountryCards {
 
         protected override void NewCardDataListener() {
             value.text = ((int)observedCard.data.GetValue(data.type)).ToString();
+            rank.text = rankPrefix + CountryCardDatabase.instance.GetRank(observedCard.data, data.type);
         }
     }
 }

@@ -41,6 +41,9 @@ namespace EQx.Game.Table {
         [SerializeField]
         float structureAnimationTime = 1;
 
+        [SerializeField]
+        Sprite defaultPillar = default;
+
         private void Start() {
         }
 
@@ -59,11 +62,13 @@ namespace EQx.Game.Table {
             context.gameObject.SetActive(true);
             structureGroup.spacing = closedSpacing;
             pillarImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, closedImageHeight);
-            pillarImage.sprite = data.structureHihlighted;
+            pillarImage.sprite = data.level == EQxLevel.Pillar ? data.structureHihlighted : defaultPillar;
             head.text = "";
             body.text = "";
             icon.enabled = false;
-            StartCoroutine(ShowStructure());
+            if (data.level == EQxLevel.Pillar) {
+                StartCoroutine(ShowStructure());
+            }
             yield return new WaitForSeconds(waitAfterStructure);
             icon.enabled = true;
             icon.sprite = data.iconWhite;
@@ -73,7 +78,7 @@ namespace EQx.Game.Table {
         }
 
         IEnumerator RemoveDemand() {
-            StartCoroutine(HideStructure());
+            //StartCoroutine(HideStructure());
             yield return new WaitForSeconds(structureAnimationTime*1.3f);
             context.gameObject.SetActive(false);
         }

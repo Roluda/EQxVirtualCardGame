@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 14
   variableName: Giving Income
-  level: 3
+  level: 4
   color: {r: 0.3529412, g: 0.54509807, b: 0.67058825, a: 1}
   iconTransparent: {fileID: 21300000, guid: b6e9f70061529a34382d55b53d8a0e66, type: 3}
   iconWhite: {fileID: 21300000, guid: b0c4dc8f3aa53fa47956d1a3b6ba90b1, type: 3}
@@ -24,6 +24,7 @@ MonoBehaviour:
     measures - like education or healthcare - are conducive for Value Creation.
   structureHihlighted: {fileID: 7461052282624026596, guid: 8332a331ec0502d4a84d2ea3188acdb8,
     type: 3}
+  subVariables: []
   indicators:
   - Subsidies and transfers as % of expenses
   - Regional redistribution as % of government budget

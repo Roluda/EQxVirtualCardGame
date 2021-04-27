@@ -14,10 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 7
   variableName: Economic Value
-  level: 2
+  level: 3
   color: {r: 0.37254903, g: 0.74509805, b: 0.7137255, a: 1}
-  iconTransparent: {fileID: 0}
-  iconWhite: {fileID: 0}
+  iconTransparent: {fileID: 1723271389753158066, guid: 9bca50c7ac0b3d14392c9df450e8e6ea,
+    type: 3}
+  iconWhite: {fileID: -5518309957515829739, guid: 4b86ed6a6593c2c479deba218ed17bb0,
+    type: 3}
   iconBlack: {fileID: 0}
   description: "Measures Value Creation \u2013 and Value Extraction - from the economy\u2019s
     three markets: products and services, capital markets, and labor markets."
+  structureHihlighted: {fileID: 0}
+  subVariables:
+  - {fileID: 11400000, guid: 1961a73400608bb4eb795929542f8412, type: 2}
+  - {fileID: 11400000, guid: 9df4a597b4eeb8c448f0fa500fd01e93, type: 2}
+  - {fileID: 11400000, guid: c91d87844fc3102498492d8bfd377bc5, type: 2}
+  indicators: []

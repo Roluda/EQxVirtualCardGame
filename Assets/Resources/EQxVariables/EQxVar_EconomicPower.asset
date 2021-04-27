@@ -14,12 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 5
   variableName: Economic Power
-  level: 2
+  level: 3
   color: {r: 0.77647066, g: 0.30588236, b: 0.35686275, a: 1}
-  iconTransparent: {fileID: 0}
-  iconWhite: {fileID: 0}
+  iconTransparent: {fileID: 2325564409312672026, guid: 9bca50c7ac0b3d14392c9df450e8e6ea,
+    type: 3}
+  iconWhite: {fileID: 716416685937441136, guid: 4b86ed6a6593c2c479deba218ed17bb0,
+    type: 3}
   iconBlack: {fileID: 0}
   description: "Measures elite dominance in the economy: at the firm level, the elite
     coalition level and in terms of \u2018creative destruction\u2019."
   structureHihlighted: {fileID: 0}
+  subVariables:
+  - {fileID: 11400000, guid: ad10285c367031647931807041458e84, type: 2}
+  - {fileID: 11400000, guid: b89a0f28404959e41864c0d9ab332a99, type: 2}
+  - {fileID: 11400000, guid: 023a0be8eaa0e7a45a4011704de5d012, type: 2}
   indicators: []
