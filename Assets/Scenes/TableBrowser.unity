@@ -1411,7 +1411,7 @@ MonoBehaviour:
   serverOption: {fileID: 1277771219153880227, guid: e728211d72d2593428e29ae76cbb7634,
     type: 3}
   log: {fileID: 1446428903}
-  reconnectInterval: 0
+  reconnectInterval: 5
 --- !u!4 &526392256
 Transform:
   m_ObjectHideFlags: 0
@@ -4032,7 +4032,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.000041719148, y: 0.000015543459}
-  m_SizeDelta: {x: -18.637844, y: 15}
+  m_SizeDelta: {x: -18.637844, y: 90.41}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1511091330
 MonoBehaviour:
@@ -4275,7 +4275,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 20
   m_Viewport: {fileID: 1138399489}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1883631086}

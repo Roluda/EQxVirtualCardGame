@@ -23,6 +23,9 @@ namespace EQx.Menu {
 
 		public Action onRoomNotUnique;
 
+		private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
+		private List<GameObject> serverOptions = new List<GameObject>();
+
 		static string userID = "";
 
         public void ConnectToPhoton() {
@@ -66,12 +69,13 @@ namespace EQx.Menu {
 			Debug.Log("ConnectedToLobby");
         }
 
-        public void CreateServerOption(string name, int currentPlayers, int maxPlayers, UnityEngine.Events.UnityAction callback) {
+        public GameObject CreateServerOption(string name, int currentPlayers, int maxPlayers, UnityEngine.Events.UnityAction callback) {
 			var option = Instantiate(serverOption);
 			option.transform.SetParent(content);
 			var browserItem = option.GetComponent<TableOption>();
 			if (browserItem != null)
 				browserItem.SetData(name, currentPlayers, maxPlayers, callback);
+			return option;
 		}
 
 		public void Host(string roomName, int maxPlayers, int maxRounds) {
@@ -94,15 +98,9 @@ namespace EQx.Menu {
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList) {
-			Debug.Log("Updated Room List");
-			for (int i = content.childCount - 1; i >= 0; --i)
-				Destroy(content.GetChild(i).gameObject);
-
-			foreach (var room in roomList) {
-				CreateServerOption(room.Name, room.PlayerCount, room.MaxPlayers, () => {
-					PhotonNetwork.JoinRoom(room.Name);
-				});
-			}
+			ClearRoomListView();
+			UpdateCachedRoomList(roomList);
+			UpdateRoomListView();
 		}
 
 		public override void OnJoinedRoom() {
@@ -129,5 +127,38 @@ namespace EQx.Menu {
 				PhotonNetwork.Disconnect();
 			}
         }
-    }
+
+		private void ClearRoomListView() {
+			foreach (GameObject entry in serverOptions) {
+				Destroy(entry.gameObject);
+			}
+			serverOptions.Clear();
+		}
+
+		private void UpdateCachedRoomList(List<RoomInfo> roomList) {
+			foreach (RoomInfo info in roomList) {
+				if (!info.IsOpen || !info.IsVisible || info.RemovedFromList) {
+					if (cachedRoomList.ContainsKey(info.Name)) {
+						cachedRoomList.Remove(info.Name);
+					}
+
+					continue;
+				}
+				if (cachedRoomList.ContainsKey(info.Name)) {
+					cachedRoomList[info.Name] = info;
+				}
+				else {
+					cachedRoomList.Add(info.Name, info);
+				}
+			}
+		}
+
+		private void UpdateRoomListView() {
+			foreach (RoomInfo room in cachedRoomList.Values) {
+				serverOptions.Add(CreateServerOption(room.Name, room.PlayerCount, room.MaxPlayers, () => {
+					PhotonNetwork.JoinRoom(room.Name);
+				}));
+			}
+		}
+	}
 }

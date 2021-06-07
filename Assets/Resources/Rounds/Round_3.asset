@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fc6bb9aafc05b46af9846f0f8f0867, type: 3}
   m_Name: Round_3
   m_EditorClassIdentifier: 
-  possibleDemands: 05000000
+  possibleDemands: 03000000
