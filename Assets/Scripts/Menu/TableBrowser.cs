@@ -8,6 +8,10 @@ using TMPro;
 
 namespace EQx.Menu {
     public class TableBrowser : MonoBehaviourPunCallbacks {
+		public const string CONNECTED_PLAYERS = "cp";
+		public const string MAX_ROUNDS = "mr";
+		public const string CURRENT_ROUND = "cr";
+
 		[SerializeField]
 		string gameVersion = "Develop";
 
@@ -69,12 +73,12 @@ namespace EQx.Menu {
 			Debug.Log("ConnectedToLobby");
         }
 
-        public GameObject CreateServerOption(string name, int currentPlayers, int maxPlayers, UnityEngine.Events.UnityAction callback) {
+        public GameObject CreateServerOption(RoomInfo info, UnityEngine.Events.UnityAction callback) {
 			var option = Instantiate(serverOption);
 			option.transform.SetParent(content);
 			var browserItem = option.GetComponent<TableOption>();
 			if (browserItem != null)
-				browserItem.SetData(name, currentPlayers, maxPlayers, callback);
+				browserItem.SetData(info, callback);
 			return option;
 		}
 
@@ -84,8 +88,16 @@ namespace EQx.Menu {
 				return;
             }
 			var customProps = new ExitGames.Client.Photon.Hashtable();
-			customProps["r"] = maxRounds;
-			var roomOptions = new RoomOptions { MaxPlayers = (byte)maxPlayers , PlayerTtl = 0, PublishUserId = true, CustomRoomProperties = customProps};
+			customProps[MAX_ROUNDS] = maxRounds;
+			customProps[CURRENT_ROUND] = 0;
+			customProps[CONNECTED_PLAYERS] = new string[] {};
+			var roomOptions = new RoomOptions {
+				MaxPlayers = (byte)maxPlayers,
+				PlayerTtl = 10000,
+				PublishUserId = true,
+				CustomRoomProperties = customProps,
+				CustomRoomPropertiesForLobby = new string[] {CONNECTED_PLAYERS, CURRENT_ROUND, MAX_ROUNDS}
+			};
 			log.text = "Creating Room...";
 			PhotonNetwork.CreateRoom(roomName, roomOptions);
 		}
@@ -155,7 +167,7 @@ namespace EQx.Menu {
 
 		private void UpdateRoomListView() {
 			foreach (RoomInfo room in cachedRoomList.Values) {
-				serverOptions.Add(CreateServerOption(room.Name, room.PlayerCount, room.MaxPlayers, () => {
+				serverOptions.Add(CreateServerOption(room, () => {
 					PhotonNetwork.JoinRoom(room.Name);
 				}));
 			}

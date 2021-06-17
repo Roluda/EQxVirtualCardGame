@@ -1,6 +1,7 @@
 ﻿using EQx.Game.CountryCards;
 using EQx.Game.Investing;
 using EQx.Game.Player;
+using EQx.Menu;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -65,6 +66,7 @@ namespace EQx.Game.Table {
                     NewRound();
                 }
             }
+            UpdateRoomProperties();
         }
 
         public void Unregister(CardPlayer player) {
@@ -78,6 +80,7 @@ namespace EQx.Game.Table {
             onPlayerUnregister?.Invoke(player);
             onRegisterUpdate?.Invoke();
             TryEndRound();
+            UpdateRoomProperties();
         }
 
         void PayedBlindListener(CardPlayer player) {
@@ -117,6 +120,7 @@ namespace EQx.Game.Table {
             onNewRound?.Invoke();
             SetDemand();
             StartPlacingRound();
+            UpdateRoomProperties();
         }
 
         void SetDemand() {
@@ -219,11 +223,21 @@ namespace EQx.Game.Table {
         }
 
         void Start() {
-            maxRounds = (int)PhotonNetwork.CurrentRoom.CustomProperties["r"];
+            maxRounds = (int)PhotonNetwork.CurrentRoom.CustomProperties[TableBrowser.MAX_ROUNDS];
         }
 
         #endregion
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        }
+
+
+        private void UpdateRoomProperties() {
+            if (PhotonNetwork.IsMasterClient) {
+                var props = PhotonNetwork.CurrentRoom.CustomProperties;
+                props[TableBrowser.CONNECTED_PLAYERS] = registeredPlayers.Select(player => player.playerName).ToArray();
+                props[TableBrowser.CURRENT_ROUND] = currentRound;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+            }
         }
     }
 }
