@@ -2226,6 +2226,8 @@ MonoBehaviour:
   frequency: 3
   firstColor: {r: 1, g: 1, b: 1, a: 1}
   secondColor: {r: 0.9960785, g: 0.9960785, b: 0.33333334, a: 1}
+  secondScale: 0.9
+  imageRect: {fileID: 574843572401186787}
 --- !u!1 &6123815224205230871
 GameObject:
   m_ObjectHideFlags: 0

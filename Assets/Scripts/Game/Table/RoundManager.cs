@@ -90,10 +90,11 @@ namespace EQx.Game.Table {
         void PlacedCardListener(CardPlayer player, int id) {
             player.baseValue = CountryCardDatabase.instance.GetCountry(id).GetValue(currentDemand);
             player.EndPlacing();
+            player.StartBetting();
         }
 
         void EndPlacingListener(CardPlayer player) {
-            player.StartBetting();
+            //player.StartBetting();
         }
 
         void EndBettingListener(CardPlayer player) {

@@ -19,9 +19,12 @@ namespace EQx.Game.UI {
         float secondScale = 0.9f;
 
         Color defaultColor = Color.white;
+        [SerializeField]
         bool active = false;
         [SerializeField]
         RectTransform imageRect;
+
+
 
         private void OnValidate() {
             imageRect = image.rectTransform;

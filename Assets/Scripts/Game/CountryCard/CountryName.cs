@@ -16,7 +16,11 @@ namespace EQx.Game.CountryCards {
 
         protected override void NewCardDataListener() {
             label.text = observedCard.data.countryName;
-            flagIcon.sprite = Resources.Load<Sprite>(path + "/" + observedCard.data.isoCountryCode.ToLower());
+            var sprite = Resources.Load<Sprite>(path + "/" + observedCard.data.isoCountryCode.ToLower());
+            if (sprite == null) {
+                sprite = Resources.Load<Sprite>(path + "/un");
+            }
+            flagIcon.sprite = sprite;
         }
     }
 }

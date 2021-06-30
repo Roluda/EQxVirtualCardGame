@@ -1,6 +1,7 @@
 ﻿using EQx.Game.Audio;
 using EQx.Game.Player;
 using EQx.Game.Table;
+using EQx.Game.Tutorial;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,12 +43,19 @@ namespace EQx.Game.LocalPlayer {
 
         private void Initialize(CardPlayer player) {
             CardPlayer.localPlayerReady -= Initialize;
-            player.onStartedPlacing += StartedPlacingListener;
             player.onStartedBetting += StartedBettingListener;
         }
 
+        public void DisplayPlacing() {
+            if (CardPlayer.localPlayer.state == PlayerState.Placing && !TutorialSystem.inTutorial) {
+                StartCoroutine(DisplayIndication(placingMessage));
+            }
+        }
+
         private void StartedBettingListener(CardPlayer player) {
-            StartCoroutine(DisplayIndication(bettingMessage));
+            if (!TutorialSystem.inTutorial) {
+                StartCoroutine(DisplayIndication(bettingMessage));
+            }
         }
 
         private void StartedPlacingListener(CardPlayer player) {

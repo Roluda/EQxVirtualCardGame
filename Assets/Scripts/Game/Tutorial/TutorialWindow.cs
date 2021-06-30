@@ -14,20 +14,44 @@ namespace EQx.Game.Tutorial {
 
         [SerializeField]
         float typeInterval = 0.05f;
-
-        private void Awake() {
-            gameObject.SetActive(false);
-        }
+        [SerializeField]
+        float popupSpeed = 5;
+        [SerializeField]
+        float promptDelay = 0.3f;
 
         public void Close() {
+            isOpen = false;
             gameObject.SetActive(false);
         }
 
+        bool isOpen = false;
+
         public void Open(TutorialData data, bool hasPrevious, bool hasNext) {
-            gameObject.SetActive(true);
             previousButton.gameObject.SetActive(hasPrevious);
             nextButton.gameObject.SetActive(hasNext);
-            StopAllCoroutines();
+            okButton.gameObject.SetActive(!hasNext);
+            if (isOpen) {
+                StopAllCoroutines();
+                StartCoroutine(ShowData(data));
+                transform.localScale = Vector3.one;
+            } else {
+                isOpen = true;
+                gameObject.SetActive(true);
+                transform.localScale = Vector3.zero;
+                StopAllCoroutines();
+                StartCoroutine(OpenWindow(data));
+            }
+        }
+
+        IEnumerator OpenWindow(TutorialData data) {
+            picture.enabled = false;
+            bodyText.text = string.Empty;
+            while(transform.localScale.x < 1) {
+                transform.localScale += Vector3.one * Time.deltaTime * popupSpeed;
+                yield return null;
+            }
+            transform.localScale = Vector3.one;
+            yield return new WaitForSeconds(promptDelay);
             StartCoroutine(ShowData(data));
         }
 

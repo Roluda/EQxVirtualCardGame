@@ -56,7 +56,11 @@ namespace EQx.Game.Screen {
             playedCard = CountryCardDatabase.instance.GetCountry(player.placedCardID);
             winner = player.state == PlayerState.Won ? true : false;
             label.text = player.playerName + nameConnector + playedCard.countryName;
-            flagIcon.sprite = Resources.Load<Sprite>(flagPath + "/" + playedCard.isoCountryCode.ToLower());
+            var sprite = Resources.Load<Sprite>(flagPath + "/" + playedCard.isoCountryCode.ToLower());
+            if (sprite == null) {
+                sprite = Resources.Load<Sprite>(flagPath + "/un");
+            }
+            flagIcon.sprite = sprite;
             SetSliderAppearance();
             UpdateSliderValuesInstant();
         }

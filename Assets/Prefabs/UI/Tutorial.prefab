@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &543467720561977316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 543467720561977317}
+  - component: {fileID: 543467720561977319}
+  - component: {fileID: 543467720561977318}
+  m_Layer: 0
+  m_Name: Tutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &543467720561977317
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543467720561977316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &543467720561977319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543467720561977316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aca8f19a5de1674bb3f691806448b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialButton: {fileID: 0}
+  tutorialSystem: {fileID: 543467720561977318}
+  initialData:
+  - text: 'Welcome to the Elite Quality Digital Card Game!
+
+
+      This is a game
+      based on the Elite Quality Index country scores.
+
+
+      You will play cards
+      agsinst the other players on the table.'
+    picture: {fileID: 21300000, guid: f5e16b2ae8a7ec942b8ad6f40cbb9c6a, type: 3}
+  - text: "To win you must collect more coins than the others.\nCoins are obtained
+      by winning rounds.\n\nRounds are won by:\n\n - Playing the right card for the
+      given component\n\n - Value creating/extracting the right amount"
+    picture: {fileID: 21300000, guid: 2b3c6414cd621ad429328b8f7b2fe2e6, type: 3}
+  - text: 'In each round, the big screen shows the EQx component on which the round
+      is played on.
+
+
+      The elite playing the highest card on that component
+      wins the round.'
+    picture: {fileID: 21300000, guid: 6eb6162c5696a1c40b9fab533ea5d2bd, type: 3}
+  - text: 'You''ll have 3 cards throughout the game.
+
+
+      In each round you play
+      one.
+
+
+      Each card shows the values of EQx components for that country.'
+    picture: {fileID: 21300000, guid: ba7576a9b2c22a84ba480495cd76b3ae, type: 3}
+  commitValueData:
+  - text: 'After playing the card, you can either value create or extract.
+
+
+      By
+      value creating, you invest in the country by
+
+      1) increasing the component
+      on your card and thereby your chance of winning and
+
+      2) bet on your card
+      winning: you put more coins on the table; you can lose more.'
+    picture: {fileID: 21300000, guid: 979bb39f9307f3e4f9264ba8d7cf3e6f, type: 3}
+  - text: 'Or you can choose to do the opposite.
+
+
+      By value extracting, you
+      are extracting from the country by
+
+      1) decreasing the component on your
+      card and thereby your chance of winning and
+
+      2) betting less on your
+      card winning: you take away on coin from your predetermined blind.'
+    picture: {fileID: 21300000, guid: db4d9bbfe61b01e408c7bd506a6c4429, type: 3}
+  - text: 'Remember that almost all countries are good in something, so be strategic
+      with card picking and value creating.
+
+      Botswana can sometimes win against
+      Switzerland.
+
+
+      If you wish to repeat this tutorial, press the Info button
+      at the top-right corner.
+
+
+      Good Luck and Have Fun!'
+    picture: {fileID: 21300000, guid: d680f0f454196a143b8f4ee2d15f9640, type: 3}
+  roundEndedData: []
+--- !u!114 &543467720561977318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543467720561977316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018aa488ec118d444ba27d5add301e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialWindow: {fileID: 0}

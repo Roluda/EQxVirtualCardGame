@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 namespace EQx.Game.Tutorial {
     public class TutorialSystem : MonoBehaviour {
+        public static bool inTutorial = false;
+
         [SerializeField]
         TutorialWindow tutorialWindow = default;
         List<TutorialData> tutorials = new List<TutorialData>();
@@ -16,6 +18,7 @@ namespace EQx.Game.Tutorial {
         public void NextWindow() { 
             if(NextAvailable()) {
                 currentIndex++;
+                inTutorial = true;
                 tutorialWindow.Open(tutorials[currentIndex], true, NextAvailable());
             }
         }
@@ -23,16 +26,19 @@ namespace EQx.Game.Tutorial {
         public void PreviousWindow() {
             if (PreviousAvailable()) {
                 currentIndex--;
+                inTutorial = true;
                 tutorialWindow.Open(tutorials[currentIndex], PreviousAvailable(), true);
             }
         }
 
         public void ExitTutorial() {
+            inTutorial = false;
             tutorialWindow.Close();
         }
 
         public void OpenTutorial() {
             if (currentIndex < tutorials.Count) {
+                inTutorial = true;
                 tutorialWindow.Open(tutorials[currentIndex], PreviousAvailable(), NextAvailable());
             }
         }
@@ -54,6 +60,7 @@ namespace EQx.Game.Tutorial {
         }
 
         private void Start() {
+            inTutorial = false;
             tutorialWindow.nextButton.onClick.AddListener(NextWindow);
             tutorialWindow.previousButton.onClick.AddListener(PreviousWindow);
             tutorialWindow.okButton.onClick.AddListener(ExitTutorial);
