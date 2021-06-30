@@ -2,6 +2,7 @@
 using EQx.Game.Player;
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EQx.Game.Table {
@@ -70,10 +71,19 @@ namespace EQx.Game.Table {
                     photonView.RPC("ReshuffleRPC", RpcTarget.All);
                 }
                 if (drawPile.Count > 0) {
-                    int randomIndex = Random.Range(0, drawPile.Count - 1);
-                    int randomCard = drawPile[randomIndex];
-                    photonView.RPC("DrawCardRPC", RpcTarget.AllBuffered, randomCard);
-                    player.ReceiveCard(randomCard);
+                    float preferredPriority = Random.Range(1, 10);
+                    var matchingCards = drawPile.Where(card => GetCardPriority(card) > preferredPriority).ToList();
+                    if (matchingCards.Count > 0) {
+                        int randomIndex = Random.Range(0, matchingCards.Count - 1);
+                        int randomCard = drawPile[randomIndex];
+                        photonView.RPC("DrawCardRPC", RpcTarget.AllBuffered, randomCard);
+                        player.ReceiveCard(randomCard);
+                    } else {
+                        int randomIndex = Random.Range(0, drawPile.Count - 1);
+                        int randomCard = drawPile[randomIndex];
+                        photonView.RPC("DrawCardRPC", RpcTarget.AllBuffered, randomCard);
+                        player.ReceiveCard(randomCard);
+                    }
                 }
             }
         }
@@ -89,6 +99,10 @@ namespace EQx.Game.Table {
         // Start is called before the first frame update
         void Start() {
             BuildDeck();
+        }
+
+        float GetCardPriority(int card) {
+            return CountryCardDatabase.instance.data.eqxCountryData[card].cardPriority;
         }
 
         void BuildDeck() {

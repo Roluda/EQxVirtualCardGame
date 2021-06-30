@@ -223,7 +223,9 @@ namespace EQx.Game.Table {
         }
 
         void Start() {
-            maxRounds = (int)PhotonNetwork.CurrentRoom.CustomProperties[TableBrowser.MAX_ROUNDS];
+            if (PhotonNetwork.IsConnected) {
+                maxRounds = (int)PhotonNetwork.CurrentRoom.CustomProperties[TableBrowser.MAX_ROUNDS];
+            }
         }
 
         #endregion

@@ -9614,6 +9614,7 @@ MonoBehaviour:
     producerRent: 0
     capitalRent: 0
     laborRent: 0
+    cardPriority: 0
   orderCache: 0
   layerCache: 0
 --- !u!114 &5480481563703173220

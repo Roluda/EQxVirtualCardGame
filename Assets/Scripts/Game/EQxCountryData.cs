@@ -28,6 +28,7 @@ namespace EQx.Game {
         public float producerRent;
         public float capitalRent;
         public float laborRent;
+        public float cardPriority;
 
         public float GetValue(EQxVariableType variable) {
             switch (variable) {
