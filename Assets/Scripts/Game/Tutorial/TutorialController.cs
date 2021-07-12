@@ -3,6 +3,7 @@ using EQx.Game.Table;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,11 +20,11 @@ namespace EQx.Game.Tutorial {
         TutorialSystem tutorialSystem = default;
 
         [SerializeField]
-        List<TutorialData> initialData = new List<TutorialData>();
+        List<TutorialDataAsset> initialData = new List<TutorialDataAsset>();
         [SerializeField]
-        List<TutorialData> commitValueData = new List<TutorialData>();
+        List<TutorialDataAsset> commitValueData = new List<TutorialDataAsset>();
         [SerializeField]
-        List<TutorialData> roundEndedData = new List<TutorialData>();
+        List<TutorialDataAsset> roundEndedData = new List<TutorialDataAsset>();
 
         private void Awake() {
             CardPlayer.localPlayerReady += RegisterPlayerListeners;

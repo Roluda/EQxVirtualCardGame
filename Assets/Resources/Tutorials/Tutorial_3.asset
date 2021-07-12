@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74edc49a3d1203540850a6d0629e42aa, type: 3}
+  m_Name: Tutorial_3
+  m_EditorClassIdentifier: 
+  rawText: 'You will have three cards throughout the game.
+
+
+    In each round you
+    play one.
+
+
+    Each card shows the values of EQx components for that country.'
+  picture: {fileID: 21300000, guid: ba7576a9b2c22a84ba480495cd76b3ae, type: 3}

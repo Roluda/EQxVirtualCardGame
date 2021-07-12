@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 namespace EQx.Game.Screen {
     public class PrizeEntry : MonoBehaviour {
-        CardPlayer observedPlayer = default;
-
         [SerializeField]
         TMP_Text rankText = default;
         [SerializeField]

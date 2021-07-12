@@ -9,7 +9,7 @@ namespace EQx.Game.Tutorial {
 
         [SerializeField]
         TutorialWindow tutorialWindow = default;
-        List<TutorialData> tutorials = new List<TutorialData>();
+        List<TutorialDataAsset> tutorials = new List<TutorialDataAsset>();
 
 
         int currentIndex = 0;
@@ -43,11 +43,11 @@ namespace EQx.Game.Tutorial {
             }
         }
 
-        public void Unlock(TutorialData data) {
+        public void Unlock(TutorialDataAsset data) {
             tutorials.Add(data);
         }
 
-        public void Unlock(List<TutorialData> data) {
+        public void Unlock(List<TutorialDataAsset> data) {
             tutorials.AddRange(data);
         }
 

@@ -23,11 +23,7 @@ namespace EQx.Game.Screen {
         [SerializeField]
         TMP_Text vcpText = default;
         [SerializeField]
-        string coinsPrefix = default;
-        [SerializeField]
         string rankPrefix = default;
-        [SerializeField]
-        string vcpPrefix = default;
 
         public CardPlayer observedPlayer;
         public int rank;

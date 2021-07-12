@@ -26,7 +26,7 @@ namespace EQx.Game.Tutorial {
 
         bool isOpen = false;
 
-        public void Open(TutorialData data, bool hasPrevious, bool hasNext) {
+        public void Open(TutorialDataAsset data, bool hasPrevious, bool hasNext) {
             previousButton.gameObject.SetActive(hasPrevious);
             nextButton.gameObject.SetActive(hasNext);
             okButton.gameObject.SetActive(!hasNext);
@@ -43,7 +43,7 @@ namespace EQx.Game.Tutorial {
             }
         }
 
-        IEnumerator OpenWindow(TutorialData data) {
+        IEnumerator OpenWindow(TutorialDataAsset data) {
             picture.enabled = false;
             bodyText.text = string.Empty;
             while(transform.localScale.x < 1) {
@@ -55,12 +55,13 @@ namespace EQx.Game.Tutorial {
             StartCoroutine(ShowData(data));
         }
 
-        IEnumerator ShowData(TutorialData data) {
+        IEnumerator ShowData(TutorialDataAsset data) {
             picture.enabled = data.picture;
             picture.sprite = data.picture;
             bodyText.text = string.Empty;
-            foreach(var letter in data.text) {
-                bodyText.text += letter;
+            var textCache = data.escapeText.Split(' ');
+            foreach(var letter in textCache) {
+                bodyText.text += letter+" ";
                 yield return new WaitForSeconds(typeInterval);
             }
         }

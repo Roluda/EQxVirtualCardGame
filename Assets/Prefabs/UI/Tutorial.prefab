@@ -47,87 +47,14 @@ MonoBehaviour:
   tutorialButton: {fileID: 0}
   tutorialSystem: {fileID: 543467720561977318}
   initialData:
-  - text: 'Welcome to the Elite Quality Digital Card Game!
-
-
-      This is a game
-      based on the Elite Quality Index country scores.
-
-
-      You will play cards
-      against the other players on the table.'
-    picture: {fileID: 21300000, guid: f5e16b2ae8a7ec942b8ad6f40cbb9c6a, type: 3}
-  - text: 'To win you must collect more coins than the others.
-
-      Coins are obtained
-      by winning rounds.
-
-
-      Rounds are won by:
-
-
-      \u2022<indent=3em>Playing
-      the right card for the given component</indent>
-
-      \u2022<indent=3em>Value
-      creating/extracting the right amount<indent>'
-    picture: {fileID: 21300000, guid: 2b3c6414cd621ad429328b8f7b2fe2e6, type: 3}
-  - text: 'In each round, the big screen shows the EQx component on which the round
-      is played on.
-
-
-      The elite playing the highest card on that component
-      wins the round.'
-    picture: {fileID: 21300000, guid: 6eb6162c5696a1c40b9fab533ea5d2bd, type: 3}
-  - text: 'You''ll have 3 cards throughout the game.
-
-
-      In each round you play
-      one.
-
-
-      Each card shows the values of EQx components for that country.'
-    picture: {fileID: 21300000, guid: ba7576a9b2c22a84ba480495cd76b3ae, type: 3}
+  - {fileID: 11400000, guid: 80f47d2324571a841b7386e56733c7ed, type: 2}
+  - {fileID: 11400000, guid: 298e9471166d353418a5ad5ac7055fcc, type: 2}
+  - {fileID: 11400000, guid: 257c9136afa19714b9bd4a39d2e3ef5c, type: 2}
+  - {fileID: 11400000, guid: 2dcac8ea8cecca247b36152882ac7ade, type: 2}
   commitValueData:
-  - text: 'After playing the card, you can either value create or extract.
-
-
-      By
-      value creating, you invest in the country by:
-
-
-      \u2022<indent=3em>increasing
-      the component on your card and thereby your chance of winning and</indent>
-
-      /u2022<indent=3em>bet
-      on your card winning: you put more coins on the table; you can lose more.</indent>'
-    picture: {fileID: 21300000, guid: 979bb39f9307f3e4f9264ba8d7cf3e6f, type: 3}
-  - text: 'Or you can choose to do the opposite.
-
-
-      By value extracting, you
-      are extracting from the country by:
-
-
-      <indent=3em>decreasing the component
-      on your card and thereby your chance of winning
-
-      \u2022<indent=3em>betting
-      less on your card winning: you take away one coin from your predetermined blind.</indent>'
-    picture: {fileID: 21300000, guid: db4d9bbfe61b01e408c7bd506a6c4429, type: 3}
-  - text: 'Remember that almost all countries are good in something, so be strategic
-      with card picking and value creating.
-
-      Botswana can sometimes win against
-      Switzerland.
-
-
-      If you wish to repeat this tutorial, press the Info button
-      at the top-right corner.
-
-
-      Good Luck and Have Fun!'
-    picture: {fileID: 21300000, guid: d680f0f454196a143b8f4ee2d15f9640, type: 3}
+  - {fileID: 11400000, guid: ff8b5233738ff6a41bfc165633ec1565, type: 2}
+  - {fileID: 11400000, guid: 3102f6689de2d48409b1159efceb62cc, type: 2}
+  - {fileID: 11400000, guid: 9c1898f430b0e944cae41808f2cc62fd, type: 2}
   roundEndedData: []
 --- !u!114 &543467720561977318
 MonoBehaviour:
