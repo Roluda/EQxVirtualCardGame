@@ -6086,6 +6086,39 @@ PrefabInstance:
       propertyPath: tutorialButton
       value: 
       objectReference: {fileID: 1150394254}
+    - target: {fileID: 543467720561977319, guid: 17c58e651f811de46a8805e6074595b8,
+        type: 3}
+      propertyPath: commitValueData.Array.data[1].text
+      value: 'Or you can choose to do the opposite.
+
+
+        By value extracting,
+        you are extracting from the country by:
+
+
+        <indent=3em>decreasing
+        the component on your card and thereby your chance of winning
+
+        \u2022<indent=3em>betting
+        less on your card winning: you take away one coin from your predetermined
+        blind.</indent>'
+      objectReference: {fileID: 0}
+    - target: {fileID: 543467720561977319, guid: 17c58e651f811de46a8805e6074595b8,
+        type: 3}
+      propertyPath: commitValueData.Array.data[0].text
+      value: 'After playing the card, you can either value create or extract.
+
+
+        By
+        value creating, you invest in the country by:
+
+
+        \u2022<indent=3em>increasing
+        the component on your card and thereby your chance of winning and</indent>
+
+        /u2022<indent=3em>bet
+        on your card winning: you put more coins on the table; you can lose more.</indent>'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17c58e651f811de46a8805e6074595b8, type: 3}
 --- !u!114 &543467720571768145 stripped
