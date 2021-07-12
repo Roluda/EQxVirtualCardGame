@@ -55,11 +55,22 @@ MonoBehaviour:
 
 
       You will play cards
-      agsinst the other players on the table.'
+      against the other players on the table.'
     picture: {fileID: 21300000, guid: f5e16b2ae8a7ec942b8ad6f40cbb9c6a, type: 3}
-  - text: "To win you must collect more coins than the others.\nCoins are obtained
-      by winning rounds.\n\nRounds are won by:\n\n - Playing the right card for the
-      given component\n\n - Value creating/extracting the right amount"
+  - text: 'To win you must collect more coins than the others.
+
+      Coins are obtained
+      by winning rounds.
+
+
+      Rounds are won by:
+
+
+      \u2022<indent=3em>Playing
+      the right card for the given component</indent>
+
+      \u2022<indent=3em>Value
+      creating/extracting the right amount<indent>'
     picture: {fileID: 21300000, guid: 2b3c6414cd621ad429328b8f7b2fe2e6, type: 3}
   - text: 'In each round, the big screen shows the EQx component on which the round
       is played on.
@@ -82,25 +93,27 @@ MonoBehaviour:
 
 
       By
-      value creating, you invest in the country by
+      value creating, you invest in the country by:
 
-      1) increasing the component
-      on your card and thereby your chance of winning and
 
-      2) bet on your card
-      winning: you put more coins on the table; you can lose more.'
+      \u2022<indent=3em>increasing
+      the component on your card and thereby your chance of winning and</indent>
+
+      /u2022<indent=3em>bet
+      on your card winning: you put more coins on the table; you can lose more.</indent>'
     picture: {fileID: 21300000, guid: 979bb39f9307f3e4f9264ba8d7cf3e6f, type: 3}
   - text: 'Or you can choose to do the opposite.
 
 
       By value extracting, you
-      are extracting from the country by
+      are extracting from the country by:
 
-      1) decreasing the component on your
-      card and thereby your chance of winning and
 
-      2) betting less on your
-      card winning: you take away on coin from your predetermined blind.'
+      <indent=3em>decreasing the component
+      on your card and thereby your chance of winning
+
+      \u2022<indent=3em>betting
+      less on your card winning: you take away one coin from your predetermined blind.</indent>'
     picture: {fileID: 21300000, guid: db4d9bbfe61b01e408c7bd506a6c4429, type: 3}
   - text: 'Remember that almost all countries are good in something, so be strategic
       with card picking and value creating.
