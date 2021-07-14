@@ -51,7 +51,6 @@ namespace EQx.Game.Investing {
         }
 
         void CalculateMountain() {
-            Debug.Log(name + ".CalculateMountain");
             int prize = InvestmentManager.instance.prize;
             if (prize > 0) {
                 prizeMountain.capital = prize;

@@ -9,10 +9,4 @@ public class SetScaleOnStart : MonoBehaviour
     {
         transform.localScale = Vector3.one;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

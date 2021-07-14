@@ -63,7 +63,6 @@ namespace EQx.Game.Investing {
         /// <param name="amount"></param>
         /// <returns></returns>
         public int AddCoins(int amount) {
-            Debug.Log(name + ".AddCoins: " + amount);
             int oldAmount = targetAmount;
             SetAmount(targetAmount + amount);
             int newAmount = targetAmount;
@@ -72,7 +71,6 @@ namespace EQx.Game.Investing {
         }
 
         public int RemoveCoins(int amount) {
-            Debug.Log(name + ".RemoveCoins: " + amount);
             int debt = amount - targetAmount;
             SetAmount(targetAmount - amount);
             return debt;

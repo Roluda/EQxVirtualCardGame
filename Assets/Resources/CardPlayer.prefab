@@ -45,13 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  seatNumber: 0
   avatarID: 0
-  state: 0
-  placedCardID: 0
-  baseValue: 0
-  bonusValue: 0
-  cardsInHand: 
 --- !u!114 &-8434983263080755558
 MonoBehaviour:
   m_ObjectHideFlags: 0

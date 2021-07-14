@@ -24,11 +24,11 @@ namespace EQx.Game.Screen {
         }
 
 
-        private void EndedBettingListener(CardPlayer player) {
+        private void ActivateScoreboard(CardPlayer player, int round) {
             ScoreboardOn();
         }
 
-        private void EndedPlacingListener(CardPlayer player) {
+        private void ActivateInvestment(CardPlayer player, int round) {
             InvestmentOn();
         }
 
@@ -38,8 +38,9 @@ namespace EQx.Game.Screen {
 
         private void Init(CardPlayer player) {
             CardPlayer.localPlayerReady -= Init;
-            player.onEndedPlacing += EndedPlacingListener;
-            player.onEndedBetting += EndedBettingListener;
+            player.onStartedBetting += ActivateInvestment;
+            player.onStartedPlacing += ActivateScoreboard;
+            player.onEndedBetting += ActivateScoreboard;
         }
 
 

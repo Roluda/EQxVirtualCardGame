@@ -66,7 +66,6 @@ namespace EQx.Game.Player {
         }
 
         private void InvestmentChangedListener(int investment) {
-            Debug.Log("backup: " + commitmentPile.backup + " investment: " + investment);
             commitmentPile.SetAmountUnsaved(commitmentPile.backup + investment);
             capital = capitalBackup - investment;
         }
@@ -77,7 +76,6 @@ namespace EQx.Game.Player {
 
         void CapitalUpdatedListener(CardPlayer player) {
             if (player == CardPlayer.localPlayer) {
-                Debug.Log(name + ".CapitalUpdateListener: new Capital: " + InvestmentManager.instance.Capital(player));
                 capital = InvestmentManager.instance.Capital(player);
                 capitalBackup = capital;
             }

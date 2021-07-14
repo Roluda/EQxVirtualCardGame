@@ -1,5 +1,6 @@
 ﻿using EQx.Game.Investing;
 using EQx.Game.Player;
+using EQx.Game.Statistics;
 using EQx.Game.Table;
 using System;
 using System.Collections;
@@ -16,6 +17,7 @@ namespace EQx.Game.Screen {
 
         List<ScoreboardEntry> entries = new List<ScoreboardEntry>();
 
+
         private void RemoveEntry(CardPlayer player) {
             var removedEntry = entries.Where(entry => entry.observedPlayer == player).First();
             entries.Remove(removedEntry);
@@ -27,25 +29,28 @@ namespace EQx.Game.Screen {
             entry.Init(player);
             entries.Add(entry);
             OrderByCapital();
+            UpdateEntries();
+        }
+
+        public void UpdateEntries() {
+            entries.ForEach(e => e.UpdateValues());
+            entries.ForEach(e => e.UpdateRanking());
         }
 
         public void OrderByCapital() {
             entries.ForEach(entry => entry.OrderByCapital());
+            UpdateEntries();
         }
 
         public void OrderByVCP() {
             entries.ForEach(entry => entry.OrderByVCP());
+            UpdateEntries();
         }
 
         // Start is called before the first frame update
         void Start() {
             RoundManager.instance.onPlayerRegister += AddEntry;
             RoundManager.instance.onPlayerUnregister += RemoveEntry;
-        }
-
-        // Update is called once per frame
-        void Update() {
-
         }
     }
 }

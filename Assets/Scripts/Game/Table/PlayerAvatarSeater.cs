@@ -25,7 +25,6 @@ namespace EQx.Game.Table {
             if (player == CardPlayer.localPlayer) {
                 return;
             }
-            Debug.Log(name + "PlayerLeftTableListener");
             var removedAvatar = avatars.Where(avatar => avatar.observedPlayer == player).First();
             avatars.Remove(removedAvatar);
             Destroy(removedAvatar.gameObject);
@@ -35,25 +34,19 @@ namespace EQx.Game.Table {
             if (player == CardPlayer.localPlayer) {
                 return;
             }
-            Debug.Log(name + "PlayerSeatedListener");
             var newAvatar = Instantiate(avatarPrefab, transform);
             newAvatar.Initialize(player);
             avatars.Add(newAvatar);
-        }
-
-        private void TableUpdatedListener() {
-            Debug.Log(name + "TableUpdatedListener");
-            MapAvatarsToSeats();
         }
 
         private void MapAvatarsToSeats() {
             if (!CardPlayer.localPlayer) {
                 return;
             }
-            int mySeatNumber = CardPlayer.localPlayer.seatNumber;
-            avatars.Sort((a, b) => a.observedPlayer.seatNumber.CompareTo(b.observedPlayer.seatNumber));
+            int mySeatNumber = RoundManager.instance.GetParticipant(CardPlayer.localPlayer).seatNumber;
             for(int i=0; i < avatars.Count; i++) {
-                int offset = avatars[i].observedPlayer.seatNumber - mySeatNumber;
+                int seat = RoundManager.instance.GetParticipant(avatars[i].observedPlayer).seatNumber;
+                int offset = seat - mySeatNumber;
                 if (offset < 0) {
                     offset = seats.Count + offset;
                 } else {
@@ -65,7 +58,7 @@ namespace EQx.Game.Table {
 
         // Start is called before the first frame update
         void Start() {
-            RoundManager.instance.onRegisterUpdate += TableUpdatedListener;
+            RoundManager.instance.onRegisterUpdate += MapAvatarsToSeats;
             RoundManager.instance.onPlayerRegister += PlayerRegisteredListener;
             RoundManager.instance.onPlayerUnregister += PlayerUnregisteredListener;
         }

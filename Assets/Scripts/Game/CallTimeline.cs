@@ -37,7 +37,6 @@ namespace EQx {
         float timer = 0;
 
         public void Play() {
-            Debug.Log(name + ".Play");
             playing = true;
         }
 
@@ -46,7 +45,6 @@ namespace EQx {
         }
 
         public void Stop() {
-            Debug.Log(name + ".Stop");
             playing = false;
             timer = 0;
             foreach(var action in actions) {

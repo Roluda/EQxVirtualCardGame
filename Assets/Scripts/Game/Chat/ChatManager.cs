@@ -22,6 +22,7 @@ namespace EQx.Game.Chat {
 
         [PunRPC]
         void ReceiveChatMessage(string sender, string message) {
+            Logger.Log($"{name}.{nameof(ReceiveChatMessage)}({sender},{message})");
             var messageObject = Instantiate(messagePrefab, chatContext);
             messageObject.SetData(sender, message);
             messages.Add(messageObject);

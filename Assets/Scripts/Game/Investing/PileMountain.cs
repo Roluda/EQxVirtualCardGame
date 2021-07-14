@@ -51,7 +51,6 @@ namespace EQx.Game.Investing {
         }
 
         private void BuildPiles() {
-            Debug.Log(name + ".BuildPiles");
             coinPiles = new List<CoinPile>();
             for (int c = 0; c<columns; c++) {
                 for(int r = 0;r<rows; r++) {

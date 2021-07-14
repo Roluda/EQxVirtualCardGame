@@ -64,12 +64,10 @@ namespace EQx.Game.Screen {
         }
 
         void NewDemandListener(EQxVariableType demand) {
-            Debug.Log("NewDemandListener");
             StartCoroutine(ChangeDemand(EQxVariableDatabase.instance.GetVariable(demand)));
         }
 
         IEnumerator ChangeDemand(EQxVariableData data) {
-            Debug.Log("data" + data);
             head.text = "";
             body.text = "";
             icon.sprite = data.iconWhite;

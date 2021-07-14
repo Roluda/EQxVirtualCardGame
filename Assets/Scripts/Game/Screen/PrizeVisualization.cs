@@ -34,15 +34,14 @@ namespace EQx.Game.Screen {
             CleanUp();
             var sprites = Resources.LoadAll<Sprite>("Sprites/Characters");
             
-            foreach (var player in RoundManager.instance.registeredPlayers) {
-                if(player.state == PlayerState.Unregistered) {
-                    continue;
+            foreach (var participant in RoundManager.instance.AllActiveParticipants()) {
+                if(participant.state == RoundState.Won || participant.state == RoundState.Lost) {
+                    entries[participant.player] = Instantiate(entryPrefab, spawnContext);
+                    entries[participant.player].SetName(participant.player.playerName);
+                    entries[participant.player].SetIcon(sprites[participant.player.avatarID]);
+                    entries[participant.player].SetValueInstant(PlayerObserver.instance.GetCapital(participant.player));
+                    capitals[participant.player] = PlayerObserver.instance.GetCapital(participant.player);
                 }
-                entries[player] = Instantiate(entryPrefab, spawnContext);
-                entries[player].SetName(player.playerName);
-                entries[player].SetIcon(sprites[player.avatarID]);
-                entries[player].SetValueInstant(PlayerObserver.instance.GetCapital(player));
-                capitals[player] = PlayerObserver.instance.GetCapital(player);
             }
             SetRanks();
         }
@@ -65,11 +64,17 @@ namespace EQx.Game.Screen {
 
         public void UpdateRankings() {
             capitals.Clear();
-            foreach(var player in RoundManager.instance.registeredPlayers) {
-                capitals[player] = PlayerObserver.instance.GetCapital(player) - PlayerObserver.instance.GetCommitment(player) + PlayerObserver.instance.GetWinnings(player);
-                if (entries.ContainsKey(player)) {
-                    entries[player].SetGain(0);
+            foreach(var participant in RoundManager.instance.AllActiveParticipants()) {
+                if(participant.state == RoundState.Won || participant.state == RoundState.Lost) {
+                    capitals[participant.player] = 
+                        PlayerObserver.instance.GetCapital(participant.player) 
+                        - PlayerObserver.instance.GetCommitment(participant.player)
+                        + PlayerObserver.instance.GetWinnings(participant.player);
+                    if (entries.ContainsKey(participant.player)) {
+                        entries[participant.player].SetGain(0);
+                    }
                 }
+
             }
             SetRanks();
         }

@@ -57,23 +57,66 @@ namespace EQx.Game.Investing {
         bool commited = false;
         float timer = 0;
 
+        private void Awake() {
+            CardPlayer.localPlayerReady += Initialize;
+        }
+        void Start() {
+            RoundManager.instance.onNewDemand += NewDemandListener;
+            confirmButton.onClick.AddListener(ConfirmCommitment);
+            investmentSlider.onCommitmentUpdate += AdjustCommitment;
+        }
+        private void Update() {
+            timer += Time.deltaTime;
+            if (timer > timeUntilWarning) {
+                warning.StartBlink();
+            }
+        }
+        public void AdjustCommitment(int investment) {
+            plannedInvestment = investment;
+            onInvestmentChange?.Invoke(investment);
+            UpdateSliderValues();
+        }
 
+        public void ConfirmCommitment() {
+            if (!commited) {
+                commited = true;
+                CardPlayer.localPlayer.InvestCoins(plannedInvestment);
+                CardPlayer.localPlayer.Commit();
+            }
+        }
         private void NewDemandListener(EQxVariableType variable) {
             currentVariable = EQxVariableDatabase.instance.GetVariable(variable);
             UpdateSliderAppearance();
         }
-
-        void CardPlacedListener(CardPlayer player, int id) {
+        private void StartedBettingListener(CardPlayer player, int round) {
+            int id = RoundManager.instance.GetParticipant(player).placedCardID;
             currentCountry = CountryCardDatabase.instance.GetCountry(id);
             SetHeader();
             UpdateSliderValues();
+            commited = false;
+            confirmButton.gameObject.SetActive(true);
+            warning.StopBlink();
+            timer = 0;
+            ScreenOn();
+        }
+        private void EndedBettingListener(CardPlayer player, int round) {
+            confirmButton.gameObject.SetActive(false);
+        }
+        private void ScreenOn() {
+            screen.gameObject.SetActive(true);
+            investmentSlider.Reset();
+            warning.StopBlink();
         }
 
+        public void Initialize(CardPlayer player) {
+            CardPlayer.localPlayerReady -= Initialize;
+            player.onStartedBetting += StartedBettingListener;
+            player.onEndedBetting += EndedBettingListener;
+        }
         void SetHeader() {
             countryFlag.sprite = Resources.Load<Sprite>(flagPath + "/" + currentCountry.isoCountryCode.ToLower());
             countryName.text = currentCountry.countryName;
         }
-
         void UpdateSliderAppearance() {
             demandIcon.sprite = currentVariable.iconTransparent;
             actualValue.color = currentVariable.color;
@@ -81,7 +124,6 @@ namespace EQx.Game.Investing {
             reducedValue.color = currentVariable.color;
             combinedValue.color = currentVariable.color;
         }
-
         private void UpdateSliderValues() {
             if (bonusValue > 0) {
                 addedValue.SetValue(cardValue + bonusValue);
@@ -98,70 +140,5 @@ namespace EQx.Game.Investing {
             }
             combinedValue.text = ((int)(cardValue + bonusValue)).ToString();
         }
-
-
-        public void AdjustCommitment(int investment) {
-            Debug.Log(name + ".AdjustCommitment: " + investment);
-            plannedInvestment = investment;
-            onInvestmentChange?.Invoke(investment);
-            UpdateSliderValues();
-        }
-
-        public void ConfirmCommitment() {
-            Debug.Log(name + ".ConfirmCommitment");
-            if (!commited) {
-                commited = true;
-                CardPlayer.localPlayer.InvestCoins(plannedInvestment);
-                CardPlayer.localPlayer.Commit();
-                CardPlayer.localPlayer.EndBetting();
-            }
-        }
-
-        private void StartedBettingListener(CardPlayer player) {
-            Debug.Log(name + ".StartedTurnListener: " + player);
-            commited = false;
-            confirmButton.gameObject.SetActive(true);
-            warning.StopBlink();
-            timer = 0;
-            ScreenOn();
-        }
-
-        private void EndedBettingListener(CardPlayer player) {
-            Debug.Log(name + ".EndedTurnListener: " + player);
-            confirmButton.gameObject.SetActive(false);
-        }
-
-        private void ScreenOn() {
-            Debug.Log(name + ".ScreenOn");
-            screen.gameObject.SetActive(true);
-            investmentSlider.Reset();
-            warning.StopBlink();
-        }
-
-        public void Initialize(CardPlayer player) {
-            Debug.Log(name + "Initialize");
-            CardPlayer.localPlayerReady -= Initialize;
-            player.onPlacedCard += CardPlacedListener;
-            player.onStartedBetting += StartedBettingListener;
-            player.onEndedBetting += EndedBettingListener;
-        }
-
-        private void Update() {
-            timer += Time.deltaTime;
-            if (timer > timeUntilWarning) {
-                warning.StartBlink();
-            }
-        }
-
-        private void Awake() {
-            CardPlayer.localPlayerReady += Initialize;
-        }
-
-        void Start() {
-            RoundManager.instance.onNewDemand += NewDemandListener;
-            confirmButton.onClick.AddListener(ConfirmCommitment);
-            investmentSlider.onCommitmentUpdate += AdjustCommitment;
-        }
-
     }
 }

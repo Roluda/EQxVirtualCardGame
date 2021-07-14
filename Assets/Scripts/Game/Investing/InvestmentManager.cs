@@ -53,7 +53,6 @@ namespace EQx.Game.Investing {
         public CardPlayer prizeWinner;
 
         public void Register(CardPlayer player) {
-            Debug.Log(name + ".Register: " + player);
             player.onReceivedCoins += ReceivedCoinsListener;
             player.onInvestedCoins += InvestedCoinsListener;
             player.onPayedBlind += PayedBlindListener;
@@ -74,7 +73,7 @@ namespace EQx.Game.Investing {
 
         public void Unregister(CardPlayer player) {
             var account = accounts.Where(acc => acc.player == player).First();
-            player.Commit();
+            account.capital += account.TakeCommitment();
             account.isActive = false;
             player.onReceivedCoins -= ReceivedCoinsListener;
             player.onInvestedCoins -= InvestedCoinsListener;
@@ -84,27 +83,22 @@ namespace EQx.Game.Investing {
         }
 
         private void PayedBlindListener(CardPlayer player) {
-            Debug.Log(name + ".PayedBlindListener: " + player);
             var account = accounts.Where(acc => acc.player == player).First();
             account.capital -= blind;
             account.payedBlind += blind;
-            Debug.Log(player + " payed " + account.payedBlind);
             onPayedBlind?.Invoke(player);
             onCapitalUpdated?.Invoke(player);
         }
 
         private void InvestedCoinsListener(CardPlayer player, int amount) {
-            Debug.Log(name + ".InvestedCoins: " + player + "," + amount);
             var account = accounts.Where(acc => acc.player == player).First();
             account.capital -= amount;
             account.investment += amount;
-            player.bonusValue = investmentPayoff.Evaluate(amount);
             onInvested?.Invoke(player);
             onCapitalUpdated?.Invoke(player);
         }
 
         private void ReceivedCoinsListener(CardPlayer player, int amount) {
-            Debug.Log(name + ".ReceivedCoins: "+ player + ","+ amount);
             var account = accounts.Where(acc => acc.player == player).First();
             account.capital += amount;
             onReceivedCoins?.Invoke(player);
@@ -112,8 +106,7 @@ namespace EQx.Game.Investing {
         }
 
         private void CommitedListener(CardPlayer player) {
-            Debug.Log(name + ".CommitedListener: "+ player);
-            prize += TakeCommitment(player);
+            AddPrize(TakeCommitment(player));
             onCommited?.Invoke(player);
         }
 
@@ -127,16 +120,21 @@ namespace EQx.Game.Investing {
             }
         }
 
-        public void EconomyGrowth() {
-            Debug.Log(name + ".EconomyGrowth");
-            if (PhotonNetwork.IsMasterClient) {
-                photonView.RPC("EconomyGrowthRPC", RpcTarget.AllBuffered);
-            }
+        [PunRPC]
+        void SetPrizeRPC(int amount) {
+            Logger.Log($"{name}.{nameof(SetPrizeRPC)}");
+            prize = amount;
+        }
+
+        [PunRPC]
+        void AddPrizeRPC(int amount) {
+            Logger.Log($"{name}.{nameof(AddPrizeRPC)}({amount})");
+            prize += amount;
         }
 
         [PunRPC]
         void EconomyGrowthRPC() {
-            Debug.Log(name + ".EconomyGrowthRPC");
+            Logger.Log($"{name}.{nameof(EconomyGrowthRPC)}");
             float currentPrize = prize;
             int newPrize = (int)(currentPrize * economicGrowth);
             onEconomyGrowth?.Invoke(newPrize - prize);
@@ -145,18 +143,35 @@ namespace EQx.Game.Investing {
 
         [PunRPC]
         void WinPrizeRPC() {
-            Debug.Log(name + "WinPrizeRPC");
+            Logger.Log($"{name}.{nameof(WinPrizeRPC)}");
             if (prizeWinner) {
                 prizeWinner.ReceiveCoins(prize);
                 onWinPrize?.Invoke(prizeWinner, prize);
-                prize = 0;
+                SetPrize(0);
+            }
+        }
+
+        public void SetPrize(int amount) {
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC(nameof(SetPrizeRPC), RpcTarget.AllBuffered, amount);
+            }
+        }
+
+        public void AddPrize(int amount) {
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC(nameof(AddPrizeRPC), RpcTarget.AllBuffered, amount);
+            }
+        }
+
+        public void EconomyGrowth() {
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC(nameof(EconomyGrowthRPC), RpcTarget.AllBuffered);
             }
         }
 
         public void WinPrize() {
-            Debug.Log(name + "WinPrize");
             if (PhotonNetwork.IsMasterClient) {
-                photonView.RPC("WinPrizeRPC", RpcTarget.AllBuffered);
+                photonView.RPC(nameof(WinPrizeRPC), RpcTarget.AllBuffered);
             }
         }
 

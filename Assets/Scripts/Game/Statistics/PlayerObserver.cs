@@ -1,8 +1,8 @@
 ﻿using EQx.Game.Investing;
 using EQx.Game.Player;
 using EQx.Game.Table;
+using Photon.Pun;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,7 +19,7 @@ namespace EQx.Game.Statistics {
         VCP
     }
 
-    public class PlayerObserver : MonoBehaviour {
+    public class PlayerObserver : MonoBehaviourPunCallbacks, IPunObservable {
 
         public static PlayerObserver instance;
 
@@ -28,7 +28,6 @@ namespace EQx.Game.Statistics {
         int currentRound = 0;
 
         public void Register(CardPlayer player) {
-            Debug.Log(name + ".Register: " + player);
             player.onInvestedCoins += InvestedCoinsListener;
             player.onLost += LoseListener;
             player.onWin += WinListener;
@@ -36,12 +35,15 @@ namespace EQx.Game.Statistics {
             player.onStartedPlacing += StartPlacingListener;
 
             string userID = player.photonView.Owner.UserId;
-            var playerTrack = playerTracks.Where(track => track.userID == userID).FirstOrDefault();
+            var playerTrack = playerTracks.FirstOrDefault(track => track.userID == userID);
             if (playerTrack == null) {
                 playerTracks.Add(new PlayerTrack(player));
             } else {
                 playerTrack.player = player;
                 playerTrack.active = true;
+                if (PhotonNetwork.IsMasterClient) {
+                    RecoverUserData(playerTrack);
+                }
             }
         }
 
@@ -53,6 +55,46 @@ namespace EQx.Game.Statistics {
             player.onStartedPlacing -= StartPlacingListener;
             playerTracks.Where(track => track.player == player).First().active = false;
         }
+
+        #region networking
+        void RecoverUserData(PlayerTrack track) {
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC(
+                    nameof(RecoverUserDataRPC),
+                    RpcTarget.AllBuffered,
+                    track.userID,
+                    track.winnings,
+                    track.commitments,
+                    track.investments,
+                    track.capital,
+                    track.won,
+                    track.cardPlaced,
+                    track.valueCreationPercentile
+                );
+            }
+        }
+
+        [PunRPC]
+        void RecoverUserDataRPC(string userID, Dictionary<int, int> winnings, Dictionary<int, int> commitments, Dictionary<int, int> investments, Dictionary<int, int> capital, Dictionary<int, bool> won, Dictionary<int, int> cardPlaced, Dictionary<int, float> valueCreationPercentile) {
+            Logger.Log($"{name}.{nameof(RecoverUserDataRPC)}({userID})");
+            var recoveredTrack = playerTracks.FirstOrDefault(track => track.userID == userID);
+            if (recoveredTrack == null) {
+                Debug.LogWarning("No Track to recover");
+                return;
+            }
+            recoveredTrack.winnings = winnings;
+            recoveredTrack.commitments = commitments;
+            recoveredTrack.investments = investments;
+
+            recoveredTrack.capital = capital;
+            recoveredTrack.won = won;
+            recoveredTrack.cardPlaced = cardPlaced;
+            recoveredTrack.valueCreationPercentile = valueCreationPercentile;
+
+        }
+        #endregion
+
+        #region event listeners
 
         private void WinListener(CardPlayer player) {
             AddWin(player, true);
@@ -82,9 +124,11 @@ namespace EQx.Game.Statistics {
             AddWinnings(player, 0);
         }
 
-        private void StartPlacingListener(CardPlayer player) {
-            AddCapital(player, InvestmentManager.instance.Capital(player));
+        private void StartPlacingListener(CardPlayer player, int round) {
+            AddCapital(player, InvestmentManager.instance.Capital(player), round);
         }
+
+        #endregion
 
         #region Data API
         public int GetWinnings(CardPlayer player) {
@@ -92,8 +136,9 @@ namespace EQx.Game.Statistics {
         }
 
         public int GetWinnings(CardPlayer player, int round) {
-            if (GetTrack(player).winnings.ContainsKey(round)) {
-                return GetTrack(player).winnings[round];
+            var track = GetTrack(player);
+            if (track.winnings.ContainsKey(round)) {
+                return track.winnings[round];
             } else {
                 return 0;
             }
@@ -128,7 +173,7 @@ namespace EQx.Game.Statistics {
         }
 
         public int GetCommitment(CardPlayer player, int round) {
-            if (GetTrack(player).commitments.ContainsKey(round)){
+            if (GetTrack(player).commitments.ContainsKey(round)) {
                 return GetTrack(player).commitments[round];
             } else {
                 return 0;
@@ -154,8 +199,7 @@ namespace EQx.Game.Statistics {
         public int GetCardPlaced(CardPlayer player, int round) {
             if (GetTrack(player).cardPlaced.ContainsKey(round)) {
                 return GetTrack(player).cardPlaced[round];
-            }
-            else{
+            } else {
                 return 0;
             }
         }
@@ -173,7 +217,7 @@ namespace EQx.Game.Statistics {
         }
 
         public PlayerTrack GetTrack(CardPlayer player) {
-            return playerTracks.Where(track => track.player == player).FirstOrDefault();
+            return playerTracks.First(track => track.player == player);
         }
 
         void AddWin(CardPlayer player, bool data) {
@@ -184,8 +228,8 @@ namespace EQx.Game.Statistics {
             GetTrack(player).winnings[currentRound] = data;
         }
 
-        void AddCapital(CardPlayer player, int data) {
-            GetTrack(player).capital[currentRound] = data;
+        void AddCapital(CardPlayer player, int data, int round) {
+            GetTrack(player).capital[round] = data;
         }
 
         void AddInvestment(CardPlayer player, int data) {
@@ -225,7 +269,7 @@ namespace EQx.Game.Statistics {
 
         public int GetRank(CardPlayer player, TrackStat stat, int round) {
             var ranking = GetRanking(stat, round);
-            if (ranking.Contains(player)){
+            if (ranking.Contains(player)) {
                 return ranking.IndexOf(player);
             } else {
                 return 0;
@@ -252,10 +296,9 @@ namespace EQx.Game.Statistics {
         }
 
         private void GameOverListener() {
-            Debug.Log(name + ".GameOverListener");
             currentRound = RoundManager.instance.currentRound;
-            foreach(var player in RoundManager.instance.registeredPlayers) {
-                AddCapital(player, InvestmentManager.instance.Capital(player));
+            foreach (var participant in RoundManager.instance.AllActiveParticipants()) {
+                AddCapital(participant.player, InvestmentManager.instance.Capital(participant.player), currentRound);
             }
 
         }
@@ -265,9 +308,12 @@ namespace EQx.Game.Statistics {
         }
 
         private void OnDestroy() {
-            if(instance == this) {
+            if (instance == this) {
                 instance = null;
             }
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         }
     }
 }

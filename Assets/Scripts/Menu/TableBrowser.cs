@@ -38,6 +38,7 @@ namespace EQx.Menu {
 				if (!string.IsNullOrEmpty(userID)) {
 					PhotonNetwork.AuthValues.UserId = userID;
 				}
+				PhotonNetwork.UseRpcMonoBehaviourCache = true;
 				PhotonNetwork.ConnectUsingSettings();
 				PhotonNetwork.AutomaticallySyncScene = true;
 				PhotonNetwork.GameVersion = gameVersion;
@@ -64,13 +65,11 @@ namespace EQx.Menu {
         public override void OnConnectedToMaster() {
 			userID = PhotonNetwork.LocalPlayer.UserId;
 			log.text = "Connected to Master Server";
-			Debug.Log("ConnectedToMaster");
 			PhotonNetwork.JoinLobby();
         }
 
         public override void OnJoinedLobby() {
 			log.text = "Connected to Multiplayer Lobby";
-			Debug.Log("ConnectedToLobby");
         }
 
         public GameObject CreateServerOption(RoomInfo info, UnityEngine.Events.UnityAction callback) {
@@ -84,7 +83,7 @@ namespace EQx.Menu {
 
 		public void Host(string roomName, int maxPlayers, int maxRounds) {
             if (!PhotonNetwork.IsConnected) {
-				Debug.LogWarning("Not Cennected to PhotonNetwork");
+				log.text="Not Connected to Photon Network";
 				return;
             }
 			var customProps = new ExitGames.Client.Photon.Hashtable();
@@ -93,7 +92,7 @@ namespace EQx.Menu {
 			customProps[CONNECTED_PLAYERS] = new string[] {};
 			var roomOptions = new RoomOptions {
 				MaxPlayers = (byte)maxPlayers,
-				PlayerTtl = 10000,
+				PlayerTtl = 1000,
 				PublishUserId = true,
 				CustomRoomProperties = customProps,
 				CustomRoomPropertiesForLobby = new string[] {CONNECTED_PLAYERS, CURRENT_ROUND, MAX_ROUNDS}
@@ -126,12 +125,10 @@ namespace EQx.Menu {
 				onRoomNotUnique?.Invoke();
             }
 			log.text = message;
-			Debug.LogWarning(message);
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message) {
 			log.text = message;
-			Debug.LogWarning(message);
         }
 
         private void OnApplicationQuit() {

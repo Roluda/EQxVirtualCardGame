@@ -1,6 +1,7 @@
 ﻿using EQx.Game.CountryCards;
 using EQx.Game.Player;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,9 +17,45 @@ namespace EQx.Game.Table {
         List<int> drawPile;
         List<int> discardPile;
 
+        List<CardInventory> playerInventories = new List<CardInventory>();
+
+        public void Register(CardPlayer player) {
+            player.onRequestedCard += RequestCard;
+            player.onPlacedCard += PlacedCard;
+            player.onReceivedCard += ReceivedCard;
+
+            string userID = player.photonView.Owner.UserId;
+            var inventory = playerInventories.FirstOrDefault(inv => inv.ownerID == userID);
+            if (inventory == null) {
+                inventory = new CardInventory() {
+                    owner = player,
+                    ownerID = userID,
+                };
+                playerInventories.Add(inventory);
+                if (PhotonNetwork.IsMasterClient) {
+                    for (int i = 0; i < initialCards; i++) {
+                        DealCard(player);
+                    }
+                }
+            } else {
+                inventory.owner = player;
+                int[] cards = inventory.cards.ToArray();
+                inventory.cards.Clear();
+                foreach(int card in cards) {
+                    player.ReceiveCard(card);
+                }
+            }
+        }
+
+        public void Unregister(CardPlayer player) {
+            player.onRequestedCard -= RequestCard;
+            player.onPlacedCard -= PlacedCard;
+            player.onReceivedCard -= ReceivedCard;
+        }
+
         [PunRPC]
         void DiscardCardRPC(int id) {
-            Debug.Log(name + ".DiscardCardRPC");
+            Logger.Log($"{name}.{nameof(DiscardCardRPC)}({id})");
             discardPile.Add(id);
         }
 
@@ -30,62 +67,50 @@ namespace EQx.Game.Table {
 
         [PunRPC]
         void ReshuffleRPC() {
-            Debug.Log(name + ".ReshuffleRPC");
+            Logger.Log($"{name}.{nameof(ReshuffleRPC)}");
             drawPile.AddRange(discardPile);
             discardPile.Clear();
         }
 
         [PunRPC]
         void DrawCardRPC(int id) {
-            Debug.Log(name + ".DealCardRPC");
+            Logger.Log($"{name}.{nameof(DrawCardRPC)}({id})");
             drawPile.Remove(id);
         }
 
-        public void Register(CardPlayer player) {
-            Debug.Log(name + ".Register" + player.name);
-            player.onRequestedCard += RequestCard;
-            if (PhotonNetwork.IsMasterClient) {
-                for (int i = 0; i < initialCards; i++) {
-                    DealCard(player);
-                }
-            }
-        }
-
-        public void Unregister(CardPlayer player) {
-            Debug.Log(name + ".Unregister" + player.name);
-            player.onRequestedCard -= RequestCard;
-            foreach (int card in player.cardsInHand) {
-                DiscardCard(card);
-            }
-        }
-
         public void RequestCard(CardPlayer player) {
-            Debug.Log(name + ".RequestCard");
             DealCard(player);
         }
 
         void DealCard(CardPlayer player) {
-            Debug.Log(name + ".DealCard to" + player.name);
             if (PhotonNetwork.IsMasterClient) {
                 if (drawPile.Count == 0) {
                     photonView.RPC("ReshuffleRPC", RpcTarget.All);
                 }
                 if (drawPile.Count > 0) {
-                    float preferredPriority = Random.Range(1, 10);
+                    float preferredPriority = UnityEngine.Random.Range(1, 10);
                     var matchingCards = drawPile.Where(card => GetCardPriority(card) > preferredPriority).ToList();
                     if (matchingCards.Count > 0) {
-                        int randomIndex = Random.Range(0, matchingCards.Count - 1);
+                        int randomIndex = UnityEngine.Random.Range(0, matchingCards.Count - 1);
                         int randomCard = drawPile[randomIndex];
                         photonView.RPC("DrawCardRPC", RpcTarget.AllBuffered, randomCard);
                         player.ReceiveCard(randomCard);
                     } else {
-                        int randomIndex = Random.Range(0, drawPile.Count - 1);
+                        int randomIndex = UnityEngine.Random.Range(0, drawPile.Count - 1);
                         int randomCard = drawPile[randomIndex];
                         photonView.RPC("DrawCardRPC", RpcTarget.AllBuffered, randomCard);
                         player.ReceiveCard(randomCard);
                     }
                 }
             }
+        }
+
+        private void ReceivedCard(CardPlayer player, int card) {
+            GetInventory(player).cards.Add(card);
+        }
+
+        private void PlacedCard(CardPlayer player, int card) {
+            GetInventory(player).cards.Remove(card);
         }
 
         private void Awake() {
@@ -106,12 +131,15 @@ namespace EQx.Game.Table {
         }
 
         void BuildDeck() {
-            Debug.Log(name + ".BuildDeck");
             drawPile = new List<int>();
             discardPile = new List<int>();
             for (int i = 0; i < CountryCardDatabase.instance.length; i++) {
                 drawPile.Add(i);
             }
+        }
+
+        CardInventory GetInventory(CardPlayer player) {
+            return playerInventories.First(inventory => inventory.owner == player);
         }
 
         private void OnDestroy() {

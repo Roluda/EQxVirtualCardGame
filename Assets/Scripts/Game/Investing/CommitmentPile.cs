@@ -18,13 +18,12 @@ namespace EQx.Game.Investing {
         public int backup = 0;
 
         public void Initialize(CardPlayer player) {
-            Debug.Log(name + "Initialize: " + player);
             observedPlayer = player;
             observedPlayer.onStartedBetting += UpdateCommitment;
             observedPlayer.onEndedBetting += UpdateCommitment;
         }
 
-        public void UpdateCommitment(CardPlayer player) {
+        public void UpdateCommitment(CardPlayer player, int round) {
             int amount = InvestmentManager.instance.Commitment(player);
             if(amount > 0) {
                 extractionPile.SetAmount(0);
@@ -58,7 +57,6 @@ namespace EQx.Game.Investing {
         }
 
         private void PayedBlindListener(CardPlayer player) {
-            Debug.Log(name + "PayedBlindListener: " + player);
             if (player == observedPlayer) {
                 int amount = InvestmentManager.instance.PayedBlind(player);
                 if (amount > 0) {
@@ -73,7 +71,6 @@ namespace EQx.Game.Investing {
         }
 
         private void InvestedCoinsListener(CardPlayer player) {
-            Debug.Log(name + "InvestedCoinsListener");
             if (player == observedPlayer) {
                 int amount = InvestmentManager.instance.Investment(player);
                 if (amount > 0) {
@@ -88,7 +85,6 @@ namespace EQx.Game.Investing {
         }
 
         private void CommitedListener(CardPlayer player) {
-            Debug.Log(name + "CommitedListener");
             if (player == observedPlayer) {
                 creationPile.SetAmount(0);
                 extractionPile.SetAmount(0);

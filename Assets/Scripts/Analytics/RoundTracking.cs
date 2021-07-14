@@ -5,6 +5,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Analytics;
 
@@ -30,15 +31,15 @@ namespace EQx.Analytics {
         }
 
         private void BettingEndedListener() {
-            foreach(var stat in RoundManager.instance.registeredPlayers) {
-                if (stat.state == Game.Player.PlayerState.Won) {
+            foreach(var stat in RoundManager.instance.AllActiveParticipants()) {
+                if (stat.state == RoundState.Won) {
                     int cardID = stat.placedCardID;
                     EQxCountryData country = CountryCardDatabase.instance.GetCountry(cardID);
                     EQxVariableType demand = RoundManager.instance.currentDemand;
                     float baseValue = stat.baseValue;
                     float bonusValue = stat.bonusValue;
                     float combinedValue = stat.combinedValue;
-                    int competition = RoundManager.instance.registeredPlayers.Count;
+                    int competition = RoundManager.instance.AllActiveParticipants().Count();
                     AnalyticsEvent.Custom(winnerEvent, new Dictionary<string, object> {
                         {"country_name", country.countryName},
                         {"demand", demand.ToString()},

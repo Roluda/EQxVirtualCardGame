@@ -16,13 +16,7 @@ namespace EQx.Game.Screen {
         [SerializeField]
         float presentationTime = 5;
         [SerializeField]
-        float extractRoundStartValue = 100;
-        [SerializeField]
-        float creationRoundStartValue = 0;
-        [SerializeField]
         RandomSFX winApplause = default;
-        [SerializeField]
-        RandomSFX loseGlory = default;
         [SerializeField]
         RandomSFX winDang = default;
         [SerializeField]
@@ -31,15 +25,13 @@ namespace EQx.Game.Screen {
         List<WinnerEntry> candidates = new List<WinnerEntry>();
 
         public void SpawnBars() {
-            float targetValue = RoundManager.instance.winner.combinedValue;
-            float startValue = RoundManager.instance.extractionRound ? extractRoundStartValue : creationRoundStartValue;
-            foreach (var player in RoundManager.instance.registeredPlayers) {
-                if (player.state == PlayerState.Unregistered) {
-                    continue;
+            float targetValue = RoundManager.instance.AllActiveParticipants().Max(part => part.combinedValue);
+            foreach (var participant in RoundManager.instance.AllActiveParticipants()) {
+                if (participant.state == RoundState.Won || participant.state == RoundState.Lost) {
+                    var candidate = Instantiate(winnerEntry, spawnContext);
+                    candidate.Initialize(participant.player, 0, targetValue, presentationTime);
+                    candidates.Add(candidate);
                 }
-                var candidate = Instantiate(winnerEntry, spawnContext);
-                candidate.Initialize(player, startValue, targetValue, presentationTime);
-                candidates.Add(candidate);
             }
         }
 
@@ -54,11 +46,7 @@ namespace EQx.Game.Screen {
             foreach (var candidate in candidates) {
                 candidate.Win();
             }
-            if (RoundManager.instance.extractionRound) {
-                loseGlory.Play();
-            } else {
-                winApplause.Play();
-            }
+            winApplause.Play();
             winDang.Play();
         }
 

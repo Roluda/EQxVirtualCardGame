@@ -9,11 +9,15 @@ namespace EQx.Game.UI {
         public bool isMouseOver = false;
 
         private void Update() {
-            isMouseOver = IsOverTHisElement(GetEventSystemRaycastResults());
+            isMouseOver = IsOverThisElement(GetEventSystemRaycastResults());
+        }
+
+        private void OnDisable() {
+            isMouseOver = false;
         }
 
         //Returns 'true' if we touched or hovering on Unity UI element.
-        private bool IsOverTHisElement(List<RaycastResult> eventSystemRaysastResults) {
+        private bool IsOverThisElement(List<RaycastResult> eventSystemRaysastResults) {
             for (int index = 0; index < eventSystemRaysastResults.Count; index++) {
                 RaycastResult curRaysastResult = eventSystemRaysastResults[index];
                 if (curRaysastResult.gameObject == gameObject)

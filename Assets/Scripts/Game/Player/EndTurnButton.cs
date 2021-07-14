@@ -18,15 +18,13 @@ namespace EQx.Game.Player {
             player.onEndedPlacing += EndedTurnListener;
             player.onStartedPlacing += StartedTurnListener;
             button.gameObject.SetActive(false);
-            button.onClick.AddListener(delegate { player.EndPlacing(); });
-            button.onClick.AddListener(delegate { button.gameObject.SetActive(false); });
         }
 
-        private void StartedTurnListener(CardPlayer arg0) {
+        private void StartedTurnListener(CardPlayer arg0, int round) {
             button.gameObject.SetActive(true);
         }
 
-        private void EndedTurnListener(CardPlayer arg0) {
+        private void EndedTurnListener(CardPlayer arg0, int round) {
             button.gameObject.SetActive(false);
         }
     }

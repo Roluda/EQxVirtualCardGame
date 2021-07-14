@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -322,6 +322,17 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2489463719169177974}
           m_MethodName: ShowCurrentRound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 574843570937832462}
+          m_MethodName: OrderByCapital
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1582,11 +1593,6 @@ PrefabInstance:
     - target: {fileID: 3395886138040969636, guid: 013b315ef6d37f643b742a99bfaa691b,
         type: 3}
       propertyPath: viewIdField
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5587719179522801720, guid: 013b315ef6d37f643b742a99bfaa691b,
-        type: 3}
-      propertyPath: initialCards
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5587719179522801722, guid: 013b315ef6d37f643b742a99bfaa691b,
@@ -9259,6 +9265,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e311ce8133f2e24cb6dcd8cf9a89328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &574843570937832462 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4796397849760671367, guid: a3d0f2794bb5efd43bede29c1a57921c,
+    type: 3}
+  m_PrefabInstance: {fileID: 574843570937832460}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622f8cfdefb3eb741904b246ab54a130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1188919542530776427

@@ -27,39 +27,24 @@ namespace EQx.Game.Screen {
 
         public CardPlayer observedPlayer;
         public int rank;
-        TrackStat sortingMethod = TrackStat.Capital;
 
         public void OrderByVCP() {
-            sortingMethod = TrackStat.VCP;
             rank = PlayerObserver.instance.GetRank(observedPlayer, TrackStat.VCP, RoundManager.instance.currentRound-1);
-            UpdateRanking();
         }
 
         public void OrderByCapital() {
-            sortingMethod = TrackStat.Capital;
             rank = PlayerObserver.instance.GetRank(observedPlayer, TrackStat.Capital, RoundManager.instance.currentRound);
-            UpdateRanking();
         }
 
-        void UpdateRanking() {
+        public void UpdateRanking() {
             transform.SetSiblingIndex(rank);
             rankText.text = $"{rankPrefix}{rank+1}";
         }
 
-        private void UpdateValues() {
+        public void UpdateValues() {
             int capital = InvestmentManager.instance.Capital(observedPlayer);
             coinsText.text = $"{capital}";
             vcpText.text = $"{Math.Round(PlayerObserver.instance.GetVCP(observedPlayer, RoundManager.instance.currentRound-1) * 100, 0)}%";
-            switch (sortingMethod) {
-                case TrackStat.Capital:
-                    OrderByCapital();
-                    break;
-                case TrackStat.VCP:
-                    OrderByVCP();
-                    break;
-                default:
-                    throw new NotImplementedException("cant sort by this method");
-            }
         }
 
         public void Init(CardPlayer player) {
@@ -67,14 +52,6 @@ namespace EQx.Game.Screen {
             nameText.text = player.playerName;
             var sprites = Resources.LoadAll<Sprite>("Sprites/Characters");
             icon.sprite = sprites[player.avatarID];
-            RoundManager.instance.onNewRound += UpdateValues;
-            UpdateValues();
-        }
-
-        private void OnDestroy() {
-            if (RoundManager.instance) {
-                RoundManager.instance.onNewRound -= UpdateValues;
-            }
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using EQx.Game.Table;
+using UnityEngine.Assertions;
 
 namespace EQx.Game.Player {
     public class Hand : MonoBehaviour {
@@ -59,29 +60,30 @@ namespace EQx.Game.Player {
             }
         }
 
-        void StartedPlacingListener(CardPlayer player) {
+        void StartedPlacingListener(CardPlayer player, int round) {
             fanAnchor.position = placingLocation.position;
         }
 
-        void EndedPlacingListener(CardPlayer player) {
+        void EndedPlacingListener(CardPlayer player, int round) {
 
         }
 
-        private void StartedBettingListener(CardPlayer player) {
+        private void StartedBettingListener(CardPlayer player, int round) {
             fanAnchor.position = bettingLocation.position;
         }
 
-        private void EndedBettingListener(CardPlayer player) {
+        private void EndedBettingListener(CardPlayer player, int round) {
         }
 
         public void RemovePlacedCard() {
             if (placedCard != null) {
                 Destroy(placedCard.gameObject);
+                placedCard = null;
             }
         }
 
         void PlacedCardListener(CardPlayer player, int id) {
-            Debug.Log(name + "PlaceCardListener");
+            Assert.IsTrue(!placedCard);
             var removedCard = cardInventory.Where(card => card.id == id).First();
             cardInventory.Remove(removedCard);
             removedCard.affordable = false;
@@ -93,7 +95,6 @@ namespace EQx.Game.Player {
         }
 
         void ReceivedCardListener(CardPlayer player, int id) {
-            Debug.Log(name + "ReceiveCardListener");
             var newCard = Instantiate(cardPrefab);
             newCard.data = CountryCardDatabase.instance.GetCountry(id);
             cardInventory.Add(newCard);
@@ -105,13 +106,12 @@ namespace EQx.Game.Player {
         }
 
         void ShowDropZone(CountryCard card) {
-            if (localPlayer.state == PlayerState.Placing) {
+            if (RoundManager.instance.GetParticipant(localPlayer).state == RoundState.Placing) {
                 dropZone.Show();
             }
         }
 
         void CheckPlayDistance(CountryCard card) {
-            Debug.Log(name + "CheckPlayDistance");
             if (dropZone.hovered) { 
                 PlaceCard(card);
             }
@@ -119,14 +119,12 @@ namespace EQx.Game.Player {
         }
 
         void PlaceCard(CountryCard card) {
-            Debug.Log(name + "PlaceCard");
             if (cardInventory.Contains(card)) {
                 localPlayer.PlaceCard(card.id);
             }
         }
 
         public void Initialize(CardPlayer player) {
-            Debug.Log(name + "Initialize");
             CardPlayer.localPlayerReady -= Initialize;
             localPlayer = player;
         }
@@ -146,7 +144,7 @@ namespace EQx.Game.Player {
                 card.SetTargetPosition(CalculateFanPosition(fan.IndexOf(card), fan.Count));
                 card.SetTargetRotation(CalculateFanRotation(fan.IndexOf(card), fan.Count));
                 card.order = sortingOrderStart + fan.IndexOf(card);
-                if(playerCache.state == PlayerState.Placing) {
+                if(RoundManager.instance.GetParticipant(playerCache).state == RoundState.Placing) {
                     card.affordable = true;
                 } else {
                     card.affordable = false;

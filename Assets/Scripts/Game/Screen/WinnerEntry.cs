@@ -50,11 +50,12 @@ namespace EQx.Game.Screen {
         public void Initialize(CardPlayer player, float startValue, float targetValue, float presentTime) {
             this.player = player;
             currentValue = startValue;
+            var participant = RoundManager.instance.GetParticipant(player);
             this.startValue = startValue;
-            this.targetValue = player.combinedValue;
+            this.targetValue = participant.combinedValue;
             presentSpeed = (targetValue - startValue) / presentTime;
-            playedCard = CountryCardDatabase.instance.GetCountry(player.placedCardID);
-            winner = player.state == PlayerState.Won ? true : false;
+            playedCard = CountryCardDatabase.instance.GetCountry(participant.placedCardID);
+            winner = participant.state == RoundState.Won ? true : false;
             label.text = player.playerName + nameConnector + playedCard.countryName;
             var sprite = Resources.Load<Sprite>(flagPath + "/" + playedCard.isoCountryCode.ToLower());
             if (sprite == null) {
@@ -92,8 +93,6 @@ namespace EQx.Game.Screen {
             Destroy(gameObject);
         }
 
-
-        // Update is called once per frame
         void Update() {
             if (presentingValues && !ReachedTarget()) {
                 currentValue += Time.deltaTime * presentSpeed;
@@ -118,13 +117,5 @@ namespace EQx.Game.Screen {
             addedValue.SetValueInstant(currentValue);
             reducedValue.SetValueInstant(currentValue);
         }
-
-
-
-        // Start is called before the first frame update
-        void Start() {
-
-        }
-
     }
 }

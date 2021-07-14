@@ -33,89 +33,178 @@ namespace EQx.Game.Table {
         public UnityAction onNewRound;
         public UnityAction onGameEnd;
 
-        public List<CardPlayer> registeredPlayers = new List<CardPlayer>();
-        public CardPlayer winner = default;
-
+        List<RoundParticipant> participants = new List<RoundParticipant>();
         public EQxVariableType currentDemand;
 
         public int currentRound = 0;
         bool inRound = false;
         bool gameOver = false;
-        public bool extractionRound = false;
 
         public void Register(CardPlayer player) {
-            Debug.Log(name + ".Register by" + player.name);
-            player.onPayedBlind += PayedBlindListener;
             player.onPlacedCard += PlacedCardListener;
-            player.onEndedPlacing += EndPlacingListener;
-            player.onEndedBetting += EndBettingListener;
+            player.onCommited += CommittedListener;
+            player.onStartedPlacing += StartPlacingListener;
+            player.onStartedBetting += StartBettingListener;
 
-            registeredPlayers.Add(player);
-            registeredPlayers.Sort((x, y) => x.photonView.Owner.ActorNumber.CompareTo(y.photonView.Owner.ActorNumber));
-            for (int i = 0; i < registeredPlayers.Count; i++) {
-                registeredPlayers[i].seatNumber = i;
+            string userID = player.photonView.Owner.UserId;
+            var participant = participants.FirstOrDefault(part => part.userID == userID);
+            if (participant!=null) {
+                participant.player = player;
+                if (PhotonNetwork.IsMasterClient) {
+                    RecoverState(participant.userID, (int)participant.state, participant.placedCardID, participant.baseValue, participant.bonusValue);
+                }
+            } else {
+                participant = new RoundParticipant() {
+                    player = player,
+                    userID = userID,
+                    seatNumber = -2,
+                    state = inRound ? RoundState.Start : RoundState.Waiting
+                };
+                
+                participants.Add(participant);
             }
+            participant.active = true;
             onPlayerRegister?.Invoke(player);
-            onRegisterUpdate?.Invoke();
-            if (inRound) {
-                player.PayBlind();
-                player.StartPlacing();
+            var orderedParticipants = AllActiveParticipants().OrderBy(part => part.actorNumber).ToList();
+            for(int i = 0; i < orderedParticipants.Count; i++) {
+                orderedParticipants[i].seatNumber = i;
             }
+            onRegisterUpdate?.Invoke();
             if (PhotonNetwork.IsMasterClient) {
-                if (registeredPlayers.Count == 1) {
+                if (participants.Count() == 1) {
                     NewRound();
+                } else {
+                    DetermineNextAction(participant);
                 }
             }
             UpdateRoomProperties();
         }
 
         public void Unregister(CardPlayer player) {
-            Debug.Log(name + ".Unregister by" + player.playerName);
-            player.onEndedPlacing -= EndPlacingListener;
-            player.onEndedBetting -= EndBettingListener;
             player.onPlacedCard -= PlacedCardListener;
-            player.onPayedBlind -= PayedBlindListener;
-            player.seatNumber = -1;
-            registeredPlayers.Remove(player);
+            player.onCommited -= CommittedListener;
+            player.onStartedPlacing -= StartPlacingListener;
+            player.onStartedBetting -= StartBettingListener;
+            GetParticipant(player).active = false;
             onPlayerUnregister?.Invoke(player);
             onRegisterUpdate?.Invoke();
             TryEndRound();
             UpdateRoomProperties();
         }
 
-        void PayedBlindListener(CardPlayer player) {
-            player.RequestCard();
+
+        private void DetermineNextAction(RoundParticipant participant) {
+            if (!participant.active) {
+                return;
+            }
+            switch (participant.state) {
+                case RoundState.Waiting:
+                    break;
+                case RoundState.Start:
+                    HandlePreviousCard(participant);
+                    participant.Reset();
+                    participant.player.StartPlacing(currentRound);
+                    break;
+                case RoundState.Placing:
+                    participant.player.StartPlacing(currentRound);
+                    break;
+                case RoundState.Placed:
+                    participant.player.EndPlacing(currentRound);
+                    participant.player.PayBlind();
+                    participant.player.StartBetting(currentRound);
+                    break;
+                case RoundState.Betting:
+                    participant.player.PayBlind();
+                    participant.player.StartBetting(currentRound);
+                    break;
+                case RoundState.Betted:
+                    participant.player.EndBetting(currentRound);
+                    TryEndRound();
+                    break;
+                case RoundState.Won:
+                    participant.player.Win();
+                    break;
+                case RoundState.Lost:
+                    participant.player.Lose();
+                    break;
+                default:
+                    throw new NotImplementedException("This Round State does not exist");
+
+            }
+        }
+
+        private void HandlePreviousCard(RoundParticipant participant) {
+            if(participant.placedCardID != -1) {
+                CardDealer.instance.DiscardCard(participant.placedCardID);
+                participant.player.RequestCard();
+            }
+        }
+
+
+
+        private void StartPlacingListener(CardPlayer player, int round) {
+            GetParticipant(player).state = RoundState.Placing;
+        }
+
+        private void StartBettingListener(CardPlayer player, int round) {
+            GetParticipant(player).state = RoundState.Betting;
+        }
+
+        private void CommittedListener(CardPlayer player) {
+            var participant = GetParticipant(player);
+            if(!(participant.state == RoundState.Betting)) {
+                return;
+            }
+            participant.bonusValue = InvestmentManager.instance.BonusValue(player);
+            participant.state = RoundState.Betted;
+            DetermineNextAction(GetParticipant(player));
         }
 
         void PlacedCardListener(CardPlayer player, int id) {
-            player.baseValue = CountryCardDatabase.instance.GetCountry(id).GetValue(currentDemand);
-            player.EndPlacing();
-            player.StartBetting();
+            var participant = GetParticipant(player);
+            if (!(participant.state == RoundState.Placing)) {
+                return;
+            }
+            participant.placedCardID = id;
+            participant.baseValue = CountryCardDatabase.instance.GetCountry(id).GetValue(currentDemand);
+            participant.state = RoundState.Placed;
+            DetermineNextAction(GetParticipant(player));
         }
 
-        void EndPlacingListener(CardPlayer player) {
-            //player.StartBetting();
+        void RecoverState(string userID, int state, int placedCard, float baseValue, float bonusValue) {
+            if (PhotonNetwork.IsMasterClient) {
+                photonView.RPC(nameof(RecoverStateRPC), RpcTarget.AllBuffered, userID, state, placedCard, baseValue, bonusValue);
+            }
         }
 
-        void EndBettingListener(CardPlayer player) {
-            TryEndRound();
+        [PunRPC]
+        private void RecoverStateRPC(string userID, int state, int placedCard, float baseValue, float bonusValue) {
+            Logger.Log($"{name}.{nameof(RecoverStateRPC)}({state}");
+            var participant = participants.FirstOrDefault(part => part.userID == userID);
+            if (participant == null) {
+                throw new Exception("No participant to recover");
+            }
+            participant.state = inRound ? (RoundState)state : RoundState.Waiting;
+            participant.placedCardID = placedCard;
+            participant.baseValue = baseValue;
+            participant.bonusValue = bonusValue;
         }
 
         #region RoundBehaviour
         public void NewRound() {
-            Debug.Log(name + ".NewRound");
+            Logger.Log($"{name}.{nameof(NewRound)}");
             if (PhotonNetwork.IsMasterClient && !inRound) {
                 if (currentRound >= maxRounds) {
-                    photonView.RPC("EndGameRPC", RpcTarget.AllBuffered);
+                    photonView.RPC(nameof(EndGameRPC), RpcTarget.AllBuffered);
                 } else {
-                    photonView.RPC("NewRoundRPC", RpcTarget.AllBuffered);
+                    photonView.RPC(nameof(NewRoundRPC), RpcTarget.AllBuffered);
                 }
             }
         }
 
         [PunRPC]
         void NewRoundRPC() {
-            Debug.Log(name + ".NewRoundRPC");
+            Logger.Log($"{name}.{nameof(NewRoundRPC)}");
             currentRound++;
             inRound = true;
             onNewRound?.Invoke();
@@ -125,7 +214,6 @@ namespace EQx.Game.Table {
         }
 
         void SetDemand() {
-            Debug.Log(name + ".SetDemand");
             if (PhotonNetwork.IsMasterClient) {
                 var newDemand = currentRound <= scriptedRounds.Length
                     ? scriptedRounds[currentRound - 1].randomDemand
@@ -136,13 +224,12 @@ namespace EQx.Game.Table {
 
         [PunRPC]
         void SetDemandRPC(int demand) {
-            Debug.Log(name + ".SetDemandRPC");
+            Logger.Log($"{name}.{nameof(SetDemandRPC)}({demand}");
             currentDemand = (EQxVariableType)demand;
             onNewDemand?.Invoke(currentDemand);
         }
 
         void StartPlacingRound() {
-            Debug.Log(name + ".StartPlacingRound");
             if (PhotonNetwork.IsMasterClient) {
                 photonView.RPC("StartPlacingRoundRPC", RpcTarget.AllBuffered);
             }
@@ -150,20 +237,18 @@ namespace EQx.Game.Table {
 
         [PunRPC]
         void StartPlacingRoundRPC() {
-            Debug.Log(name + ".StartPlacingRoundRPC");
-            foreach (var player in registeredPlayers) {
-                if (!(player.state == PlayerState.Unregistered)) {
-                    CardDealer.instance.DiscardCard(player.placedCardID);
+            Logger.Log($"{name}.{nameof(StartPlacingRoundRPC)}");
+            foreach (var player in participants) {
+                player.state = RoundState.Start;
+                if (player.active) {
+                    DetermineNextAction(player);
                 }
-                player.StartPlacing();
-                player.PayBlind();
             }
             onPlacingStarted?.Invoke();
         }
 
         void TryEndRound() {
-            Debug.Log(name + ".TryEndRound");
-            if (registeredPlayers.All(cardPlayer => cardPlayer.state == PlayerState.Betted || cardPlayer.state == PlayerState.Unregistered)) {
+            if (participants.Where(cardPlayer => cardPlayer.active).All(cardPlayer => cardPlayer.state == RoundState.Betted)) {
                 if (PhotonNetwork.IsMasterClient) {
                     photonView.RPC("EndBettingRoundRPC", RpcTarget.AllBuffered);
                 }
@@ -172,24 +257,21 @@ namespace EQx.Game.Table {
 
         [PunRPC]
         void EndBettingRoundRPC() {
-            Debug.Log(name + ".EndBettingRoundRPC");
+            Logger.Log($"{name}.{nameof(EndBettingRoundRPC)}");
             inRound = false;
-            extractionRound = InvestmentManager.instance.prize < 0;
-            winner = extractionRound
-                ? registeredPlayers.Aggregate((x, y) => x.combinedValue < y.combinedValue ? x : y)
-                : registeredPlayers.Aggregate((x, y) => x.combinedValue > y.combinedValue ? x : y);
-            foreach(var player in registeredPlayers) {
+            var winner = AllActiveParticipants().Aggregate((x, y) => x.combinedValue > y.combinedValue ? x : y);
+            foreach(var player in AllActiveParticipants()) {
                 if(player == winner) {
-                    player.Win();
+                    player.state = RoundState.Won;
                 } else {
-                    player.Lose();
+                    player.state = RoundState.Lost;
                 }
+                DetermineNextAction(player);
             }
             onBettingEnded?.Invoke();
         }
 
         void EndGame() {
-            Debug.Log(name + ".EndGame");
             if (PhotonNetwork.IsMasterClient) {
                 photonView.RPC("EndGameRPC", RpcTarget.AllBuffered);
             }
@@ -197,7 +279,7 @@ namespace EQx.Game.Table {
 
         [PunRPC]
         void EndGameRPC() {
-            Debug.Log(name + ".EndGameRPC");
+            Logger.Log($"{name}.{nameof(EndGameRPC)}");
             if (!gameOver) {
                 gameOver = true;
                 currentRound++;
@@ -237,10 +319,22 @@ namespace EQx.Game.Table {
         private void UpdateRoomProperties() {
             if (PhotonNetwork.IsMasterClient) {
                 var props = PhotonNetwork.CurrentRoom.CustomProperties;
-                props[TableBrowser.CONNECTED_PLAYERS] = registeredPlayers.Select(player => player.playerName).ToArray();
+                props[TableBrowser.CONNECTED_PLAYERS] = AllActiveParticipants().Select(part => part.player.playerName).ToArray();
                 props[TableBrowser.CURRENT_ROUND] = currentRound;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(props);
             }
+        }
+
+        public IEnumerable<RoundParticipant> AllActiveParticipants() {
+            return participants.Where(part => part.active);
+        }
+
+        public RoundParticipant GetParticipant(CardPlayer player) {
+            return participants.First(part => part.player == player);
+        }
+
+        public bool IsInState(CardPlayer player, RoundState state) {
+            return GetParticipant(player).state == state;
         }
     }
 }

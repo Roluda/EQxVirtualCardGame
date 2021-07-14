@@ -37,8 +37,8 @@ namespace EQx.Game.UI {
         private void StartGameOver() {
             RoundManager.instance.onGameEnd -= StartGameOver;
             overlay.SetActive(true);
-            var winner = InvestmentManager.instance.accounts.OrderByDescending(account => account.capital).First().player.playerName;
-            var quality = PlayerObserver.instance.playerTracks.OrderByDescending(track => track.valueCreationPercentile[RoundManager.instance.currentRound - 1]).First().playerName;
+            var winner = InvestmentManager.instance.accounts.OrderByDescending(account => account.capital).First(account => account.isActive).player.playerName;
+            var quality = PlayerObserver.instance.playerTracks.OrderByDescending(track => track.valueCreationPercentile[RoundManager.instance.currentRound - 1]).First(track=>track.active).playerName;
             winnerText.text = $"{winner}{winnerAffix}";
             qualityText.text = $"{quality}{qualityAffix}";
             StartCoroutine(ShowDiagram());
@@ -91,11 +91,6 @@ namespace EQx.Game.UI {
 
         public void PreviousDiagram() {
             NextDiagram();
-        }
-
-        // Update is called once per frame
-        void Update() {
-
         }
     }
 }

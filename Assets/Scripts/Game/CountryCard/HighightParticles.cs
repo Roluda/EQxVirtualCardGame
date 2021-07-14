@@ -13,7 +13,6 @@ public class HighightParticles : CountryCardComponent
     }
 
     protected override void CardUnaffordableListener(CountryCard card) {
-        Debug.Log("Stopping Affordance");
         system.Stop();
     }
 }

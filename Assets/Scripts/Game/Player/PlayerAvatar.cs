@@ -52,7 +52,6 @@ namespace EQx.Game.Player {
         }
 
         public void Initialize(CardPlayer player) {
-            Debug.Log(name + "Initialize");
             observedPlayer = player;
             observedPlayer.onPlacedCard += CardPlacedListener;
             observedPlayer.onEndedPlacing += EndedPlacingListener;
@@ -94,16 +93,14 @@ namespace EQx.Game.Player {
             nameText.text = name;
         }
 
-        private void StartedPlacingListener(CardPlayer player) {
-            Debug.Log(name + "StartedTurnListener");
+        private void StartedPlacingListener(CardPlayer player, int round) {
             shade.material.SetFloat("_Effect", 0);
         }
 
-        private void EndedPlacingListener(CardPlayer player) {
+        private void EndedPlacingListener(CardPlayer player, int round) {
         }
 
-        private void EndedBettingListener(CardPlayer arg0) {
-            Debug.Log(name + "EndedBettingListener");
+        private void EndedBettingListener(CardPlayer player, int round) {
             shade.material.SetFloat("_Effect", 1);
         }
 

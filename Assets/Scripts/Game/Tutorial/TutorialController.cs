@@ -1,15 +1,13 @@
 ﻿using EQx.Game.Player;
 using EQx.Game.Table;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace EQx.Game.Tutorial {
     public class TutorialController : MonoBehaviour {
-        static bool firstOpen = true;
+        static bool firstOpenInitial = true;
+        static bool firstOpenCommit = true;
 
         bool roundEndedDataUnlocked = false;
         bool commitValueDataUnlocked = false;
@@ -32,7 +30,7 @@ namespace EQx.Game.Tutorial {
 
         private void RegisterPlayerListeners(CardPlayer player) {
             CardPlayer.localPlayerReady -= RegisterPlayerListeners;
-            player.onEndedPlacing += _ => AddCommitValueData();
+            player.onEndedPlacing += (a,b) => AddCommitValueData();
         }
 
         private void Start() {
@@ -42,8 +40,8 @@ namespace EQx.Game.Tutorial {
         }
 
         public void OpenBasicTutorial() {
-            if (firstOpen) {
-                firstOpen = false;
+            if (firstOpenInitial) {
+                firstOpenInitial = false;
                 tutorialSystem.OpenTutorial();
             }
         }
@@ -52,15 +50,17 @@ namespace EQx.Game.Tutorial {
             if (!commitValueDataUnlocked) {
                 commitValueDataUnlocked = true;
                 tutorialSystem.Unlock(commitValueData);
-                tutorialSystem.NextWindow();
+                if (firstOpenCommit) {
+                    tutorialSystem.NextWindow();
+                }
             }
         }
 
         void AddRoundEndedData() {
-            if(commitValueDataUnlocked && !roundEndedDataUnlocked) {
+            if (commitValueDataUnlocked && !roundEndedDataUnlocked) {
                 roundEndedDataUnlocked = true;
                 tutorialSystem.Unlock(commitValueData);
             }
-        }        
+        }
     }
 }

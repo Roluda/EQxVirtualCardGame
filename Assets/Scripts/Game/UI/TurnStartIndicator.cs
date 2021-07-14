@@ -47,18 +47,18 @@ namespace EQx.Game.LocalPlayer {
         }
 
         public void DisplayPlacing() {
-            if (CardPlayer.localPlayer.state == PlayerState.Placing && !TutorialSystem.inTutorial) {
+            if (RoundManager.instance.GetParticipant(CardPlayer.localPlayer).state == RoundState.Placing && !TutorialSystem.inTutorial) {
                 StartCoroutine(DisplayIndication(placingMessage));
             }
         }
 
-        private void StartedBettingListener(CardPlayer player) {
+        private void StartedBettingListener(CardPlayer player, int round) {
             if (!TutorialSystem.inTutorial) {
                 StartCoroutine(DisplayIndication(bettingMessage));
             }
         }
 
-        private void StartedPlacingListener(CardPlayer player) {
+        private void StartedPlacingListener(CardPlayer player, int round) {
             StartCoroutine(DisplayIndication(placingMessage));
         }
 
