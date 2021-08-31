@@ -21,6 +21,12 @@ namespace EQx.Menu {
 		GameObject serverOption = null;
 		[SerializeField]
 		TMP_Text log = default;
+		[SerializeField]
+		int defaultPlayers = 5;
+		[SerializeField]
+		int defaultRounds = 8;
+		[SerializeField]
+		string defaultTableSuffix = "Table";
 
 		[SerializeField]
 		float reconnectInterval = 10;
@@ -105,6 +111,7 @@ namespace EQx.Menu {
             if (!PhotonNetwork.IsConnected) {
 				return;
             }
+			log.text = "Joining Random Room...";
 			PhotonNetwork.JoinRandomRoom();
         }
 
@@ -126,6 +133,11 @@ namespace EQx.Menu {
             }
 			log.text = message;
         }
+
+        public override void OnJoinRandomFailed(short returnCode, string message) {
+			log.text = message;
+			Host(ConstructRoomName(), defaultPlayers, defaultRounds);
+		}
 
         public override void OnJoinRoomFailed(short returnCode, string message) {
 			log.text = message;
@@ -168,6 +180,22 @@ namespace EQx.Menu {
 					PhotonNetwork.JoinRoom(room.Name);
 				}));
 			}
+		}
+
+		private string ConstructRoomName() {
+			string roomName = PlayerPrefs.GetString(PlayerPrefKeys.PLAYERNAME);
+			if (roomName[roomName.Length - 1] == 's') {
+				roomName += $"' {defaultTableSuffix}";
+			} else {
+				roomName += $"'s {defaultTableSuffix}";
+			}
+			string baseName = roomName;
+			int i = 0;
+			while (cachedRoomList.ContainsKey(roomName)) {
+				i++;
+				roomName = baseName + $" ({i})";
+			}
+			return roomName;
 		}
 	}
 }

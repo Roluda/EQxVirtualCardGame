@@ -10,9 +10,9 @@ namespace EQx.Game.UI {
         [SerializeField]
         UILineRenderer lineRenderer = default;
 
-        [SerializeField]
+        [SerializeField, ColorUsage(true, true)]
         Color defaultColor = Color.white;
-        [SerializeField]
+        [SerializeField, ColorUsage(true, true)]
         Color highlightColor = Color.green;
 
         // Update is called once per frame

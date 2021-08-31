@@ -34,7 +34,7 @@ namespace EQx.Game.Table {
         public UnityAction onGameEnd;
 
         List<RoundParticipant> participants = new List<RoundParticipant>();
-        public EQxVariableType currentDemand;
+        public EQxVariableType currentDemand = EQxVariableType.ValueCreation;
 
         public int currentRound = 0;
         bool inRound = false;
@@ -225,8 +225,8 @@ namespace EQx.Game.Table {
         void SetDemand() {
             if (PhotonNetwork.IsMasterClient) {
                 var newDemand = currentRound <= scriptedRounds.Length
-                    ? scriptedRounds[currentRound - 1].randomDemand
-                    : defaultRound.randomDemand;
+                    ? scriptedRounds[currentRound - 1].RandomDemandExcept(new List<EQxVariableType>() {currentDemand})
+                    : defaultRound.RandomDemandExcept(new List<EQxVariableType>() { currentDemand });
                 photonView.RPC("SetDemandRPC", RpcTarget.AllBuffered, (int)newDemand);
             }
         }

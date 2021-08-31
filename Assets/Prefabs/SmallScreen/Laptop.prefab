@@ -506,6 +506,7 @@ GameObject:
   - component: {fileID: 574843571098170760}
   - component: {fileID: 574843571098170762}
   - component: {fileID: 574843571098170761}
+  - component: {fileID: 1276009457422830996}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -569,6 +570,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1276009457422830996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574843571098170767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c380118869d58c468ec07cdb0e92a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 574843571098170761}
+  frequency: 0.6
+  firstColor: {r: 1, g: 1, b: 1, a: 1}
+  secondColor: {r: 1, g: 1, b: 1, a: 1}
+  secondScale: 1.2
+  active: 0
+  imageRect: {fileID: 574843571098170760}
 --- !u!1 &574843571245043443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,6 +1268,7 @@ MonoBehaviour:
   demandIcon: {fileID: 574843571978332645}
   combinedValue: {fileID: 574843570913821951}
   investmentSlider: {fileID: 574843572288358934}
+  knobBlink: {fileID: 1276009457422830996}
   confirmButton: {fileID: 574843572401186812}
   warning: {fileID: 5165459942588057969}
   timeUntilWarning: 0
@@ -2227,6 +2248,7 @@ MonoBehaviour:
   firstColor: {r: 1, g: 1, b: 1, a: 1}
   secondColor: {r: 0.9960785, g: 0.9960785, b: 0.33333334, a: 1}
   secondScale: 0.9
+  active: 0
   imageRect: {fileID: 574843572401186787}
 --- !u!1 &6123815224205230871
 GameObject:
@@ -2812,15 +2834,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1271508379146006174}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &690267333048879597 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1743205699908888435, guid: f1f50c7c6d39269489f130a6b69e85bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1271508379146006174}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7364891270469831725 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8615412151744783027, guid: f1f50c7c6d39269489f130a6b69e85bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1271508379146006174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &690267333048879597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1743205699908888435, guid: f1f50c7c6d39269489f130a6b69e85bd,
     type: 3}
   m_PrefabInstance: {fileID: 1271508379146006174}
   m_PrefabAsset: {fileID: 0}

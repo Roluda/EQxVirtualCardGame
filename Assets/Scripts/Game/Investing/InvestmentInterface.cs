@@ -36,6 +36,8 @@ namespace EQx.Game.Investing {
         [Header("InvestingInformation")]
         [SerializeField]
         InvestmentSlider investmentSlider = default;
+        [SerializeField]
+        BlinkingImage knobBlink = default;
 
         [Header("Confirmation")]
         [SerializeField]
@@ -69,6 +71,7 @@ namespace EQx.Game.Investing {
             timer += Time.deltaTime;
             if (timer > timeUntilWarning) {
                 warning.StartBlink();
+                knobBlink.StartBlink();
             }
         }
         public void AdjustCommitment(int investment) {
@@ -96,6 +99,7 @@ namespace EQx.Game.Investing {
             commited = false;
             confirmButton.gameObject.SetActive(true);
             warning.StopBlink();
+            knobBlink.StopBlink();
             timer = 0;
             ScreenOn();
         }
@@ -106,6 +110,7 @@ namespace EQx.Game.Investing {
             screen.gameObject.SetActive(true);
             investmentSlider.Reset();
             warning.StopBlink();
+            knobBlink.StopBlink();
         }
 
         public void Initialize(CardPlayer player) {

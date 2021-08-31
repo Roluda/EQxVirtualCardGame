@@ -497,7 +497,7 @@ MonoBehaviour:
     laborRent: 80
     cardPriority: 4
   - countryName: Czech Republic
-    isoCountryCode: CY
+    isoCountryCode: CZ
     valueCreation: 59
     valueExtraction: 40
     power: 55
@@ -911,7 +911,7 @@ MonoBehaviour:
     laborRent: 62
     cardPriority: 3
   - countryName: Slovak Republic
-    isoCountryCode: SX
+    isoCountryCode: SK
     valueCreation: 53
     valueExtraction: 46
     power: 54

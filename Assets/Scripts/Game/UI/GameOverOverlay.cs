@@ -18,15 +18,20 @@ namespace EQx.Game.UI {
         [SerializeField]
         TMP_Text winnerText = default;
         [SerializeField]
-        TMP_Text qualityText = default;
+        string coinsPrefix = "Most Competitive Elite: ";
         [SerializeField]
-        string winnerAffix = " wins the elite wealth prize!";
-        [SerializeField]
-        string qualityAffix = " wins the elite quality prize!";
+        string qualityPrefix = "Most Value Created (Elite Quality): ";
         [SerializeField]
         LineDiagram diagram = default;
+        [SerializeField]
+        string coinsDiagramTitle = "Accumulated coins (Wealth)";
+        [SerializeField]
+        string vcpDiagramTitle = "Average value creation percentage (Elite Quality)";
 
         TrackType current = TrackType.VCP;
+
+        string winnerCoins;
+        string winnerVCP;
 
         // Start is called before the first frame update
         void Start() {
@@ -37,10 +42,8 @@ namespace EQx.Game.UI {
         private void StartGameOver() {
             RoundManager.instance.onGameEnd -= StartGameOver;
             overlay.SetActive(true);
-            var winner = InvestmentManager.instance.accounts.OrderByDescending(account => account.capital).First(account => account.isActive).player.playerName;
-            var quality = PlayerObserver.instance.playerTracks.OrderByDescending(track => track.valueCreationPercentile[RoundManager.instance.currentRound - 1]).First(track=>track.active).playerName;
-            winnerText.text = $"{winner}{winnerAffix}";
-            qualityText.text = $"{quality}{qualityAffix}";
+            winnerCoins = InvestmentManager.instance.accounts.OrderByDescending(account => account.capital).First(account => account.isActive).player.playerName;
+            winnerVCP = PlayerObserver.instance.playerTracks.OrderByDescending(track => track.valueCreationPercentile[RoundManager.instance.currentRound - 1]).First(track=>track.active).playerName;
             StartCoroutine(ShowDiagram());
         }
 
@@ -58,6 +61,7 @@ namespace EQx.Game.UI {
 
             switch (current) {
                 case TrackType.Capital:
+                    winnerText.text = $"{coinsPrefix}{winnerCoins}";
                     diagram.ClearData();
                     diagram.maxMargin = 1.1f;
                     diagram.minMargin = .9f;
@@ -67,11 +71,12 @@ namespace EQx.Game.UI {
                     }
                     diagram.labelX = "Round";
                     diagram.labelY = "Coins";
-                    diagram.header = "Coins over Game";
+                    diagram.header = coinsDiagramTitle;
                     diagram.Redraw();
 
                     break;
                 case TrackType.VCP:
+                    winnerText.text = $"{qualityPrefix}{winnerVCP}";
                     diagram.ClearData();
                     diagram.maxMargin = 1;
                     diagram.minMargin = .9f;
@@ -81,7 +86,7 @@ namespace EQx.Game.UI {
                     }
                     diagram.labelX = "Round";
                     diagram.labelY = "Value Creation %";
-                    diagram.header = "Value Creation Percentile over Game";
+                    diagram.header = vcpDiagramTitle;
                     diagram.yScaleDecimals = 2;
                     diagram.Redraw();
                     break;
