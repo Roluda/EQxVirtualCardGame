@@ -43,6 +43,7 @@ namespace EQx.Game.Table {
         public void Register(CardPlayer player) {
             player.onPlacedCard += PlacedCardListener;
             player.onCommited += CommittedListener;
+            player.onInvestedCoins += InvestedListener;
             player.onStartedPlacing += StartPlacingListener;
             player.onStartedBetting += StartBettingListener;
 
@@ -83,6 +84,7 @@ namespace EQx.Game.Table {
         public void Unregister(CardPlayer player) {
             player.onPlacedCard -= PlacedCardListener;
             player.onCommited -= CommittedListener;
+            player.onInvestedCoins -= InvestedListener;
             player.onStartedPlacing -= StartPlacingListener;
             player.onStartedBetting -= StartBettingListener;
             GetParticipant(player).active = false;
@@ -150,12 +152,19 @@ namespace EQx.Game.Table {
             GetParticipant(player).state = RoundState.Betting;
         }
 
+        private void InvestedListener(CardPlayer player, int round) {
+            var participant = GetParticipant(player);
+            if (!(participant.state == RoundState.Betting)) {
+                return;
+            }
+            participant.bonusValue = InvestmentManager.instance.BonusValue(player);
+        }
+
         private void CommittedListener(CardPlayer player) {
             var participant = GetParticipant(player);
             if(!(participant.state == RoundState.Betting)) {
                 return;
             }
-            participant.bonusValue = InvestmentManager.instance.BonusValue(player);
             participant.state = RoundState.Betted;
             DetermineNextAction(GetParticipant(player));
         }

@@ -98,7 +98,7 @@ namespace EQx.Game.Statistics {
 
         private void WinListener(CardPlayer player) {
             AddWin(player, true);
-            AddWinnings(player, InvestmentManager.instance.prize);
+            AddWinnings(player, InvestmentManager.instance.jackpot);
         }
 
         private void InvestedCoinsListener(CardPlayer player, int amount) {

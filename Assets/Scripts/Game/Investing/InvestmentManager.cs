@@ -28,18 +28,18 @@ namespace EQx.Game.Investing {
 
         [SerializeField]
         int prizePool = 0;
-        public int prize {
+        public int jackpot {
             get => prizePool;
             set {
                 int oldPool = prizePool;
                 prizePool = value;
                 if (oldPool != prizePool) {
-                    onPrizeUpdated?.Invoke();
+                    onJackpotUpdated?.Invoke();
                 }
             }
         }
 
-        public UnityAction onPrizeUpdated;
+        public UnityAction onJackpotUpdated;
         public UnityAction<int> onEconomyGrowth;
         public UnityAction<CardPlayer, int> onWinPrize;
         public UnityAction<CardPlayer> onCapitalUpdated;
@@ -50,7 +50,7 @@ namespace EQx.Game.Investing {
 
         public List<Account> accounts = new List<Account>();
 
-        public CardPlayer prizeWinner;
+        public CardPlayer jackpotWinner;
 
         public void Register(CardPlayer player) {
             player.onReceivedCoins += ReceivedCoinsListener;
@@ -60,7 +60,7 @@ namespace EQx.Game.Investing {
             player.onWin += WinListener;
 
             string userID = player.photonView.Owner.UserId;
-            var account = accounts.Where(acc => acc.userID == userID).FirstOrDefault();
+            var account = accounts.FirstOrDefault(acc => acc.userID == userID);
             if (account != null) {
                 accounts.Add(new Account(player));
                 accounts.Remove(account);
@@ -74,6 +74,11 @@ namespace EQx.Game.Investing {
         public void Unregister(CardPlayer player) {
             var account = accounts.Where(acc => acc.player == player).First();
             account.capital += account.TakeCommitment();
+            if(player == jackpotWinner) {
+                account.capital += jackpot;
+                SetJackpot(0);
+                jackpotWinner = null;
+            }
             account.isActive = false;
             player.onReceivedCoins -= ReceivedCoinsListener;
             player.onInvestedCoins -= InvestedCoinsListener;
@@ -83,7 +88,7 @@ namespace EQx.Game.Investing {
         }
 
         private void PayedBlindListener(CardPlayer player) {
-            var account = accounts.Where(acc => acc.player == player).First();
+            var account = accounts.First(acc => acc.player == player);
             account.capital -= blind;
             account.payedBlind += blind;
             onPayedBlind?.Invoke(player);
@@ -91,7 +96,7 @@ namespace EQx.Game.Investing {
         }
 
         private void InvestedCoinsListener(CardPlayer player, int amount) {
-            var account = accounts.Where(acc => acc.player == player).First();
+            var account = accounts.First(acc => acc.player == player);
             account.capital -= amount;
             account.investment += amount;
             onInvested?.Invoke(player);
@@ -99,19 +104,19 @@ namespace EQx.Game.Investing {
         }
 
         private void ReceivedCoinsListener(CardPlayer player, int amount) {
-            var account = accounts.Where(acc => acc.player == player).First();
+            var account = accounts.First(acc => acc.player == player);
             account.capital += amount;
             onReceivedCoins?.Invoke(player);
             onCapitalUpdated?.Invoke(player);
         }
 
         private void CommitedListener(CardPlayer player) {
-            AddPrize(TakeCommitment(player));
+            SetJackpot(jackpot+TakeCommitment(player));
             onCommited?.Invoke(player);
         }
 
         private void WinListener(CardPlayer player) {
-            prizeWinner = player;
+            jackpotWinner = player;
         }
 
         public void CommitAll() {
@@ -121,45 +126,34 @@ namespace EQx.Game.Investing {
         }
 
         [PunRPC]
-        void SetPrizeRPC(int amount) {
-            Logger.Log($"{name}.{nameof(SetPrizeRPC)}");
-            prize = amount;
-        }
-
-        [PunRPC]
-        void AddPrizeRPC(int amount) {
-            Logger.Log($"{name}.{nameof(AddPrizeRPC)}({amount})");
-            prize += amount;
+        void SetJackpotRPC(int amount) {
+            Logger.Log($"{name}.{nameof(SetJackpotRPC)}");
+            jackpot = amount;
         }
 
         [PunRPC]
         void EconomyGrowthRPC() {
             Logger.Log($"{name}.{nameof(EconomyGrowthRPC)}");
-            float currentPrize = prize;
+            float currentPrize = jackpot;
             int newPrize = (int)(currentPrize * economicGrowth);
-            onEconomyGrowth?.Invoke(newPrize - prize);
-            prize = newPrize;
+            onEconomyGrowth?.Invoke(newPrize - jackpot);
+            jackpot = newPrize;
         }
 
         [PunRPC]
         void WinPrizeRPC() {
             Logger.Log($"{name}.{nameof(WinPrizeRPC)}");
-            if (prizeWinner) {
-                prizeWinner.ReceiveCoins(prize);
-                onWinPrize?.Invoke(prizeWinner, prize);
-                SetPrize(0);
+            if (jackpotWinner) {
+                jackpotWinner.ReceiveCoins(jackpot);
+                onWinPrize?.Invoke(jackpotWinner, jackpot);
+                jackpotWinner = null;
+                SetJackpot(0);
             }
         }
 
-        public void SetPrize(int amount) {
+        public void SetJackpot(int amount) {
             if (PhotonNetwork.IsMasterClient) {
-                photonView.RPC(nameof(SetPrizeRPC), RpcTarget.AllBuffered, amount);
-            }
-        }
-
-        public void AddPrize(int amount) {
-            if (PhotonNetwork.IsMasterClient) {
-                photonView.RPC(nameof(AddPrizeRPC), RpcTarget.AllBuffered, amount);
+                photonView.RPC(nameof(SetJackpotRPC), RpcTarget.AllBuffered, amount);
             }
         }
 

@@ -27,12 +27,12 @@ namespace EQx.Game.Investing {
 
         // Start is called before the first frame update
         void Start() {
-            InvestmentManager.instance.onPrizeUpdated += CalculateMountain;
+            InvestmentManager.instance.onJackpotUpdated += CalculateMountain;
             InvestmentManager.instance.onEconomyGrowth += EconomyGrowthListener;
             growthInfo.gameObject.SetActive(false);
         }
         void Update() {
-            infoText.text = $"{infoPrefix}{Mathf.Abs(InvestmentManager.instance.prize)}";
+            infoText.text = $"{infoPrefix}{Mathf.Abs(InvestmentManager.instance.jackpot)}";
             infoText.gameObject.SetActive(prizeMountain.highlighted || debtMountain.highlighted);
         }
 
@@ -51,7 +51,7 @@ namespace EQx.Game.Investing {
         }
 
         void CalculateMountain() {
-            int prize = InvestmentManager.instance.prize;
+            int prize = InvestmentManager.instance.jackpot;
             if (prize > 0) {
                 prizeMountain.capital = prize;
                 debtMountain.capital = 0;

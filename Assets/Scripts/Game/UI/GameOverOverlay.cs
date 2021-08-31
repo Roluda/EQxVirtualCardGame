@@ -91,6 +91,6 @@ namespace EQx.Game.UI {
 
         public void PreviousDiagram() {
             NextDiagram();
-        }
+        }   
     }
 }
