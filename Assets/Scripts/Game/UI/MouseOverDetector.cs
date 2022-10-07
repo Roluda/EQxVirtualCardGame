@@ -6,10 +6,16 @@ using UnityEngine.EventSystems;
 namespace EQx.Game.UI {
     public class MouseOverDetector : MonoBehaviour {
 
+        [HideInInspector]
         public bool isMouseOver = false;
 
+        private void OnEnable() {
+            isMouseOver = false;
+        }
+
         private void Update() {
-            isMouseOver = IsOverThisElement(GetEventSystemRaycastResults());
+            bool mo = IsOverThisElement(GetEventSystemRaycastResults());
+            isMouseOver = mo;
         }
 
         private void OnDisable() {

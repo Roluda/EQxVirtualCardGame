@@ -43,7 +43,10 @@ namespace EQx.Game.UI {
             RoundManager.instance.onGameEnd -= StartGameOver;
             overlay.SetActive(true);
             winnerCoins = InvestmentManager.instance.accounts.OrderByDescending(account => account.capital).First(account => account.isActive).player.playerName;
-            winnerVCP = PlayerObserver.instance.playerTracks.OrderByDescending(track => track.valueCreationPercentile[RoundManager.instance.currentRound - 1]).First(track=>track.active).playerName;
+            winnerVCP = PlayerObserver.instance.playerTracks
+                .Where(track => track.valueCreationPercentile.ContainsKey(RoundManager.instance.currentRound -1))
+                .OrderByDescending(track => track.valueCreationPercentile[RoundManager.instance.currentRound - 1])
+                .First(track=>track.active).playerName;
             StartCoroutine(ShowDiagram());
         }
 

@@ -112,7 +112,7 @@ namespace EQx.Game.Player {
         }
 
         void CheckPlayDistance(CountryCard card) {
-            if (dropZone.hovered) { 
+            if (dropZone.hovered) {
                 PlaceCard(card);
             }
             dropZone.Hide();

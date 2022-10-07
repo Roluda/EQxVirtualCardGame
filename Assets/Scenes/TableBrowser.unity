@@ -1406,13 +1406,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26166f2ef28a784ba14286a42cf9bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameVersion: Develop
+  gameVersion: 1.1
   content: {fileID: 1511091329}
   serverOption: {fileID: 1277771219153880227, guid: e728211d72d2593428e29ae76cbb7634,
     type: 3}
   log: {fileID: 1446428903}
   defaultPlayers: 5
-  defaultRounds: 8
+  defaultRounds: 5
   defaultTableSuffix: Table
   reconnectInterval: 5
 --- !u!4 &526392256

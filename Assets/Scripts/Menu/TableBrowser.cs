@@ -13,7 +13,7 @@ namespace EQx.Menu {
 		public const string CURRENT_ROUND = "cr";
 
 		[SerializeField]
-		string gameVersion = "Develop";
+		string gameVersion = "1.0";
 
 		[SerializeField]
 		Transform content = null;

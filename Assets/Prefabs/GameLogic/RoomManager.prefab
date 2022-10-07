@@ -45,3 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPlayerPrefab: {fileID: 4752798874831480479, guid: 2393c1f7f3a9aed49a7bc9c37115ea7a,
     type: 3}
+  kickAfk: 1
+  timeUntilAfk: 90
